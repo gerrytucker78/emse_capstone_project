@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_findRoom"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Find a Room" />
+        <item
+            android:id="@+id/nav_emergency"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Emergency Navigation" />
+        <item
+            android:id="@+id/nav_reportEmergency"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Report Emergency" />
+        <!--<item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Manage Account" />-->
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Manage Account" />
+            <!--<item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Manage Account" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />-->
+        </menu>
+    </item>
+
+</menu>
