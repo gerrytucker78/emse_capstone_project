@@ -1,0 +1,29 @@
+--Enable PostGis extension
+select current_user;
+create extension postgis;
+create extension fuzzystrmatch;
+create extension postgis_tiger_geocoder;
+create extension postgis_topology;
+alter schema tiger owner to rds_superuser;
+alter schema topology owner to rds_superuser;
+CREATE FUNCTION exec(text) returns text language plpgsql volatile AS $f$ BEGIN EXECUTE $1; RETURN $1; END; $f$;
+
+SELECT exec('ALTER TABLE ' || quote_ident(s.nspname) || '.' || quote_ident(s.relname) || ' OWNER TO rds_superuser;')
+  FROM (
+    SELECT nspname, relname
+    FROM pg_class c JOIN pg_namespace n ON (c.relnamespace = n.oid) 
+    WHERE nspname in ('tiger','topology') AND
+    relkind IN ('r','S','v') ORDER BY relkind = 'S')
+s;
+
+SET search_path=public,tiger;
+
+--Create CometNav Tables
+CREATE TABLE Users( user_id SERIAL CONSTRAINT users_pk PRIMARY KEY, username VARCHAR(50), email text, hashedPassword text);
+CREATE TABLE Roles(role_id SERIAL CONSTRAINT roles_pk PRIMARY KEY, role VARCHAR(25));
+CREATE TABLE UserRoles(user_id SERIAL REFERENCES Users(user_id), role_id INT REFERENCES Roles(role_id));
+CREATE TABLE Actions(action_id SERIAL CONSTRAINT actions_pk PRIMARY KEY, actions_name text);
+CREATE TABLE RoleActions(action_id SERIAL REFERENCES Actions(action_id), role_id INT REFERENCES Roles(role_id));
+CREATE TABLE Sensors(sensor_id SERIAL CONSTRAINT sensors_pk PRIMARY KEY, name text, latLong geography(MULTIPOINT,4326));
+CREATE TABLE Locations(location_id SERIAL CONSTRAINT locations_pk PRIMARY KEY, floor INT, latLong geography(MULTIPOINT,4326), name text, type text, map bytea);
+CREATE TABLE Emergencies(emergency_id SERIAL CONSTRAINT emergency_pk PRIMARY KEY, location_id INT REFERENCES Locations(location_id), emergency_type text, emergency_notes text, emergency_start timestamp, emergency_last_update timestamp, emergency_end timestamp); 
