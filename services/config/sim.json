@@ -16,6 +16,13 @@
         "floor": 1,
         "latLong": null
       }
-    ]
+    ],
+    "location:1": {
+      "location_id": 1,
+      "building_id": 1,
+      "name": "Location 1",
+      "floor": 1,
+      "latLong": null
+    }
   }
 }
