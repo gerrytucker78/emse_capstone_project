@@ -1,24 +1,58 @@
 var request = require('supertest');
 var config = require('config');
-var simulation = config.get('simumlation');
+var simulation = config.get('simulation');
 
 describe('Locations', function () {
     var server;
-    beforeEach(function () {
+    var testLocations = [];
+
+    before(function (done) {
         server = require('../app.js');
+
+        var simLocations = simulation.get("locations");
+        var totalCount = 0;
+
+        request(server).delete('/locations').send().end(function (err, res) {
+            for (var i = 0; i < simLocations.length; i++) {
+                var simLoc = simLocations[i];
+
+                request(server).post('/locations').send(simLoc).end(function (err, res) {
+                    totalCount++;
+                    if (totalCount == testLocations.length) {
+                        done();
+                    }
+                });
+
+                testLocations.push(simLoc);
+            }
+        });
+
+
     });
-    afterEach(function () {
-        server.close();
+    after(function (done) {
+
+        request(server).delete('/locations').send().end(function (err, res) {
+            done();
+            server.close();
+        });
+
+
+    });
+
+
+    it('getAll', function (done) {
+        request(server).get('/locations').expect(testLocations).expect(200, done);
     });
 
     it('getLocation', function (done) {
-        request(server).get('/locations/id/1').expect(simulation.get("location:1")).expect(200, done);
+        request(server).get('/locations/id/' + testLocations[0].location_id).expect(testLocations[0]).expect(200, done);
     });
 
-    it('getAll', function (done) {
-        request(server).get('/locations').expect(simulation.get("locations")).expect(200, done);
+    it('Delete By Id', function (done) {
+        request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {
+            request(server).get('/locations/id/' + testLocations[0].location_id).expect('').expect(200, done);
+        });
     });
-
 
 });
 
