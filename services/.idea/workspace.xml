@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/dev.json" afterPath="$PROJECT_DIR$/config/dev.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/locations.js" afterPath="$PROJECT_DIR$/models/locations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/sensors.js" afterPath="$PROJECT_DIR$/models/sensors.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/locations.js" afterPath="$PROJECT_DIR$/routes/locations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/sensors.js" afterPath="$PROJECT_DIR$/routes/sensors.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/sensors.js" afterPath="$PROJECT_DIR$/tests/sensors.js" />
     </list>
     <ignored path="services.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,7 +42,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/locations.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
@@ -98,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dev.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dev.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/dev.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+            <state relative-caret-position="180">
+              <caret line="57" column="7" selection-start-line="57" selection-start-column="7" selection-end-line="57" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -156,11 +150,11 @@
         <option value="$PROJECT_DIR$/tests/locations.js" />
         <option value="$PROJECT_DIR$/models/locations.js" />
         <option value="$PROJECT_DIR$/models/sensors.js" />
-        <option value="$PROJECT_DIR$/config/dev.json" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/tests/sensors.js" />
         <option value="$PROJECT_DIR$/routes/sensors.js" />
         <option value="$PROJECT_DIR$/routes/locations.js" />
+        <option value="$PROJECT_DIR$/config/dev.json" />
       </list>
     </option>
   </component>
@@ -914,44 +908,44 @@
       <workItem from="1489024516004" duration="2875000" />
       <workItem from="1489206381891" duration="19000" />
       <workItem from="1489365688721" duration="4783000" />
-      <workItem from="1489370936049" duration="9005000" />
+      <workItem from="1489370936049" duration="10443000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Locations - 2017.03.13 at 21h 29m 17s.xml">
+    <history-entry file="Locations - 2017.03.13 at 21h 53m 01s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.13 at 21h 29m 26s.xml">
+    <history-entry file="Locations - 2017.03.13 at 21h 53m 06s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.13 at 21h 29m 31s.xml">
+    <history-entry file="Locations - 2017.03.13 at 21h 53m 21s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 28m 07s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 43m 18s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 28m 19s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 50m 50s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 28m 23s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 51m 08s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 28m 27s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 51m 26s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 28m 33s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 52m 03s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 29m 07s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 52m 34s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Sensors - 2017.03.13 at 21h 29m 11s.xml">
+    <history-entry file="Sensors - 2017.03.13 at 21h 52m 39s.xml">
       <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26018000" />
+    <option name="totallyTimeSpent" value="27456000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1361,14 +1355,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/dev.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/locations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -1413,6 +1399,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/dev.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="57" column="7" selection-start-line="57" selection-start-column="7" selection-end-line="57" selection-end-column="7" />
           <folding />
         </state>
       </provider>
