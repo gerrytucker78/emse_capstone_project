@@ -1,5 +1,3 @@
-
-
 var dbData = require("./db.js");
 
 var Sequelize = require('sequelize');
@@ -20,9 +18,3 @@ var Location = dbData.db.define('locations', {
 
 
 module.exports = Location;
-
-
-
-
-
-

@@ -15,8 +15,8 @@ router.get('/', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simDataSet);
     } else {
-        Location.findAll().then(function (projects) {
-            return res.send(projects)
+        Location.findAll({order: [['location_id','ASC']]}).then(function (locations) {
+            return res.send(locations)
         });
     }
 });
@@ -28,8 +28,8 @@ router.get('/id/:id', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simulation.get("location:" + req.params.id));
     } else {
-        Location.findOne({where: {location_id: req.params.id}}).then(function (projects) {
-            return res.send(projects)
+        Location.findOne({where: {location_id: req.params.id}}).then(function (location) {
+            return res.send(location)
         });
     }
 });

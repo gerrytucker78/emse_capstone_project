@@ -29,20 +29,17 @@
       }
 
     ],
-    "location:1": {
-      "location_id": 1,
-      "name": "Test",
-      "floor": 1,
-      "latlong": null,
-      "type": "ROOM",
-      "map": null
+  "sensors": [
+    {
+      "sensor_id": "1",
+      "name": "Test 1",
+      "latlong": null
     },
-    "sensor:1": {
-      "location_id": 1,
-      "building_id": 1,
-      "name": "Location 1",
-      "floor": 1,
-      "latLong": null
+    {
+      "sensor_id": "2",
+      "name": "Test 2",
+      "latlong": null
     }
+  ]
   }
 }
