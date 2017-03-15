@@ -1,8 +1,10 @@
 var request = require('supertest');
 var config = require('config');
 var simulation = config.get('simulation');
+var fs = require('fs');
 
 describe('Locations', function () {
+    this.timeout(10000);
     var server;
     var testLocations = [];
 
@@ -10,18 +12,36 @@ describe('Locations', function () {
         server = require('../app.js');
 
         var simLocations = simulation.get("locations");
+        var simLocationMaps = simulation.get("maps");
         var totalCount = 0;
 
         request(server).delete('/locations').send().end(function (err, res) {
+
             for (var i = 0; i < simLocations.length; i++) {
                 var simLoc = simLocations[i];
 
-                request(server).post('/locations').send(simLoc).end(function (err, res) {
+                var readStream = fs.createReadStream('./data/ECSS2.png');
+                var mapData;
+
+                readStream.on('data', function (data) {
+                    console.log(data.length);
+
+
+                    simLoc.map = data;
+
+                })
+
+
+                request(server).post('/locations').field('location', JSON.stringify(simLoc)).attach('map', './data/ECSS2.png').end(function (err, res) {
+                    if (err) {
+                        return console.error('upload failed:', err);
+                    }
                     totalCount++;
                     if (totalCount == testLocations.length) {
                         done();
                     }
                 });
+
 
                 testLocations.push(simLoc);
             }

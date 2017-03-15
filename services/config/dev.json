@@ -54,6 +54,7 @@
         "map": null
       }
     ],
+    "maps": [{"filename": "data/ECSS2.png"},{"filename": "data/ECSS3.png"}],
     "sensors": [
       {
         "sensor_id": "1",
