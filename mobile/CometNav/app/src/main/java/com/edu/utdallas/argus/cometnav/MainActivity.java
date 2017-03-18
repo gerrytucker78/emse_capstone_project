@@ -1,5 +1,6 @@
 package com.edu.utdallas.argus.cometnav;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -82,6 +83,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_findRoom) {
             // Handle the Find Room action
+            Intent intent = new Intent(this,FindARoomMapsActivity.class);
+            this.startActivity(intent);
+            return true;
         } else if (id == R.id.nav_emergency) {
 
         } else if (id == R.id.nav_reportEmergency) {
