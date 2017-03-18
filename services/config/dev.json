@@ -1,0 +1,77 @@
+{
+  "db": {
+    "host": "capstone.cswyqjezev94.us-west-2.rds.amazonaws.com",
+    "db": "capstone_gerry",
+    "port": 5432,
+    "authRequired": "true",
+    "user": "argus",
+    "password": "utdemse2015",
+    "sync": true
+  },
+  "simulation": {
+    "enabled": "false",
+    "locations": [
+      {
+        "location_id": "1",
+        "name": "Test 1",
+        "floor": 1,
+        "latlong": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                100.0,
+                0.0
+              ],
+              [
+                101.0,
+                0.0
+              ],
+              [
+                101.0,
+                1.0
+              ],
+              [
+                100.0,
+                1.0
+              ],
+              [
+                100.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        "type": "ROOM",
+        "map": null
+      },
+      {
+        "location_id": "2",
+        "name": "Test 2",
+        "floor": 1,
+        "latlong": null,
+        "type": "ROOM",
+        "map": null
+      }
+    ],
+    "maps": [{"filename": "data/ECSS2.png"},{"filename": "data/ECSS3.png"}],
+    "sensors": [
+      {
+        "sensor_id": "1",
+        "name": "Test 1",
+        "latlong": {
+          "type": "Point",
+          "coordinates": [
+            39.807222,
+            -76.984722
+          ]
+        }
+      },
+      {
+        "sensor_id": "2",
+        "name": "Test 2",
+        "latlong": null
+      }
+    ]
+  }
+}

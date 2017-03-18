@@ -1,31 +1,20 @@
+var dbData = require("./db.js");
+
+var Sequelize = require('sequelize');
 var config = require('config');
-var simulation = config.get('simumlation');
-
-
-/**
- * @todo Need to populate with real database functionality
- */
-
-
+var dbConfig = config.get("db");
 
 /**
- * Simulation Data
- */
-var simDataSet = simulation.get("locations");
+ * Defining Database Model
+ **/
+var Location = dbData.db.define('locations', {
+    location_id: {type: Sequelize.STRING, primaryKey: true},
+    floor: {type: Sequelize.INTEGER},
+    latlong: {type: Sequelize.GEOMETRY},
+    name: {type: Sequelize.STRING},
+    type: {type: Sequelize.STRING},
+    map: {type: Sequelize.BLOB}
+}, {timestamps: false});
 
 
-/**
- * Export Methods
- */
-if (simulation.get("enabled") == "true") {
-    module.exports = {
-        getLocations: function () {
-            return simDataSet;
-        }
-    };
-} else {
-    module.exports = {getLocations: function() {
-        // @todo Need to populate with real data.
-        return {};
-    }};
-}
+module.exports = Location;
