@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,10 +88,16 @@ public class MainActivity extends AppCompatActivity
             this.startActivity(intent);
             return true;
         } else if (id == R.id.nav_emergency) {
+            Toast.makeText(this, "Emergency Navigation Clicked", Toast.LENGTH_LONG).show();
+            return true;
 
         } else if (id == R.id.nav_reportEmergency) {
+            Toast.makeText(this, "Report Emergency Clicked", Toast.LENGTH_LONG).show();
+            return true;
 
         } else if (id == R.id.nav_manage) {
+            Toast.makeText(this, "Manage Account Clicked", Toast.LENGTH_LONG).show();
+            return true;
 
         /*} else if (id == R.id.nav_share) {
 
