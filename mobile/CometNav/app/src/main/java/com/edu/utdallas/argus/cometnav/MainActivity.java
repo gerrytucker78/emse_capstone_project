@@ -29,9 +29,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                startActivity(new Intent(MainActivity.this, FindARoomMapsActivity.class));
+
+
             }
+
+
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,7 +104,11 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Manage Account Clicked", Toast.LENGTH_LONG).show();
             return true;
 
-        /*} else if (id == R.id.nav_share) {
+        /*} else if (id == R.id.fab) {
+            Intent intent = new Intent(this,FindARoomMapsActivity.class);
+            this.startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {*/
 
