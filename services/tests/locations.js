@@ -12,30 +12,21 @@ describe('Locations', function () {
         server = require('../app.js');
 
         var simLocations = simulation.get("locations");
-        var simLocationMaps = simulation.get("maps");
         var totalCount = 0;
 
+
         request(server).delete('/locations').send().end(function (err, res) {
+
+
+
 
             for (var i = 0; i < simLocations.length; i++) {
                 var simLoc = simLocations[i];
 
-                var readStream = fs.createReadStream('./data/ECSS2.png');
-                var mapData;
 
-                readStream.on('data', function (data) {
-                    console.log(data.length);
+                testLocations.push(simLoc);
 
-
-                    simLoc.map = data;
-
-                })
-
-
-                request(server).post('/locations').field('location', JSON.stringify(simLoc)).attach('map', './data/ECSS2.png').end(function (err, res) {
-                    if (err) {
-                        return console.error('upload failed:', err);
-                    }
+                request(server).post('/locations').send(simLoc).end(function (err, res) {
                     totalCount++;
                     if (totalCount == testLocations.length) {
                         done();
@@ -43,7 +34,7 @@ describe('Locations', function () {
                 });
 
 
-                testLocations.push(simLoc);
+
             }
         });
 

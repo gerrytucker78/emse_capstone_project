@@ -54,7 +54,7 @@
         "map": null
       }
     ],
-    "maps": [{"filename": "data/ECSS2.png"},{"filename": "data/ECSS3.png"}],
+    "maps": [{"location_id": "1", "filename": "data/ECSS2.png"},{"location_id": "2", "filename": "data/ECSS3.png"}],
     "sensors": [
       {
         "sensor_id": "1",

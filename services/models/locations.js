@@ -13,7 +13,7 @@ var Location = dbData.db.define('locations', {
     latlong: {type: Sequelize.GEOMETRY},
     name: {type: Sequelize.STRING},
     type: {type: Sequelize.STRING},
-    map: {type: Sequelize.BLOB}
+    map: {type: Sequelize.STRING}
 }, {timestamps: false});
 
 
