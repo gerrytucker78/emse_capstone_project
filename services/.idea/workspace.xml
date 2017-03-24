@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/capstone_DB_initilization.txt" afterPath="$PROJECT_DIR$/../database/capstone_DB_initilization.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/dev.json" afterPath="$PROJECT_DIR$/config/dev.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/locations.js" afterPath="$PROJECT_DIR$/models/locations.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/locations.js" afterPath="$PROJECT_DIR$/routes/locations.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/locations.js" afterPath="$PROJECT_DIR$/tests/locations.js" />
     </list>
@@ -37,31 +34,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="135">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="locations.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sensors.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/sensors.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-197">
-              <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
+            <state relative-caret-position="317">
+              <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -70,28 +57,9 @@
       <file leaf-file-name="dev.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/dev.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="53" column="19" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="19" />
+            <state relative-caret-position="184">
+              <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/cometnav/CometNAV/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="258" column="21" selection-start-line="258" selection-start-column="21" selection-end-line="258" selection-end-column="21" />
-              <folding>
-                <marker date="1399341884000" expanded="true" signature="604:679" ph="select * fro... lu_building" />
-                <marker date="1399341884000" expanded="true" signature="965:1056" ph="select * fro... v_SearchContent" />
-                <marker date="1399341884000" expanded="true" signature="1343:1427" ph="select * fro... lu_rooms" />
-                <marker date="1399341884000" expanded="true" signature="1873:2018" ph="select * fro... lu_rooms" />
-                <marker date="1399341884000" expanded="true" signature="2548:2716" ph="select * fro... v_SearchContent" />
-                <marker date="1399341884000" expanded="true" signature="3247:3413" ph="select * fro... v_SearchContent" />
-                <marker date="1399341884000" expanded="true" signature="3676:3819" ph="select * fro... lu_rooms" />
-                <marker date="1399341884000" expanded="true" signature="4561:4755" ph="select * fro... paths_xref" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -99,8 +67,8 @@
       <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
+            <state relative-caret-position="328">
+              <caret line="28" column="41" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -154,14 +122,14 @@
         <option value="$PROJECT_DIR$/models/sensors.js" />
         <option value="$PROJECT_DIR$/tests/sensors.js" />
         <option value="$PROJECT_DIR$/routes/sensors.js" />
-        <option value="$PROJECT_DIR$/config/dev.json" />
         <option value="$PROJECT_DIR$/tests/maps.js" />
         <option value="$PROJECT_DIR$/routes/maps.js" />
         <option value="$PROJECT_DIR$/models/maps.js" />
-        <option value="$PROJECT_DIR$/tests/locations.js" />
-        <option value="$PROJECT_DIR$/routes/locations.js" />
         <option value="$PROJECT_DIR$/models/locations.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/tests/locations.js" />
+        <option value="$PROJECT_DIR$/config/dev.json" />
+        <option value="$PROJECT_DIR$/routes/locations.js" />
       </list>
     </option>
   </component>
@@ -918,44 +886,44 @@
       <workItem from="1489717020685" duration="1486000" />
       <workItem from="1489846994502" duration="1885000" />
       <workItem from="1490060251932" duration="731000" />
-      <workItem from="1490316602326" duration="5620000" />
+      <workItem from="1490316602326" duration="6969000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Locations - 2017.03.23 at 21h 06m 22s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 44m 14s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 06m 52s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 44m 29s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 09m 39s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 44m 42s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 10m 00s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 44m 47s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 10m 29s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 44m 52s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 12m 42s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 45m 25s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 13m 00s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 45m 34s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 22m 06s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 45m 45s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 23m 32s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 46m 25s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Locations - 2017.03.23 at 21h 23m 58s.xml">
+    <history-entry file="Locations - 2017.03.23 at 21h 46m 30s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49331000" />
+    <option name="totallyTimeSpent" value="50680000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1013,14 +981,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/locations.js</url>
-          <line>22</line>
-          <properties />
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/tests/locations.js</url>
-          <line>58</line>
+          <line>62</line>
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
@@ -1358,6 +1320,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/sensors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-197">
+          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="40" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/cometnav/CometNAV/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1375,58 +1369,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/locations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-197">
-          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="40" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
+        <state relative-caret-position="328">
+          <caret line="28" column="41" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/dev.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="53" column="19" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="19" />
+        <state relative-caret-position="184">
+          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/routes/locations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="317">
+          <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
           <folding />
         </state>
       </provider>

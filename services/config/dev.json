@@ -42,7 +42,7 @@
             ]
           ]
         },
-        "type": "ROOM",
+        "type": "FLOOR",
         "map": null
       },
       {
@@ -51,7 +51,15 @@
         "floor": 1,
         "latlong": null,
         "type": "ROOM",
-        "map": null
+        "map": "url"
+      },
+      {
+        "location_id": "3",
+        "name": "Test 3",
+        "floor": 1,
+        "latlong": null,
+        "type": "FLOOR",
+        "map": "url"
       }
     ],
     "maps": [{"location_id": "1", "filename": "data/ECSS2.png"},{"location_id": "2", "filename": "data/ECSS3.png"}],

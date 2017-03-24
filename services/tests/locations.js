@@ -7,6 +7,7 @@ describe('Locations', function () {
     this.timeout(10000);
     var server;
     var testLocations = [];
+    var testFloors = [];
 
     before(function (done) {
         server = require('../app.js');
@@ -23,8 +24,11 @@ describe('Locations', function () {
             for (var i = 0; i < simLocations.length; i++) {
                 var simLoc = simLocations[i];
 
-
                 testLocations.push(simLoc);
+
+                if (simLoc.type == "FLOOR") {
+                    testFloors.push(simLoc);
+                }
 
                 request(server).post('/locations').send(simLoc).end(function (err, res) {
                     totalCount++;
@@ -57,6 +61,10 @@ describe('Locations', function () {
 
     it('getLocation', function (done) {
         request(server).get('/locations/id/' + testLocations[0].location_id).expect(testLocations[0]).expect(200, done);
+    });
+
+    it('getFloors', function (done) {
+        request(server).get('/locations/floors').expect(testFloors).expect(200, done);
     });
 
     it('Delete By Id', function (done) {
