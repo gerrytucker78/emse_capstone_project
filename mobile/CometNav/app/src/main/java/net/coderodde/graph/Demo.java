@@ -1,3 +1,7 @@
+package net.coderodde.graph;
+
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -33,10 +37,10 @@ public class Demo {
     private static final float PLANE_WIDTH = 1000;
     private static final float PLANE_HEIGHT = 1000;
 
-    public static void main(String[] args) {
+    public static void runTest() {
         long seed = System.nanoTime();
         Random random = new Random(seed);
-        System.out.println("Seed = " + seed);
+        Log.d("AlgoDemo","Seed = " + seed);
 
         long start = System.currentTimeMillis();
         DirectedGraph graph = getRandomGraph(NODES, ARCS, random);
@@ -52,12 +56,12 @@ public class Demo {
 
         long end = System.currentTimeMillis();
 
-        System.out.println("Created the graph data structures in " +
+        Log.d("AlgoDemo","Created the graph data structures in " +
                 (end - start) + " milliseconds.");
 
-        System.out.println("Source: " + sourceNodeId);
-        System.out.println("Target: " + targetNodeId);
-        System.out.println();
+        Log.d("AlgoDemo","Source: " + sourceNodeId);
+        Log.d("AlgoDemo","Target: " + targetNodeId);
+        Log.d("AlgoDemo","");
 
         HeuristicFunction hf = new EuclideanHeuristicFunction(coordinates);
 
@@ -86,14 +90,14 @@ public class Demo {
         boolean agreed = path1.equals(path2) && path1.equals(path3);
 
         if (agreed) {
-            System.out.println("Algorithms agree: true");
+            Log.d("AlgoDemo","Algorithms agree: true");
         } else {
-            System.out.println("Algorithms DISAGREED!");
-            System.out.println("A* path length:       "
+            Log.d("AlgoDemo","Algorithms DISAGREED!");
+            Log.d("AlgoDemo","A* path length:       "
                     + path1.getCost(weightFunction));
-            System.out.println("Dijkstra path length: "
+            Log.d("AlgoDemo","Dijkstra path length: "
                     + path2.getCost(weightFunction));
-            System.out.println("NBA* path length:     "
+            Log.d("AlgoDemo","NBA* path length:     "
                     + path3.getCost(weightFunction));
         }
     }
@@ -105,10 +109,10 @@ public class Demo {
         DirectedGraphPath path = pathfinder.search(sourceNode, targetNode);
         long end = System.currentTimeMillis();
 
-        System.out.println(pathfinder.getClass().getSimpleName() +
+        Log.d("AlgoDemo",pathfinder.getClass().getSimpleName() +
                 " in " + (end - start) + " milliseconds.");
-        System.out.println(path);
-        System.out.println();
+        Log.d("AlgoDemo",path.toString());
+        Log.d("AlgoDemo","");
         return path;
     }
 
