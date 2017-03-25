@@ -152,7 +152,7 @@ public class Demo {
         return coordinates;
     }
 
-    private static DirectedGraphWeightFunction
+    public static DirectedGraphWeightFunction
     getWeightFunction(DirectedGraph graph,
                       DirectedGraphNodeCoordinates coordinates) {
         DirectedGraphWeightFunction weightFunction =
