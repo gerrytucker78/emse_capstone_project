@@ -1,0 +1,33 @@
+{"location_id": 1,
+        "name": "Test 1",
+        "floor": 1,
+        "latlong": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                100.0,
+                0.0
+              ],
+              [
+                101.0,
+                0.0
+              ],
+              [
+                101.0,
+                1.0
+              ],
+              [
+                100.0,
+                1.0
+              ],
+              [
+                100.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        "type": "FLOOR",
+        "map": null
+}
