@@ -8,6 +8,7 @@ describe('Locations', function () {
     var server;
     var testLocations = [];
     var testFloors = [];
+    var testBlockedAreas = [];
     var testPaths = [];
 
     before(function (done) {
@@ -29,6 +30,10 @@ describe('Locations', function () {
 
                 if (simLoc.type == "FLOOR") {
                     testFloors.push(simLoc);
+                }
+
+                if (simLoc.type == "BLOCKED_AREA") {
+                    testBlockedAreas.push(simLoc);
                 }
 
                 request(server).post('/locations').send(simLoc).end(function (err, res) {
@@ -94,15 +99,20 @@ describe('Locations', function () {
         request(server).get('/locations/floors').expect(testFloors).expect(200, done);
     });
 
+    it('getPaths', function(done) {
+        request(server).get('/locations/paths').expect(testPaths).expect(200,done);
+    })
+
+    it('getBlockedAreas', function(done) {
+        request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
+    })
+
+
     it('Delete By Id', function (done) {
         request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {
             request(server).get('/locations/id/' + testLocations[0].location_id).expect('').expect(200, done);
         });
     });
-
-    it('getPaths', function(done) {
-        request(server).get('/locations/paths').expect(testPaths).expect(200,done);
-    })
 
 });
 
