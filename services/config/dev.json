@@ -11,72 +11,24 @@
   "simulation": {
     "enabled": "false",
     "locations": [
-      {
-        "location_id": 1,
-        "name": "Test 1",
-        "floor": 1,
-        "latlong": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                100.0,
-                0.0
-              ],
-              [
-                101.0,
-                0.0
-              ],
-              [
-                101.0,
-                1.0
-              ],
-              [
-                100.0,
-                1.0
-              ],
-              [
-                100.0,
-                0.0
-              ]
-            ]
-          ]
-        },
-        "type": "FLOOR",
-        "map": null
-      },
-      {
-        "location_id": 2,
-        "name": "Test 2",
-        "floor": 1,
-        "latlong": null,
-        "type": "ROOM",
-        "map": "url"
-      },
-      {
-        "location_id": 3,
-        "name": "Test 3",
-        "floor": 1,
-        "latlong": null,
-        "type": "FLOOR",
-        "map": "url"
-      },
-      {
-        "location_id": 4,
-        "name": "Blocked 1",
-        "floor": 1,
-        "latlong": null,
-        "type": "BLOCKED_AREA",
-        "map": "url"
-      },
-      {
-        "location_id": 5,
-        "name": "Blocked 2",
-        "floor": 1,
-        "latlong": null,
-        "type": "BLOCKED_AREA",
-        "map": "url"
-      }
+      {"location_id": 0,"name": "2.HALL.NW.1","type":"HALL","pixel_loc_x":190,"pixel_loc_y":105,"floor":2,"map":null,"latlong":null},
+      {"location_id": 1,"name": "2.HALL.NW.2","type":"HALL","pixel_loc_x":190,"pixel_loc_y":180,"floor":2,"map":null,"latlong":null},
+      {"location_id": 2,"name": "2.201","type":"ROOM","pixel_loc_x":170,"pixel_loc_y":190,"floor":2,"map":null,"latlong":null},
+      {"location_id": 3,"name": "2.202","type":"ROOM","pixel_loc_x":165,"pixel_loc_y":178,"floor":2,"map":null,"latlong":null},
+      {"location_id": 4,"name": "2.203","type":"ROOM","pixel_loc_x":170,"pixel_loc_y":170,"floor":2,"map":null,"latlong":null},
+      {"location_id": 5,"name": "2.204","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":100,"floor":2,"map":null,"latlong":null},
+      {"location_id": 6,"name": "2.2R1","type":"ROOM","pixel_loc_x":198,"pixel_loc_y":195,"floor":2,"map":null,"latlong":null},
+      {"location_id": 7,"name": "2.2R2","type":"ROOM","pixel_loc_x":198,"pixel_loc_y":217,"floor":2,"map":null,"latlong":null},
+      {"location_id": 8,"name": "2.HALL.NW.3","type":"HALL","pixel_loc_x":190,"pixel_loc_y":210,"floor":2,"map":null,"latlong":null},
+      {"location_id": 9,"name": "2.HALL.NW.4","type":"HALL","pixel_loc_x":190,"pixel_loc_y":242,"floor":2,"map":null,"latlong":null},
+      {"location_id": 10,"name": "2.TEMP","type":"ROOM","pixel_loc_x":208,"pixel_loc_y":242,"floor":2,"map":null,"latlong":null},
+      {"location_id": 11,"name": "2.TEMP","type":"ROOM","pixel_loc_x":213,"pixel_loc_y":250,"floor":2,"map":null,"latlong":null},
+      {"location_id": 12,"name": "2.TEMP","type":"ROOM","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+      {"location_id": 13,"name": "Blocked 1","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+      {"location_id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+
+
+      {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null}
     ],
     "maps": [{"location_id": "1", "filename": "data/ECSS2.png"},{"location_id": "2", "filename": "data/ECSS3.png"}],
     "sensors": [

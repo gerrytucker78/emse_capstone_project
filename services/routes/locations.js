@@ -79,14 +79,7 @@ router.get('/id/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
 
-    Location.create({
-        location_id: req.body.location_id,
-        name: req.body.name,
-        floor: req.body.floor,
-        type: req.body.type,
-        latlong: req.body.latlong,
-        map: req.body.map
-    }).then(function (loc) {
+    Location.create(req.body).then(function (loc) {
         res.send(loc)
     });
 });

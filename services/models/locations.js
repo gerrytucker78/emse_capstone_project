@@ -13,7 +13,9 @@ var Location = dbData.db.define('locations', {
     latlong: {type: Sequelize.GEOMETRY},
     name: {type: Sequelize.STRING},
     type: {type: Sequelize.STRING},
-    map: {type: Sequelize.STRING}
+    map: {type: Sequelize.STRING},
+    pixel_loc_x: {type: Sequelize.INTEGER},
+    pixel_loc_y: {type: Sequelize.INTEGER}
 }, {timestamps: false});
 
 
