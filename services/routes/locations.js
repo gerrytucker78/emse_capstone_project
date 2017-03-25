@@ -129,6 +129,9 @@ router.delete('/paths', function (req, res, next) {
 
 });
 
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
 router.put('/', function (req, res, next) {
     var locations = [];
     locations = req.body;
@@ -138,7 +141,6 @@ router.put('/', function (req, res, next) {
         });
     });
 
-})
-;
+});
 
 module.exports = router;

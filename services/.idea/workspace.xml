@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/emergencies.js" afterPath="$PROJECT_DIR$/routes/emergencies.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/locations.js" afterPath="$PROJECT_DIR$/routes/locations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/locations.js" afterPath="$PROJECT_DIR$/tests/locations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/sensors.js" afterPath="$PROJECT_DIR$/routes/sensors.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/emergencies.js" afterPath="$PROJECT_DIR$/tests/emergencies.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/sensors.js" afterPath="$PROJECT_DIR$/tests/sensors.js" />
     </list>
     <ignored path="services.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,11 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-207">
-              <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+            <state relative-caret-position="108">
+              <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sensors.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/sensors.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="74" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -64,21 +76,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
+      <file leaf-file-name="sensors.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/sensors.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="915">
-              <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+            <state relative-caret-position="168">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paths.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/paths.js">
+      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+            <state relative-caret-position="273">
+              <caret line="73" column="17" selection-start-line="73" selection-start-column="17" selection-end-line="73" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -94,11 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+            <state relative-caret-position="183">
+              <caret line="52" column="88" selection-start-line="52" selection-start-column="88" selection-end-line="52" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -107,18 +119,8 @@
       <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="94" column="7" selection-start-line="94" selection-start-column="7" selection-end-line="94" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sensors.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/sensors.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
+            <state relative-caret-position="108">
+              <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="111" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -160,20 +162,20 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/models/db.js" />
         <option value="$PROJECT_DIR$/models/sensors.js" />
-        <option value="$PROJECT_DIR$/tests/sensors.js" />
-        <option value="$PROJECT_DIR$/routes/sensors.js" />
         <option value="$PROJECT_DIR$/tests/maps.js" />
         <option value="$PROJECT_DIR$/routes/maps.js" />
         <option value="$PROJECT_DIR$/models/maps.js" />
         <option value="$PROJECT_DIR$/models/paths.js" />
         <option value="$PROJECT_DIR$/models/locations.js" />
         <option value="$PROJECT_DIR$/models/emergencies.js" />
-        <option value="$PROJECT_DIR$/routes/emergencies.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/config/dev.json" />
-        <option value="$PROJECT_DIR$/tests/emergencies.js" />
         <option value="$PROJECT_DIR$/tests/locations.js" />
         <option value="$PROJECT_DIR$/routes/locations.js" />
+        <option value="$PROJECT_DIR$/tests/sensors.js" />
+        <option value="$PROJECT_DIR$/routes/sensors.js" />
+        <option value="$PROJECT_DIR$/routes/emergencies.js" />
+        <option value="$PROJECT_DIR$/tests/emergencies.js" />
       </list>
     </option>
   </component>
@@ -331,7 +333,7 @@
       <recent name="$PROJECT_DIR$/models" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.Locations">
+  <component name="RunManager" selected="Mocha.Emergencies">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -947,18 +949,12 @@
       <workItem from="1490060251932" duration="731000" />
       <workItem from="1490316602326" duration="7564000" />
       <workItem from="1490363326656" duration="634000" />
-      <workItem from="1490402396979" duration="6388000" />
+      <workItem from="1490402396979" duration="6631000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Emergencies - 2017.03.24 at 20h 57m 47s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.03.24 at 20h 58m 05s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.03.24 at 20h 58m 27s.xml">
+    <history-entry file="Emergencies - 2017.03.24 at 21h 50m 20s.xml">
       <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
     </history-entry>
     <history-entry file="Locations - 2017.03.24 at 21h 34m 57s.xml">
@@ -982,9 +978,15 @@
     <history-entry file="Locations - 2017.03.24 at 21h 45m 58s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="Sensors - 2017.03.24 at 21h 48m 54s.xml">
+      <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Sensors - 2017.03.24 at 21h 49m 15s.xml">
+      <configuration name="Sensors" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58297000" />
+    <option name="totallyTimeSpent" value="58540000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1317,21 +1319,6 @@
     <entry file="file://$PROJECT_DIR$/models/maps.js" />
     <entry file="file://$PROJECT_DIR$/tests/maps.js" />
     <entry file="file://$PROJECT_DIR$/routes/maps.js" />
-    <entry file="file://$PROJECT_DIR$/tests/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-197">
-          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/cometnav/CometNAV/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1355,14 +1342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1379,14 +1358,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/dev.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2070">
@@ -1395,18 +1366,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/locations.js">
+    <entry file="file://$PROJECT_DIR$/routes/locations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="94" column="7" selection-start-line="94" selection-start-column="7" selection-end-line="94" selection-end-column="7" />
+        <state relative-caret-position="108">
+          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/locations.js">
+    <entry file="file://$PROJECT_DIR$/tests/locations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-207">
-          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+        <state relative-caret-position="108">
+          <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="111" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="74" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="73" column="17" selection-start-line="73" selection-start-column="17" selection-end-line="73" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/sensors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="52" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="52" column="88" selection-start-line="52" selection-start-column="88" selection-end-line="52" selection-end-column="88" />
           <folding />
         </state>
       </provider>

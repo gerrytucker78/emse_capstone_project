@@ -64,4 +64,18 @@ router.delete('/', function (req, res, next) {
 
 });
 
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
+router.put('/', function (req, res, next) {
+    var emergencies = [];
+    emergencies = req.body;
+    Emergency.destroy({truncate: true}).then(function () {
+        Emergency.bulkCreate(emergencies).then(function (emergs) {
+            res.send(emergs)
+        });
+    });
+
+});
+
 module.exports = router;

@@ -60,4 +60,19 @@ router.delete('/', function (req, res, next) {
 
 });
 
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
+router.put('/', function (req, res, next) {
+    var sensors = [];
+    sensors = req.body;
+    Sensor.destroy({truncate: true}).then(function () {
+        Sensor.bulkCreate(sensors).then(function (sens) {
+            res.send(sens)
+        });
+    });
+
+});
+
+
 module.exports = router;

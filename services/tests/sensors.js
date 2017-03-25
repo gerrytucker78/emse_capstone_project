@@ -48,6 +48,10 @@ describe('Sensors', function () {
         request(server).get('/sensors/id/' + testSensors[0].sensor_id).expect(testSensors[0]).expect(200, done);
     });
 
+    it('completeReplace', function(done) {
+        request(server).put('/sensors').send(testSensors).expect(testSensors).expect(200,done);
+    })
+
     it('Delete By Id', function (done) {
         request(server).delete('/sensors').send(testSensors[0]).expect(200).then(function () {
             request(server).get('/sensors/id/' + testSensors[0].sensor_id).expect('').expect(200, done);

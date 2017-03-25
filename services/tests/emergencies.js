@@ -49,6 +49,11 @@ describe('Emergencies', function () {
         request(server).get('/emergencies/id/' + testEmergencies[0].emergency_id).expect(testEmergencies[0]).expect(200, done);
     });
 
+    it('completeReplace', function(done) {
+        request(server).put('/emergencies').send(testEmergencies).expect(testEmergencies).expect(200,done);
+    })
+
+
     it('Delete By Id', function (done) {
         request(server).delete('/emergencies').send(testEmergencies[0]).expect(200).then(function () {
             request(server).get('/emergencies/id/' + testEmergencies[0].emergency_id).expect('').expect(200, done);
