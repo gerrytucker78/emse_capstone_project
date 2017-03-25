@@ -7,7 +7,7 @@ var simulation = config.get('simulation');
 var router = express.Router();
 
 var multer = require('multer');
-var upload = multer({ storage: multer.memoryStorage()});
+var upload = multer({storage: multer.memoryStorage()});
 
 
 /**
@@ -128,5 +128,17 @@ router.delete('/paths', function (req, res, next) {
     }
 
 });
+
+router.put('/', function (req, res, next) {
+    var locations = [];
+    locations = req.body;
+    Location.destroy({truncate: true}).then(function () {
+        Location.bulkCreate(locations).then(function (locs) {
+            res.send(locs)
+        });
+    });
+
+})
+;
 
 module.exports = router;

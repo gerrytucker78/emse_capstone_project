@@ -107,6 +107,9 @@ describe('Locations', function () {
         request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
     })
 
+    it('completeReplace', function(done) {
+        request(server).put('/locations').send(testLocations).expect(testLocations).expect(200,done);
+    })
 
     it('Delete By Id', function (done) {
         request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {
