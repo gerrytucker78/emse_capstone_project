@@ -3,6 +3,7 @@ package com.edu.utdallas.argus.cometnav;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import net.coderodde.graph.Demo;
+import net.coderodde.graph.DirectedGraph;
+import net.coderodde.graph.DirectedGraphWeightFunction;
+import net.coderodde.graph.UndirectedGraph;
+import net.coderodde.graph.pathfinding.AbstractPathfinder;
+import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
+import net.coderodde.graph.pathfinding.DirectedGraphPath;
+import net.coderodde.graph.pathfinding.HeuristicFunction;
+import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
+import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
+import net.coderodde.graph.pathfinding.support.Point2DF;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,8 +63,56 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Demo.runTest();
+        //.Demo.runTest();
+        testPathfinding();
+    }
 
+    public void testPathfinding()
+    {
+        UndirectedGraph graph = new UndirectedGraph();
+        for (int id = 1; id <= 10; ++id)
+            graph.addNode(id);
+
+        List<Integer> graphNodeList = new ArrayList<>(graph.getNodeSet());
+
+        graph.addArc(1, 2);
+        graph.addArc(2, 3);
+        graph.addArc(3, 4);
+        graph.addArc(1, 4);
+        graph.addArc(4, 5);
+
+        DirectedGraphNodeCoordinates coordinates = new DirectedGraphNodeCoordinates();
+        coordinates.put(1, new Point2DF(0,0));
+        coordinates.put(2, new Point2DF(1, 0));
+        coordinates.put(3, new Point2DF(3, 0));
+        coordinates.put(4, new Point2DF(4, 0));
+        coordinates.put(5, new Point2DF(0, 5));
+
+        DirectedGraphWeightFunction weightFunction =
+                new DirectedGraphWeightFunction();
+
+        for (Integer childNodeId : graph.getChildrenOf(1))
+            weightFunction.put(1, childNodeId, (float)(1.2 * coordinates.get(1).distance(coordinates.get(childNodeId))));
+        //increase 1's weight with 4
+        weightFunction.put(1, 4, 100);
+
+        for (Integer childNodeId : graph.getChildrenOf(2))
+            weightFunction.put(2, childNodeId, (float)(1.2 * coordinates.get(1).distance(coordinates.get(childNodeId))));
+        for (Integer childNodeId : graph.getChildrenOf(3))
+            weightFunction.put(3, childNodeId, (float)(1.2 * coordinates.get(1).distance(coordinates.get(childNodeId))));
+        for (Integer childNodeId : graph.getChildrenOf(4))
+            weightFunction.put(4, childNodeId, (float)(1.2 * coordinates.get(1).distance(coordinates.get(childNodeId))));
+        for (Integer childNodeId : graph.getChildrenOf(5))
+            weightFunction.put(5, childNodeId, (float)(1.2 * coordinates.get(1).distance(coordinates.get(childNodeId))));
+
+        HeuristicFunction hf = new EuclideanHeuristicFunction(coordinates);
+
+        AbstractPathfinder pathfinder = new NBAStarPathfinder(graph,
+                weightFunction,
+                hf);
+
+        Log.d("AlgoDemo", pathfinder.search(1, 5).toString());
+        //Log.d("AlgoDemo", pathfinder.search(4,1).toString());
     }
 
     @Override

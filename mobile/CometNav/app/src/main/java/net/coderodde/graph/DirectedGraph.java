@@ -18,12 +18,12 @@ public class DirectedGraph {
     /**
      * This map maps each directed graph node to the list of its child nodes.
      */
-    private final Map<Integer, Set<Integer>> childMap  = new HashMap<>();
+    protected final Map<Integer, Set<Integer>> childMap  = new HashMap<>();
 
     /**
      * This map maps each directed graph node to the list of its parent nodes.
      */
-    private final Map<Integer, Set<Integer>> parentMap = new HashMap<>();
+    protected final Map<Integer, Set<Integer>> parentMap = new HashMap<>();
 
     /**
      * Adds a new node represented by integer {@code nodeId} to this graph if
