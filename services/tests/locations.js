@@ -107,8 +107,12 @@ describe('Locations', function () {
         request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
     })
 
-    it('completeReplace', function(done) {
+    it('completeReplaceFloors', function(done) {
         request(server).put('/locations').send(testLocations).expect(testLocations).expect(200,done);
+    })
+
+    it('completeReplacePaths', function(done) {
+        request(server).put('/locations/paths').send(testPaths).expect(testPaths).expect(200,done);
     })
 
     it('Delete By Id', function (done) {

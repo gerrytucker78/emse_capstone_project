@@ -31,7 +31,7 @@ router.get('/paths', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simDataSet);
     } else {
-        Path.findAll({order: [['start_id', 'ASC']]}).then(function (paths) {
+        Path.findAll({order: [['start_id', 'ASC'], ['end_id','ASC']]}).then(function (paths) {
             return res.send(paths)
         });
     }
@@ -136,5 +136,21 @@ router.put('/', function (req, res, next) {
     });
 
 });
+
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
+router.put('/paths', function (req, res, next) {
+    var paths = [];
+    paths = req.body;
+
+    Path.destroy({truncate: true}).then(function () {
+        Path.bulkCreate(paths).then(function (pths) {
+            res.send(pths)
+        });
+    });
+
+});
+
 
 module.exports = router;
