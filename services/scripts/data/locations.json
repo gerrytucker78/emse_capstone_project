@@ -1,21 +1,21 @@
     [
-	{"id": 0,"name": "2.HALL.NW.1","type":"HALL","pixelLoc":{"x":190,"y":105}},
-	{"id": 1,"name": "2.HALL.NW.2","type":"HALL","pixelLoc":{"x":190,"y":180}},
-	{"id": 2,"name": "2.201","type":"ROOM","pixelLoc":{"x":170,"y":190}},
-	{"id": 3,"name": "2.202","type":"ROOM","pixelLoc":{"x":165,"y":178}},
-	{"id": 4,"name": "2.203","type":"ROOM","pixelLoc":{"x":170,"y":170}},
-	{"id": 5,"name": "2.204","type":"ROOM","pixelLoc":{"x":195,"y":100}},
-	{"id": 6,"name": "2.2R1","type":"ROOM","pixelLoc":{"x":198,"y":195}},
-	{"id": 7,"name": "2.2R2","type":"ROOM","pixelLoc":{"x":198,"y":217}},
-	{"id": 8,"name": "2.HALL.NW.3","type":"HALL","pixelLoc":{"x":190,"y":210}},
-	{"id": 9,"name": "2.HALL.NW.4","type":"HALL","pixelLoc":{"x":190,"y":242}},
-	{"id": 10,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":208,"y":242}},
-	{"id": 11,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":213,"y":250}},
-	{"id": 12,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":225,"y":238}},
-	{"id": 13,"name": "Blocked 1","type":"BLOCKED_AREA","pixelLoc":{"x":225,"y":238}},
-	{"id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixelLoc":{"x":225,"y":238}},
+	{"location_id": 0,"name": "2.HALL.NW.1","type":"HALL","pixelLoc":{"x":190,"y":105}},
+	{"location_id": 1,"name": "2.HALL.NW.2","type":"HALL","pixelLoc":{"x":190,"y":180}},
+	{"location_id": 2,"name": "2.201","type":"ROOM","pixelLoc":{"x":170,"y":190}},
+	{"location_id": 3,"name": "2.202","type":"ROOM","pixelLoc":{"x":165,"y":178}},
+	{"location_id": 4,"name": "2.203","type":"ROOM","pixelLoc":{"x":170,"y":170}},
+	{"location_id": 5,"name": "2.204","type":"ROOM","pixelLoc":{"x":195,"y":100}},
+	{"location_id": 6,"name": "2.2R1","type":"ROOM","pixelLoc":{"x":198,"y":195}},
+	{"location_id": 7,"name": "2.2R2","type":"ROOM","pixelLoc":{"x":198,"y":217}},
+	{"location_id": 8,"name": "2.HALL.NW.3","type":"HALL","pixelLoc":{"x":190,"y":210}},
+	{"location_id": 9,"name": "2.HALL.NW.4","type":"HALL","pixelLoc":{"x":190,"y":242}},
+	{"location_id": 10,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":208,"y":242}},
+	{"location_id": 11,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":213,"y":250}},
+	{"location_id": 12,"name": "2.TEMP","type":"ROOM","pixelLoc":{"x":225,"y":238}},
+	{"location_id": 13,"name": "Blocked 1","type":"BLOCKED_AREA","pixelLoc":{"x":225,"y":238}},
+	{"location_id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixelLoc":{"x":225,"y":238}},
 
 
-	{"id": 1000,"name": "Floor 2","type":"FLOOR","pixelLoc":{"x":225,"y":238}},
+	{"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixelLoc":{"x":225,"y":238}}
 
     ]
