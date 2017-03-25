@@ -26,4 +26,5 @@ CREATE TABLE Actions(action_id SERIAL CONSTRAINT actions_pk PRIMARY KEY, actions
 CREATE TABLE RoleActions(action_id SERIAL REFERENCES Actions(action_id), role_id INT REFERENCES Roles(role_id));
 CREATE TABLE Sensors(sensor_id SERIAL CONSTRAINT sensors_pk PRIMARY KEY, name text, latLong geography(Point,4326));
 CREATE TABLE Locations(location_id SERIAL CONSTRAINT locations_pk PRIMARY KEY, floor INT, latLong geography(Polygon,4326), name text, type text, map text);
+CREATE TABLE Paths(start_id integer, end_id integer, weight real, PRIMARY KEY (start_id, end_id));
 CREATE TABLE Emergencies(emergency_id SERIAL CONSTRAINT emergency_pk PRIMARY KEY, location_id INT REFERENCES Locations(location_id), emergency_type text, emergency_notes text, emergency_start timestamp, emergency_last_update timestamp, emergency_end timestamp); 

@@ -80,6 +80,28 @@
         "name": "Test 2",
         "latlong": null
       }
+    ],
+    "paths": [
+      {
+        "start_id": 1,
+        "end_id": 2,
+        "weight": 1.0
+      },
+      {
+        "start_id": 2,
+        "end_id": 1,
+        "weight": 1.0
+      },
+      {
+        "start_id": 2,
+        "end_id": 3,
+        "weight": 4.0
+      },
+      {
+        "start_id": 3,
+        "end_id": 2,
+        "weight": 4.0
+      }
     ]
   }
 }
