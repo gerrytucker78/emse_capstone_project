@@ -135,6 +135,7 @@ router.delete('/paths', function (req, res, next) {
 router.put('/', function (req, res, next) {
     var locations = [];
     locations = req.body;
+    console.log("Request Body: " + req.body.length)
     Location.destroy({truncate: true}).then(function () {
         Location.bulkCreate(locations).then(function (locs) {
             res.send(locs)

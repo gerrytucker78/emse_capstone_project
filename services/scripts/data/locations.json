@@ -1,0 +1,68 @@
+    [
+      {
+        "location_id": 1,
+        "name": "Test 1",
+        "floor": 1,
+        "latlong": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                100.0,
+                0.0
+              ],
+              [
+                101.0,
+                0.0
+              ],
+              [
+                101.0,
+                1.0
+              ],
+              [
+                100.0,
+                1.0
+              ],
+              [
+                100.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        "type": "FLOOR",
+        "map": null
+      },
+      {
+        "location_id": 2,
+        "name": "Test 2",
+        "floor": 1,
+        "latlong": null,
+        "type": "ROOM",
+        "map": "url"
+      },
+      {
+        "location_id": 3,
+        "name": "Test 3",
+        "floor": 1,
+        "latlong": null,
+        "type": "FLOOR",
+        "map": "url"
+      },
+      {
+        "location_id": 4,
+        "name": "Blocked 1",
+        "floor": 1,
+        "latlong": null,
+        "type": "BLOCKED_AREA",
+        "map": "url"
+      },
+      {
+        "location_id": 5,
+        "name": "Blocked 2",
+        "floor": 1,
+        "latlong": null,
+        "type": "BLOCKED_AREA",
+        "map": "url"
+      }
+    ]
