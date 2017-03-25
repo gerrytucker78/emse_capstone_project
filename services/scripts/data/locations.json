@@ -16,6 +16,6 @@
 		{"location_id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
 
 
-		{"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null}
+		{"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":"https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png","latlong":null}
 
     ]

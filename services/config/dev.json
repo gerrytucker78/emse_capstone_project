@@ -28,7 +28,7 @@
       {"location_id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
 
 
-      {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null}
+      {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":"https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png","latlong":null}
     ],
     "maps": [{"location_id": "1", "filename": "data/ECSS2.png"},{"location_id": "2", "filename": "data/ECSS3.png"}],
     "sensors": [
@@ -72,7 +72,7 @@
 
       {"end_id": 8,"start_id": 9,"weight":null},
       {"start_id": 9,"end_id": 10,"weight":null},
-      
+
       {"end_id": 9,"start_id": 10,"weight":null},
       {"start_id": 10,"end_id": 11,"weight":null},
 
