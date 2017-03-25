@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl -X POST -H "Content-Type: application/json" -d@data/locations.json http://localhost/locations
+curl -X PUT -H "Content-Type: application/json" -d@data/locations.json http://localhost/locations
