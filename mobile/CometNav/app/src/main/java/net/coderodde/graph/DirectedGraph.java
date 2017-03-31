@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Rodion "rodde" Efremov
  * @version 1.61 (Oct 13, 2016)
  */
-public class DirectedGraph {
+public class DirectedGraph implements Graph {
 
     /**
      * This map maps each directed graph node to the list of its child nodes.
