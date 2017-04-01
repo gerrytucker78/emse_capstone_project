@@ -1,0 +1,25 @@
+[
+  {"start_id": 0,"end_id": 1,"weight":null},
+  {"start_id": 1,"end_id": 2,"weight":null},
+  {"start_id": 1,"end_id": 3,"weight":null},
+  {"start_id": 1,"end_id": 4,"weight":null},
+  {"start_id": 1,"end_id": 8,"weight":null},
+  {"start_id": 8,"end_id": 6,"weight":null},
+  {"start_id": 8,"end_id": 7,"weight":null},
+  {"start_id": 8,"end_id": 9,"weight":null},
+  {"start_id": 9,"end_id": 10,"weight":null},
+  {"start_id": 10,"end_id": 11,"weight":null},
+  {"start_id": 11,"end_id": 12,"weight":null},
+
+  {"end_id": 0,"start_id": 1,"weight":null},
+  {"end_id": 1,"start_id": 2,"weight":null},
+  {"end_id": 1,"start_id": 3,"weight":null},
+  {"end_id": 1,"start_id": 4,"weight":null},
+  {"end_id": 1,"start_id": 8,"weight":null},
+  {"end_id": 8,"start_id": 6,"weight":null},
+  {"end_id": 8,"start_id": 7,"weight":null},
+  {"end_id": 8,"start_id": 9,"weight":null},
+  {"end_id": 9,"start_id": 10,"weight":null},
+  {"end_id": 10,"start_id": 11,"weight":null},
+  {"end_id": 11,"start_id": 12,"weight":null}
+]

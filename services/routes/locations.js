@@ -1,12 +1,13 @@
 var express = require('express');
 var Location = require('../models/locations.js');
+var Path = require('../models/paths.js');
 
 var config = require('config');
 var simulation = config.get('simulation');
 var router = express.Router();
 
 var multer = require('multer');
-var upload = multer({ storage: multer.memoryStorage()});
+var upload = multer({storage: multer.memoryStorage()});
 
 
 /**
@@ -25,12 +26,34 @@ router.get('/', function (req, res, next) {
     }
 });
 
-/* GET ALL locations listing. */
+/* GET ALL location paths listing. */
+router.get('/paths', function (req, res, next) {
+    if (simulation.get("enabled") == "true") {
+        res.send(simDataSet);
+    } else {
+        Path.findAll({order: [['start_id', 'ASC'], ['end_id','ASC']]}).then(function (paths) {
+            return res.send(paths)
+        });
+    }
+});
+
+/* GET ALL Floors listing. */
 router.get('/floors', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simDataSet);
     } else {
         Location.findAll({where: {type: "FLOOR"}, order: [['location_id', 'ASC']]}).then(function (locations) {
+            return res.send(locations)
+        });
+    }
+});
+
+/* GET ALL Blocked Areas listing. */
+router.get('/blockedAreas', function (req, res, next) {
+    if (simulation.get("enabled") == "true") {
+        res.send(simDataSet);
+    } else {
+        Location.findAll({where: {type: "BLOCKED_AREA"}, order: [['location_id', 'ASC']]}).then(function (locations) {
             return res.send(locations)
         });
     }
@@ -56,20 +79,27 @@ router.get('/id/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
 
-    Location.create({
-        location_id: req.body.location_id,
-        name: req.body.name,
-        floor: req.body.floor,
-        type: req.body.type,
-        latlong: req.body.latlong,
-        map: req.body.map
+    Location.create(req.body).then(function (loc) {
+        res.send(loc)
+    });
+});
+
+/**
+ * POST Add Path
+ */
+router.post('/path', function (req, res, next) {
+
+    Path.create({
+        start_id: req.body.start_id,
+        end_id: req.body.end_id,
+        weight: req.body.weight
     }).then(function (loc) {
         res.send(loc)
     });
 });
 
 /**
- * DELETE Specific location
+ * DELETE Specific location OR All
  */
 router.delete('/', function (req, res, next) {
     if (req.body.location_id === undefined) {
@@ -79,5 +109,48 @@ router.delete('/', function (req, res, next) {
     }
 
 });
+
+/**
+ * DELETE Specific path OR All
+ */
+router.delete('/paths', function (req, res, next) {
+    if (req.body.start_id === undefined && req.body.end_id === undefined) {
+        Path.destroy({truncate: true}).then(res.sendStatus(200));
+    } else {
+        Path.destroy({where: {start_id: req.body.start_id} & {end_id: req.body.end_id}}).then(res.sendStatus(200));
+    }
+
+});
+
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
+router.put('/', function (req, res, next) {
+    var locations = [];
+    locations = req.body;
+    console.log("Request Body: " + req.body.length)
+    Location.destroy({truncate: true}).then(function () {
+        Location.bulkCreate(locations).then(function (locs) {
+            res.send(locs)
+        });
+    });
+
+});
+
+/**
+ * PUT Complete drop and replace of data with provide array of JSON objects
+ */
+router.put('/paths', function (req, res, next) {
+    var paths = [];
+    paths = req.body;
+
+    Path.destroy({truncate: true}).then(function () {
+        Path.bulkCreate(paths).then(function (pths) {
+            res.send(pths)
+        });
+    });
+
+});
+
 
 module.exports = router;

@@ -8,19 +8,21 @@ describe('Locations', function () {
     var server;
     var testLocations = [];
     var testFloors = [];
+    var testBlockedAreas = [];
+    var testPaths = [];
 
     before(function (done) {
         server = require('../app.js');
 
         var simLocations = simulation.get("locations");
-        var totalCount = 0;
+        var simPaths = simulation.get('paths')
+        var totalLocCount = 0;
+        var totalPathCount = 0;
 
+        var locationsSetupComplete = false;
+        var pathSetupComplete = false;
 
         request(server).delete('/locations').send().end(function (err, res) {
-
-
-
-
             for (var i = 0; i < simLocations.length; i++) {
                 var simLoc = simLocations[i];
 
@@ -30,28 +32,58 @@ describe('Locations', function () {
                     testFloors.push(simLoc);
                 }
 
+                if (simLoc.type == "BLOCKED_AREA") {
+                    testBlockedAreas.push(simLoc);
+                }
+
                 request(server).post('/locations').send(simLoc).end(function (err, res) {
-                    totalCount++;
-                    if (totalCount == testLocations.length) {
-                        done();
+                    totalLocCount++;
+                    if (totalLocCount == testLocations.length) {
+                        locationsSetupComplete = true;
+
+
+                        if (pathSetupComplete && locationsSetupComplete) {
+                            done()
+                        }
                     }
                 });
-
-
-
             }
         });
 
+        request(server).delete('/locations/paths').send().end(function (err, res) {
+            for (var i = 0; i < simPaths.length; i++) {
+                var simPath = simPaths[i];
+
+                testPaths.push(simPath);
+
+
+                request(server).post('/locations/path').send(simPath).end(function (err, res) {
+                    totalPathCount++;
+                    if (totalPathCount == testPaths.length) {
+                        pathSetupComplete = true;
+
+                        if (pathSetupComplete && locationsSetupComplete) {
+                            done()
+                        }
+                    }
+                });
+            }
+
+        })
+
 
     });
+
+
     after(function (done) {
 
         request(server).delete('/locations').send().end(function (err, res) {
-            done();
-            server.close();
+
+            request(server).delete('/locations/paths').send().end(function (err, res) {
+                server.close();
+                done();
+            });
         });
-
-
     });
 
 
@@ -66,6 +98,22 @@ describe('Locations', function () {
     it('getFloors', function (done) {
         request(server).get('/locations/floors').expect(testFloors).expect(200, done);
     });
+
+    it('getPaths', function(done) {
+        request(server).get('/locations/paths').expect(testPaths).expect(200,done);
+    })
+
+    it('getBlockedAreas', function(done) {
+        request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
+    })
+
+    it('completeReplaceFloors', function(done) {
+        request(server).put('/locations').send(testLocations).expect(testLocations).expect(200,done);
+    })
+
+    it('completeReplacePaths', function(done) {
+        request(server).put('/locations/paths').send(testPaths).expect(testPaths).expect(200,done);
+    })
 
     it('Delete By Id', function (done) {
         request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {

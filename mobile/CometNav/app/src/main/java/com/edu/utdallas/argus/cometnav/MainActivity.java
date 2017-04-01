@@ -3,6 +3,7 @@ package com.edu.utdallas.argus.cometnav;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,23 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import net.coderodde.graph.Demo;
+import net.coderodde.graph.DirectedGraph;
+import net.coderodde.graph.DirectedGraphWeightFunction;
+import net.coderodde.graph.UndirectedGraph;
+import net.coderodde.graph.pathfinding.AbstractPathfinder;
+import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
+import net.coderodde.graph.pathfinding.DirectedGraphPath;
+import net.coderodde.graph.pathfinding.HeuristicFunction;
+import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
+import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
+import net.coderodde.graph.pathfinding.support.Point2DF;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,8 +67,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Demo.runTest();
-
+        //.Demo.runTest();
+        Navigation.testPathfinding();
     }
 
     @Override
