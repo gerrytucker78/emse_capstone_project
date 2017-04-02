@@ -19,6 +19,13 @@ android {
     }
 }
 
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -27,6 +34,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.google.android.gms:play-services-maps:10.2.0'
+    compile 'org.altbeacon:android-beacon-library:2+'
     testCompile 'junit:junit:4.12'
     compile 'com.loopj.android:android-async-http:1.4.9'
 }
