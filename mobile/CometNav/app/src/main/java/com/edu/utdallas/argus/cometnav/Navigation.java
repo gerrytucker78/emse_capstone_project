@@ -3,11 +3,13 @@ package com.edu.utdallas.argus.cometnav;
 import android.util.Log;
 
 import net.coderodde.graph.Demo;
+import net.coderodde.graph.DirectedGraph;
 import net.coderodde.graph.DirectedGraphWeightFunction;
 import net.coderodde.graph.Graph;
 import net.coderodde.graph.UndirectedGraph;
 import net.coderodde.graph.pathfinding.AbstractPathfinder;
-import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
+import net.coderodde.graph.pathfinding.DirectedGraphPath;
+import net.coderodde.graph.pathfinding.GraphNodeCoordinates;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
 import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
@@ -22,6 +24,46 @@ import org.json.JSONObject;
  */
 
 public class Navigation {
+
+    /**
+     * The node IDs mapped to coordinates
+     */
+    private GraphNodeCoordinates coordinates;
+
+    /**
+     * The latest graph used for navigation
+     */
+    private UndirectedGraph graph;
+
+    /**
+     * The current route, if we're currently navigating
+     */
+    private DirectedGraphPath currentRoute;
+
+    /**
+     * The weight function. Updated after the graph is updated.
+     */
+    private DirectedGraphWeightFunction weightFunction;
+
+    /**
+     * The Heuristic function is used to facilitate rapid speed up of the pathfinding algorithm.
+     */
+    private HeuristicFunction heuristics;
+
+    /**
+     * The pathfinder we use to navigate.
+     */
+    private AbstractPathfinder pathfinder;
+
+    /**
+     * The current node id.
+     */
+    private int currentNode;
+
+    /**
+     * The target node id, if any
+     */
+    private int endNode;
 
     public enum locTypes
     {
@@ -42,56 +84,20 @@ public class Navigation {
         return locTypes.UNKNOWN;
     }
 
-    public static void testPathfinding()
+    public Navigation()
     {
-        UndirectedGraph graph = new UndirectedGraph();
-        DirectedGraphNodeCoordinates coordinates = new DirectedGraphNodeCoordinates();
+        graph = new UndirectedGraph();
+        coordinates = new GraphNodeCoordinates();
+    }
 
-        JSONArray locations, paths;
+    /**
+     * Updates the internal graph model with the new locations. Expected to run before updatePaths.
+     * @param locations Expected to be a JSON array populated with the list of nodes.
+     */
+    public void updateNodes(JSONArray locations)
+    {
         try
         {
-            locations = new JSONArray
-                    (
-                            " [\n" +
-                                    "\t\t{\"location_id\": 0,\"name\": \"2.HALL.NW.1\",\"type\":\"HALL\",\"pixel_loc_x\":190,\"pixel_loc_y\":105,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 1,\"name\": \"2.HALL.NW.2\",\"type\":\"HALL\",\"pixel_loc_x\":190,\"pixel_loc_y\":180,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 2,\"name\": \"2.201\",\"type\":\"ROOM\",\"pixel_loc_x\":170,\"pixel_loc_y\":190,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 3,\"name\": \"2.202\",\"type\":\"ROOM\",\"pixel_loc_x\":165,\"pixel_loc_y\":178,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 4,\"name\": \"2.203\",\"type\":\"ROOM\",\"pixel_loc_x\":170,\"pixel_loc_y\":170,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 5,\"name\": \"2.204\",\"type\":\"ROOM\",\"pixel_loc_x\":195,\"pixel_loc_y\":100,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 6,\"name\": \"2.2R1\",\"type\":\"ROOM\",\"pixel_loc_x\":198,\"pixel_loc_y\":195,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 7,\"name\": \"2.2R2\",\"type\":\"ROOM\",\"pixel_loc_x\":198,\"pixel_loc_y\":217,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 8,\"name\": \"2.HALL.NW.3\",\"type\":\"HALL\",\"pixel_loc_x\":190,\"pixel_loc_y\":210,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 9,\"name\": \"2.HALL.NW.4\",\"type\":\"HALL\",\"pixel_loc_x\":190,\"pixel_loc_y\":242,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 10,\"name\": \"2.TEMP\",\"type\":\"ROOM\",\"pixel_loc_x\":208,\"pixel_loc_y\":242,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 11,\"name\": \"2.TEMP\",\"type\":\"ROOM\",\"pixel_loc_x\":213,\"pixel_loc_y\":250,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 12,\"name\": \"2.TEMP\",\"type\":\"ROOM\",\"pixel_loc_x\":225,\"pixel_loc_y\":238,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 13,\"name\": \"Blocked 1\",\"type\":\"BLOCKED_AREA\",\"pixel_loc_x\":225,\"pixel_loc_y\":238,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\t\t{\"location_id\": 14,\"name\": \"Blocked 2\",\"type\":\"BLOCKED_AREA\",\"pixel_loc_x\":225,\"pixel_loc_y\":238,\"floor\":2,\"map\":null,\"latlong\":null},\n" +
-                                    "\n" +
-                                    "\n" +
-                                    "\t\t{\"location_id\": 1000,\"name\": \"Floor 2\",\"type\":\"FLOOR\",\"pixel_loc_x\":225,\"pixel_loc_y\":238,\"floor\":2,\"map\":null,\"latlong\":null}\n" +
-                                    "\n" +
-                                    "]"
-                    );
-
-            paths = new JSONArray
-                    (
-                            "[\n" +
-                                    "  {\"start_id\": 0,\"end_id\": 1,\"weight\":null},\n" +
-                                    "  {\"start_id\": 1,\"end_id\": 2,\"weight\":null},\n" +
-                                    "  {\"start_id\": 1,\"end_id\": 3,\"weight\":null},\n" +
-                                    "  {\"start_id\": 1,\"end_id\": 4,\"weight\":null},\n" +
-                                    "  {\"start_id\": 1,\"end_id\": 8,\"weight\":null},\n" +
-                                    "  {\"start_id\": 8,\"end_id\": 6,\"weight\":null},\n" +
-                                    "  {\"start_id\": 8,\"end_id\": 7,\"weight\":null},\n" +
-                                    "  {\"start_id\": 8,\"end_id\": 9,\"weight\":null},\n" +
-                                    "  {\"start_id\": 9,\"end_id\": 10,\"weight\":null},\n" +
-                                    "  {\"start_id\": 10,\"end_id\": 11,\"weight\":null},\n" +
-                                    "  {\"start_id\": 11,\"end_id\": 12,\"weight\":null},\n" +
-                                    "]"
-                    );
-
             for(int i = 0; i < locations.length(); i++)
             {
                 JSONObject location = locations.getJSONObject(i);
@@ -104,11 +110,33 @@ public class Navigation {
                     coordinates.put(nodeId, new Point2DF(location.getInt("pixel_loc_x"), location.getInt("pixel_loc_y")));
                 }
             }
+        }
+        catch (JSONException e)
+        {
+            Log.d("Navigation", e.getMessage().toString());
+        }
+        Log.d("Navigation", "Nodes updated: " + graph.getNodeSet().toString());
+    }
 
+    /**
+     * Updates the internal graph model with the new arcs, then finishes updating the graph by
+     * creating the weight function and the heuristics and pathfinder. Expected to run after
+     * updateNodes
+     * @param paths Expected to be a JSON array populated with a list of the arcs (paths) between
+     *              nodes.
+     */
+    public void updatePaths(JSONArray paths)
+    {
+        String logStr = new String();
+        try
+        {
             for (int i = 0; i < paths.length(); i++)
             {
                 JSONObject path = paths.getJSONObject(i);
-                graph.addArc(path.getInt("start_id"), path.getInt("end_id"));
+                int startNode = path.getInt("start_id");
+                int endNode = path.getInt("end_id");
+                graph.addArc(startNode, endNode);
+                logStr += startNode + "-" + endNode + ", ";
             }
         }
         catch (JSONException e)
@@ -116,24 +144,60 @@ public class Navigation {
             Log.d("Navigation", e.getMessage().toString());
         }
 
-        Log.d("Navigation", graph.getNodeSet().toString());
+
+        Log.d("Navigation", "Arcs updated: " + logStr);
+        //This needs to happen after arcs are placed
+        populateWeightFunction();
+
+        heuristics = new EuclideanHeuristicFunction(coordinates);
+        pathfinder = new NBAStarPathfinder(graph, weightFunction, heuristics);
+    }
+
+    /**
+     * Begins navigation from the current node to the target node
+     * @param targetNodeId the target node to navigate to
+     */
+    public void beginNavigation(int targetNodeId)
+    {
+
+    }
+
+    /**
+     * Begins navigation from the start node to the end node
+     * @param startNodeId the start node to begin navigating from
+     * @param endNodeId the target node to navigate to
+     */
+    public void beginNavigation(int startNodeId, int endNodeId)
+    {
+
+    }
+
+    /**
+     *
+     */
+    public void updateCurrentRoute()
+    {
+        currentRoute = pathfinder.search(currentNode, endNode);
+        Log.d("Navigation", currentRoute.toString());
+    }
+
+    /**
+     * Populates the weight function. Should be run after updating the graph and coordinates.
+     */
+    private void populateWeightFunction()
+    {
+        weightFunction = new DirectedGraphWeightFunction();
 
         for (Integer nodeId : graph.getNodeSet())
         {
-            //Log.d("Navigation", nodeId + " " + graph.getSiblingsOf(nodeId).toString());
+            Point2DF p1 = coordinates.get(nodeId);
+            for (Integer childNodeId : graph.getChildrenOf(nodeId))
+            {
+                Point2DF p2 = coordinates.get(childNodeId);
+                float distance = p1.distance(p2);
+                weightFunction.put(nodeId, childNodeId, (float)(1.2 * distance));
+            }
         }
-
-        //This needs to happen after arcs are placed
-        DirectedGraphWeightFunction weightFunction =
-                Demo.getWeightFunction(graph, coordinates);
-
-        HeuristicFunction hf = new EuclideanHeuristicFunction(coordinates);
-
-        AbstractPathfinder pathfinder = new NBAStarPathfinder(graph,
-                weightFunction,
-                hf);
-        Log.d("Navigation", pathfinder.search(4, 6).toString());
-        //Log.d("Navigation", pathfinder.search(5, 1).toString());
     }
 
     /**

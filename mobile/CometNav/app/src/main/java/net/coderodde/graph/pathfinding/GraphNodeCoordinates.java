@@ -12,7 +12,7 @@ import net.coderodde.graph.pathfinding.support.Point2DF;
  * @author Rodion "rodde" Efremov
  * @version 1.6 (Oct 6, 2016)
  */
-public class DirectedGraphNodeCoordinates {
+public class GraphNodeCoordinates {
 
     /**
      * Maps each node to its coordinates.

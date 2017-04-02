@@ -33,10 +33,17 @@ public class UndirectedGraph extends DirectedGraph{
      * @param secondNodeId the second node of the arc.
      */
     public void addArc(int firstNodeId, int secondNodeId) {
-        childMap .get(firstNodeId).add(secondNodeId);
-        childMap .get(secondNodeId).add(firstNodeId);
-        parentMap.get(secondNodeId).add(firstNodeId);
-        parentMap.get(firstNodeId).add(secondNodeId);
+        try
+        {
+            childMap.get(firstNodeId).add(secondNodeId);
+            childMap.get(secondNodeId).add(firstNodeId);
+            parentMap.get(secondNodeId).add(firstNodeId);
+            parentMap.get(firstNodeId).add(secondNodeId);
+        }
+        catch (NullPointerException e)
+        {
+            Log.d("Navigation", e.getMessage().toString());
+        }
     }
 
     /**
