@@ -1,7 +1,7 @@
 package net.coderodde.graph.pathfinding.support;
 
 import java.util.Objects;
-import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
+import net.coderodde.graph.pathfinding.GraphNodeCoordinates;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
 
 /**
@@ -13,9 +13,9 @@ import net.coderodde.graph.pathfinding.HeuristicFunction;
  */
 public class EuclideanHeuristicFunction implements HeuristicFunction {
 
-    private final DirectedGraphNodeCoordinates coordinates;
+    private final GraphNodeCoordinates coordinates;
 
-    public EuclideanHeuristicFunction(DirectedGraphNodeCoordinates coordinates) {
+    public EuclideanHeuristicFunction(GraphNodeCoordinates coordinates) {
         this.coordinates =
                 Objects.requireNonNull(coordinates,
                         "The input coordinate map is null.");

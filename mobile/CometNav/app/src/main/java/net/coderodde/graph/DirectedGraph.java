@@ -31,9 +31,19 @@ public class DirectedGraph implements Graph {
      *
      * @param nodeId the node to add.
      */
-    public void addNode(int nodeId) {
-        childMap .putIfAbsent(nodeId, new HashSet<Integer>());
-        parentMap.putIfAbsent(nodeId, new HashSet<Integer>());
+    public void addNode(int nodeId)
+    {
+        //replacement for putIfAbsent
+        Set<Integer> value = childMap.get(nodeId);
+        if(value == null)
+        {
+            childMap.put(nodeId, new HashSet<Integer>());
+        }
+        value = parentMap.get(nodeId);
+        if (value == null)
+        {
+            parentMap.put(nodeId, new HashSet<Integer>());
+        }
     }
 
     /**

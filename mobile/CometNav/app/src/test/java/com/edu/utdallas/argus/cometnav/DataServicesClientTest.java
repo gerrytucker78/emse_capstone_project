@@ -14,9 +14,9 @@ public class DataServicesClientTest {
 
     @Test
     public void getAllLocations() throws Exception {
-        DataServicesClient client = new DataServicesClient();
-        client.getLocations();
-        assertEquals(4, 2 + 2);
+        //DataServices services = new DataServices();
+        //services.getLocations();
+        //assertEquals(4, 2 + 2);
     }
 
 }

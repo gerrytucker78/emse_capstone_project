@@ -2,38 +2,24 @@ package com.edu.utdallas.argus.cometnav;
 
 import com.loopj.android.http.*;
 
-import cz.msebera.android.httpclient.Header;
-
 /**
  * Created by gtucker on 3/24/2017.
  */
 
 public class DataServicesClient {
-    AsyncHttpClient client = new AsyncHttpClient();
-    public static String LOCATION_URL = "http://52.32.181.216/locations";
+    private static final String BASE_URL = "http://52.32.181.216/";
 
-    public void getLocations() {
-        client.get(LOCATION_URL, new AsyncHttpResponseHandler() {
+    private static AsyncHttpClient client = new AsyncHttpClient();
 
-            @Override
-            public void onStart() {
-                // called before request is started
-            }
+    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.get(getAbsoluteUrl(url), params, responseHandler);
+    }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                System.out.println(new String(responseBody));
-            }
+    public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.post(getAbsoluteUrl(url), params, responseHandler);
+    }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-            }
-
-            @Override
-            public void onRetry(int retryNo) {
-                // called when request is retried
-            }
-        });
+    private static String getAbsoluteUrl(String relativeUrl) {
+        return BASE_URL + relativeUrl;
     }
 }

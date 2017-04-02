@@ -5,10 +5,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.coderodde.graph.DirectedGraph;
-import net.coderodde.graph.DirectedGraphWeightFunction;
+
 import net.coderodde.graph.pathfinding.AbstractPathfinder;
-import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
+import net.coderodde.graph.pathfinding.GraphNodeCoordinates;
 import net.coderodde.graph.pathfinding.DirectedGraphPath;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
 import net.coderodde.graph.pathfinding.support.AStarPathfinder;
@@ -44,7 +43,7 @@ public class Demo {
 
         long start = System.currentTimeMillis();
         DirectedGraph graph = getRandomGraph(NODES, ARCS, random);
-        DirectedGraphNodeCoordinates coordinates = getCoordinates(graph,
+        GraphNodeCoordinates coordinates = getCoordinates(graph,
                 PLANE_WIDTH,
                 PLANE_HEIGHT,
                 random);
@@ -136,13 +135,13 @@ public class Demo {
         return graph;
     }
 
-    private static DirectedGraphNodeCoordinates
+    private static GraphNodeCoordinates
     getCoordinates(DirectedGraph graph,
                    float planeWidth,
                    float planeHeight,
                    Random random) {
-        DirectedGraphNodeCoordinates coordinates =
-                new DirectedGraphNodeCoordinates();
+        GraphNodeCoordinates coordinates =
+                new GraphNodeCoordinates();
 
         for (Integer nodeId : graph.getNodeSet()) {
             coordinates.put(nodeId,
@@ -154,7 +153,7 @@ public class Demo {
 
     public static DirectedGraphWeightFunction
     getWeightFunction(DirectedGraph graph,
-                      DirectedGraphNodeCoordinates coordinates) {
+                      GraphNodeCoordinates coordinates) {
         DirectedGraphWeightFunction weightFunction =
                 new DirectedGraphWeightFunction();
 
@@ -184,7 +183,7 @@ public class Demo {
 
     private static Integer
     getClosestTo(DirectedGraph graph,
-                 DirectedGraphNodeCoordinates coordinates,
+                 GraphNodeCoordinates coordinates,
                  Point2DF point) {
         double bestDistance = Double.POSITIVE_INFINITY;
         Integer bestNode = null;
@@ -202,12 +201,12 @@ public class Demo {
     }
 
     private static Integer getSource(DirectedGraph graph,
-                                     DirectedGraphNodeCoordinates coordinates) {
+                                     GraphNodeCoordinates coordinates) {
         return getClosestTo(graph, coordinates, new Point2DF());
     }
 
     private static Integer getTarget(DirectedGraph graph,
-                                     DirectedGraphNodeCoordinates coordinates) {
+                                     GraphNodeCoordinates coordinates) {
         return getClosestTo(graph,
                 coordinates,
                 new Point2DF(PLANE_WIDTH, PLANE_HEIGHT));

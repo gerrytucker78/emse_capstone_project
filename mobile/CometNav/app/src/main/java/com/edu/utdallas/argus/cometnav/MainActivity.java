@@ -21,12 +21,15 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     //Doesn't really matter what number, as long as they don't match eachother
     private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 100;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 200;
     private static final int BLUETOOTH_ENABLE_REQUEST_ID = 300;
 
     private boolean hasLocationPermissions = false;
+    Navigation nav;
+    DataServices services;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //TODO Fix code so it can run on older versions of android
-        //.Demo.runTest();
-        //Navigation.testPathfinding();
-
         //Request Permissions for coarse location
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)){
@@ -91,6 +90,10 @@ public class MainActivity extends AppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startService(intent);
 
+        //Start Navigation and Data Services
+        nav = new Navigation();
+        services = new DataServices();
+        services.updateGraph(nav);
     }
 
     @Override
