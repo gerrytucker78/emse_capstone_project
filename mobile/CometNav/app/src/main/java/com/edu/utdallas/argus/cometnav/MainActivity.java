@@ -1,9 +1,12 @@
 package com.edu.utdallas.argus.cometnav;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,27 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import net.coderodde.graph.Demo;
-import net.coderodde.graph.DirectedGraph;
-import net.coderodde.graph.DirectedGraphWeightFunction;
-import net.coderodde.graph.UndirectedGraph;
-import net.coderodde.graph.pathfinding.AbstractPathfinder;
-import net.coderodde.graph.pathfinding.DirectedGraphNodeCoordinates;
-import net.coderodde.graph.pathfinding.DirectedGraphPath;
-import net.coderodde.graph.pathfinding.HeuristicFunction;
-import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
-import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
-import net.coderodde.graph.pathfinding.support.Point2DF;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    //Doesn't really matter what number, as long as they don't match eachother
+    private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 100;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 200;
+    private static final int BLUETOOTH_ENABLE_REQUEST_ID = 300;
+
+    private boolean hasLocationPermissions = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +58,39 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //TODO Fix code so it can run on older versions of android
         //.Demo.runTest();
-        Navigation.testPathfinding();
+        //Navigation.testPathfinding();
+
+        //Request Permissions for coarse location
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)){
+                Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show();
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+            }
+        }
+
+        //Request Permissions for fine location
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+                Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show();
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        }
+
+        //Request the user enable bluetooth... to find the beacons!
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
+
+
+
+        //TODO Find Beacons on create. Move to only find beacons when ready to navigate
+        Intent intent = new Intent(this, BeaconManagerService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
+
     }
 
     @Override
@@ -140,4 +162,42 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BLUETOOTH_ENABLE_REQUEST_ID) {
+            if (resultCode == RESULT_OK) {
+                // Request granted - bluetooth is turning on...
+            }
+            if (resultCode == RESULT_CANCELED) {
+                // Request denied by user, or an error was encountered while
+                // attempting to enable bluetooth
+                //TODO Change app to indicate bluetooth is turned off?
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
+        switch (requestCode){
+            case PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    hasLocationPermissions = true;
+                }else{
+                    //PERMISSION NOT GRANTED
+                    //TODO Decide what the app will do without coarse location
+                }
+            }
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    hasLocationPermissions = true;
+                }else{
+                    //PERMISSION NOT GRANTED
+                    //TODO Decide what the app will do without coarse location
+                }
+            }
+        }
+    }
+
 }
