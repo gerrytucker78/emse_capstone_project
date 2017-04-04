@@ -1,25 +1,242 @@
 [
   {"start_id": 0,"end_id": 1,"weight":null},
+  {"start_id": 0,"end_id": 5,"weight":null},
   {"start_id": 1,"end_id": 2,"weight":null},
   {"start_id": 1,"end_id": 3,"weight":null},
   {"start_id": 1,"end_id": 4,"weight":null},
   {"start_id": 1,"end_id": 8,"weight":null},
+  {"start_id": 1, "end_id": 0, "weight":null},
+  {"start_id": 1, "end_id": 25, "weight":null},
+
+  {"start_id": 2, "end_id": 1, "weight":null},
+  {"start_id": 3, "end_id": 1, "weight":null},
+  {"start_id": 4, "end_id": 1, "weight":null},
+  {"start_id": 5,"end_id": 0,"weight":null},
+  {"start_id": 6, "end_id": 8, "weight":null},
+  {"start_id": 7, "end_id": 8, "weight":null},
+  {"start_id": 8, "end_id": 1, "weight":null},
   {"start_id": 8,"end_id": 6,"weight":null},
   {"start_id": 8,"end_id": 7,"weight":null},
   {"start_id": 8,"end_id": 9,"weight":null},
+  {"start_id": 9, "end_id": 8, "weight":null},
   {"start_id": 9,"end_id": 10,"weight":null},
+  {"start_id": 9,"end_id": 15,"weight":null},
+  {"start_id": 10,"end_id": 9, "weight":null},
   {"start_id": 10,"end_id": 11,"weight":null},
+  {"start_id": 11,"end_id": 10,"weight":null},
   {"start_id": 11,"end_id": 12,"weight":null},
+  {"start_id": 12,"end_id": 11,"weight":null},
+  {"start_id": 12,"end_id": 36,"weight":null},
+  {"start_id": 12,"end_id": 37,"weight":null},
+  {"start_id": 12,"end_id": 38,"weight":null},
 
-  {"end_id": 0,"start_id": 1,"weight":null},
-  {"end_id": 1,"start_id": 2,"weight":null},
-  {"end_id": 1,"start_id": 3,"weight":null},
-  {"end_id": 1,"start_id": 4,"weight":null},
-  {"end_id": 1,"start_id": 8,"weight":null},
-  {"end_id": 8,"start_id": 6,"weight":null},
-  {"end_id": 8,"start_id": 7,"weight":null},
-  {"end_id": 8,"start_id": 9,"weight":null},
-  {"end_id": 9,"start_id": 10,"weight":null},
-  {"end_id": 10,"start_id": 11,"weight":null},
-  {"end_id": 11,"start_id": 12,"weight":null}
+  {"start_id": 15,"end_id": 9,"weight":null},
+  {"start_id": 15,"end_id": 16,"weight":null},
+  {"start_id": 15,"end_id": 27,"weight":null},
+
+  {"start_id": 16,"end_id": 15,"weight":null},
+  {"start_id": 16,"end_id": 26,"weight":null},
+  {"start_id": 16,"end_id": 27,"weight":null},
+
+  {"start_id": 17,"end_id": 16,"weight":null},
+  {"start_id": 17,"end_id": 18,"weight":null},
+  {"start_id": 17,"end_id": 26,"weight":null},
+
+  {"start_id": 18,"end_id": 17,"weight":null},
+  {"start_id": 18,"end_id": 19,"weight":null},
+
+  {"start_id": 19,"end_id": 18,"weight":null},
+  {"start_id": 19,"end_id": 20,"weight":null},
+  {"start_id": 19,"end_id": 28,"weight":null},
+
+  {"start_id": 20,"end_id": 19,"weight":null},
+  {"start_id": 20,"end_id": 21,"weight":null},
+  {"start_id": 20,"end_id": 29,"weight":null},
+  {"start_id": 20,"end_id": 30,"weight":null},
+  {"start_id": 20,"end_id": 32,"weight":null},
+
+  {"start_id": 21,"end_id": 20,"weight":null},
+  {"start_id": 21,"end_id": 22,"weight":null},
+  {"start_id": 21,"end_id": 31,"weight":null},
+
+  {"start_id": 22,"end_id": 21,"weight":null},
+  {"start_id": 22,"end_id": 23,"weight":null},
+  {"start_id": 22,"end_id": 33,"weight":null},
+  {"start_id": 22,"end_id": 34,"weight":null},
+
+
+  {"start_id": 23,"end_id": 22,"weight":null},
+  {"start_id": 23,"end_id": 24,"weight":null},
+  {"start_id": 23,"end_id": 35,"weight":null},
+  {"start_id": 23,"end_id": 47,"weight":null},
+
+
+  {"start_id": 24,"end_id": 23,"weight":null},
+  {"start_id": 24,"end_id": 25,"weight":null},
+
+  {"start_id": 25,"end_id": 1,"weight":null},
+  {"start_id": 25,"end_id": 24,"weight":null},
+  {"start_id": 25,"end_id": 48,"weight":null},
+
+  {"start_id": 26,"end_id": 16,"weight":null},
+  {"start_id": 26,"end_id": 17,"weight":null},
+
+  {"start_id": 27,"end_id": 15,"weight":null},
+  {"start_id": 27,"end_id": 16,"weight":null},
+  {"start_id": 27,"end_id": 31,"weight":null},
+  {"start_id": 27,"end_id": 40,"weight":null},
+
+
+  {"start_id": 28,"end_id": 19,"weight":null},
+
+  {"start_id": 29,"end_id": 20,"weight":null},
+
+  {"start_id": 30,"end_id": 20,"weight":null},
+
+  {"start_id": 31,"end_id": 21,"weight":null},
+  {"start_id": 31,"end_id": 27,"weight":null},
+
+  {"start_id": 32,"end_id": 20,"weight":null},
+  {"start_id": 33,"end_id": 22,"weight":null},
+  {"start_id": 34,"end_id": 22,"weight":null},
+  {"start_id": 35,"end_id": 23,"weight":null},
+
+  {"start_id": 36,"end_id": 12,"weight":null},
+  {"start_id": 37,"end_id": 12,"weight":null},
+  {"start_id": 37,"end_id": 39,"weight":null},
+
+  {"start_id": 38,"end_id": 12,"weight":null},
+  {"start_id": 38,"end_id": 45,"weight":null},
+
+  {"start_id": 39,"end_id": 42,"weight":null},
+
+  {"start_id": 40,"end_id": 42,"weight":null},
+
+  {"start_id": 41,"end_id": 42,"weight":null},
+
+  {"start_id": 42,"end_id": 39,"weight":null},
+  {"start_id": 42,"end_id": 40,"weight":null},
+  {"start_id": 42,"end_id": 41,"weight":null},
+  {"start_id": 42,"end_id": 43,"weight":null},
+
+  {"start_id": 43,"end_id": 42,"weight":null},
+  {"start_id": 43,"end_id": 46,"weight":null},
+
+  {"start_id": 45,"end_id": 38,"weight":null},
+  {"start_id": 45,"end_id": 46,"weight":null},
+
+  {"start_id": 46,"end_id": 23,"weight":null},
+  {"start_id": 46,"end_id": 43,"weight":null},
+  {"start_id": 46,"end_id": 45,"weight":null},
+
+  {"start_id": 47,"end_id": 23,"weight":null},
+
+  {"start_id": 48,"end_id": 25,"weight":null},
+  {"start_id": 48,"end_id": 49,"weight":null},
+  {"start_id": 48,"end_id": 50,"weight":null},
+  {"start_id": 48,"end_id": 51,"weight":null},
+  {"start_id": 48,"end_id": 52,"weight":null},
+  {"start_id": 48,"end_id": 53,"weight":null},
+
+  {"start_id": 49,"end_id": 48,"weight":null},
+
+  {"start_id": 50,"end_id": 48,"weight":null},
+  {"start_id": 51,"end_id": 48,"weight":null},
+  {"start_id": 52,"end_id": 48,"weight":null},
+  {"start_id": 53,"end_id": 48,"weight":null},
+
+  {"start_id": 54,"end_id": 25,"weight":null},
+  {"start_id": 54,"end_id": 55,"weight":null},
+
+  {"start_id": 55,"end_id": 54,"weight":null},
+  {"start_id": 55,"end_id": 56,"weight":null},
+  {"start_id": 55,"end_id": 57,"weight":null},
+
+  {"start_id": 56,"end_id": 55,"weight":null},
+
+  {"start_id": 57,"end_id": 55,"weight":null},
+  {"start_id": 57,"end_id": 58,"weight":null},
+  {"start_id": 57,"end_id": 66,"weight":null},
+  {"start_id": 57,"end_id": 67,"weight":null},
+
+
+  {"start_id": 58,"end_id": 57,"weight":null},
+  {"start_id": 58,"end_id": 59,"weight":null},
+  {"start_id": 58,"end_id": 68,"weight":null},
+  {"start_id": 58,"end_id": 69,"weight":null},
+  {"start_id": 58,"end_id": 71,"weight":null},
+  {"start_id": 58,"end_id": 72,"weight":null},
+  {"start_id": 58,"end_id": 73,"weight":null},
+
+  {"start_id": 59,"end_id": 58,"weight":null},
+  {"start_id": 59,"end_id": 70,"weight":null},
+  {"start_id": 59,"end_id": 75,"weight":null},
+  {"start_id": 59,"end_id": 74,"weight":null},
+  {"start_id": 59,"end_id": 60,"weight":null},
+
+  {"start_id": 60,"end_id": 59,"weight":null},
+  {"start_id": 60,"end_id": 61,"weight":null},
+
+  {"start_id": 61,"end_id": 60,"weight":null},
+  {"start_id": 61,"end_id": 62,"weight":null},
+  {"start_id": 61,"end_id": 92,"weight":null},
+
+  {"start_id": 62,"end_id": 61,"weight":null},
+  {"start_id": 62,"end_id": 63,"weight":null},
+  {"start_id": 62,"end_id": 90,"weight":null},
+  {"start_id": 62,"end_id": 91,"weight":null},
+
+  {"start_id": 63,"end_id": 62,"weight":null},
+  {"start_id": 63,"end_id": 64,"weight":null},
+  {"start_id": 63,"end_id": 86,"weight":null},
+  {"start_id": 63,"end_id": 87,"weight":null},
+  {"start_id": 63,"end_id": 88,"weight":null},
+  {"start_id": 63,"end_id": 89,"weight":null},
+
+  {"start_id": 64,"end_id": 63,"weight":null},
+  {"start_id": 64,"end_id": 65,"weight":null},
+  {"start_id": 64,"end_id": 79,"weight":null},
+  {"start_id": 64,"end_id": 80,"weight":null},
+  {"start_id": 64,"end_id": 84,"weight":null},
+  {"start_id": 64,"end_id": 85,"weight":null},
+
+  {"start_id": 65,"end_id": 64,"weight":null},
+  {"start_id": 65,"end_id": 66,"weight":null},
+
+  {"start_id": 65,"end_id": 77,"weight":null},
+  {"start_id": 65,"end_id": 78,"weight":null},
+  {"start_id": 65,"end_id": 82,"weight":null},
+  {"start_id": 65,"end_id": 83,"weight":null},
+
+
+  {"start_id": 66,"end_id": 65,"weight":null},
+  {"start_id": 66,"end_id": 76,"weight":null},
+  {"start_id": 66,"end_id": 81,"weight":null},
+
+  {"start_id": 67,"end_id": 57,"weight":null},
+  {"start_id": 68,"end_id": 58,"weight":null},
+  {"start_id": 69,"end_id": 58,"weight":null},
+  {"start_id": 70,"end_id": 59,"weight":null},
+  {"start_id": 71,"end_id": 58,"weight":null},
+  {"start_id": 72,"end_id": 58,"weight":null},
+  {"start_id": 73,"end_id": 58,"weight":null},
+  {"start_id": 74,"end_id": 59,"weight":null},
+  {"start_id": 75,"end_id": 59,"weight":null},
+  {"start_id": 76,"end_id": 66,"weight":null},
+  {"start_id": 77,"end_id": 65,"weight":null},
+  {"start_id": 78,"end_id": 65,"weight":null},
+  {"start_id": 79,"end_id": 64,"weight":null},
+  {"start_id": 80,"end_id": 64,"weight":null},
+  {"start_id": 81,"end_id": 66,"weight":null},
+  {"start_id": 82,"end_id": 65,"weight":null},
+  {"start_id": 83,"end_id": 65,"weight":null},
+  {"start_id": 84,"end_id": 64,"weight":null},
+  {"start_id": 85,"end_id": 64,"weight":null},
+  {"start_id": 86,"end_id": 63,"weight":null},
+  {"start_id": 87,"end_id": 63,"weight":null},
+  {"start_id": 88,"end_id": 63,"weight":null},
+  {"start_id": 89,"end_id": 63,"weight":null},
+  {"start_id": 90,"end_id": 62,"weight":null},
+  {"start_id": 91,"end_id": 62,"weight":null},
+  {"start_id": 92,"end_id": 61,"weight":null}
 ]
