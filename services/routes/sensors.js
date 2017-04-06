@@ -43,7 +43,8 @@ router.post('/', function (req, res, next) {
         sensor_id: req.body.sensor_id,
         name: req.body.name,
         pixel_loc_x: req.body.pixel_loc_x,
-        pixel_loc_y: req.body.pixel_loc_y
+        pixel_loc_y: req.body.pixel_loc_y,
+        floor: req.body.floor
     }).then(function (loc) {
         res.send(loc)
     });

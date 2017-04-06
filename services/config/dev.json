@@ -36,13 +36,15 @@
         "sensor_id": "1",
         "name": "Test 1",
         "pixel_loc_x":190,
-        "pixel_loc_y":100
+        "pixel_loc_y":100,
+        "floor": 2
       },
       {
         "sensor_id": "2",
         "name": "Test 2",
         "pixel_loc_x":195,
-        "pixel_loc_y":100
+        "pixel_loc_y":100,
+        "floor": 2
       }
     ],
     "paths": [
