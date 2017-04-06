@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
 
-
-
         //TODO Find Beacons on create. Move to only find beacons when ready to navigate
         Intent intent = new Intent(this, BeaconManagerService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

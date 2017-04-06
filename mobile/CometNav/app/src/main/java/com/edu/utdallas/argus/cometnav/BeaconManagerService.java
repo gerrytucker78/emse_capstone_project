@@ -5,7 +5,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -13,6 +15,7 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
@@ -20,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Michelle on 3/25/2017.
@@ -31,9 +37,11 @@ import java.util.Comparator;
 public class BeaconManagerService extends IntentService implements BeaconConsumer{
     private static final String TAG="BeaconManagerService";
     protected static final String CometNavRegion = "CometNav"; //Specifies Eddystone region for CometNav beacons
+
+    //Null Beacon Namespace and Beacon Instance so we see all beacons
     private Region region=new Region(CometNavRegion, null, null, null);
     private BeaconManager beaconManager;
-    private static ArrayList<Beacon> beaconsList=new ArrayList<Beacon>();
+    private static Set<Beacon> beaconsList=new HashSet<Beacon>();
 
 
     public BeaconManagerService(){
@@ -42,33 +50,49 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
         onBeaconServiceConnect();
+        SystemClock.sleep(5000);
     }
 
     @Override
     public void onBeaconServiceConnect() {
+        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            @Override
+            public void didEnterRegion(Region region) {
+                Log.i(TAG, "DETECTED BEACON!!! Region:" + region.getId1() + " Namespace id:" + region.getId2() + " Bluetooth Address: " + region.getBluetoothAddress());
+            }
+
+            @Override
+            public void didExitRegion(Region region) {
+
+            }
+
+            @Override
+            public void didDetermineStateForRegion(int i, Region region) {
+                Log.i(TAG, "DETECTED BEACON!!! Region:" + region.getId1() + " Namespace id:" + region.getId2() + " Bluetooth Address: " + region.getBluetoothAddress());
+            }
+        });
+
         try {
-            beaconManager.startRangingBeaconsInRegion(region);
+            beaconManager.setRegionStatePeristenceEnabled(false);
+            startRanging();
             beaconManager.setRangeNotifier(new RangeNotifier() {
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                     Intent localIntent = new Intent("BEACON_ACTION");
-                    beaconsList.clear();
                     beaconsList.addAll(beacons);
-                    Collections.sort(beaconsList,new Comparator<Beacon>() {
-                        @Override
-                        public int compare(Beacon lhs, Beacon rhs) {
-                            return Double.compare(lhs.getDistance(), rhs.getDistance());
-                        }
-                    });
-                    localIntent.putParcelableArrayListExtra("BEACON_LIST",beaconsList);
+                    Log.d(TAG, "Adding all beacons found");
+
+                    List<Beacon> beaconArrayList = new ArrayList<Beacon>(beaconsList);
+
+                    localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
                     LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
+                    Log.d(TAG, "Beacons... " + beaconsList.toString());
                 }
             });
-
-            Log.i (TAG, "BEACONS IN ARRAY: " + beaconsList.toString());
-        } catch (RemoteException e) {
-            Log.e(TAG,"RemoteException Error when ",e);
+        } catch (Exception e) {
+            Log.e(TAG,"Exception Error when ",e);
         }
     }
 
@@ -85,11 +109,8 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.EDDYSTONE_UID_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.EDDYSTONE_TLM_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.EDDYSTONE_URL_LAYOUT));
-        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
-        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("x,s:0-1=feaa,m:2-2=20,d:3-3,d:4-5,d:6-7,d:8-11,d:12-15"));
-        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("s:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-21v"));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.URI_BEACON_LAYOUT));
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT));
         beaconManager.bind(this);
     }
 
@@ -105,8 +126,10 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
     public void stopRanging(){
         try {
             beaconManager.stopRangingBeaconsInRegion(region);
+            beaconManager.stopMonitoringBeaconsInRegion(region);
+            Log.i(TAG, "BeaconManagerService - Ranging stoped!!");
         } catch (RemoteException e) {
-            Log.e(TAG,"Error BeaconService - StopRanging",e);
+            Log.e(TAG,"Error BeaconManagerService - StopRanging",e);
         }
     }
 
@@ -115,9 +138,12 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
      */
     public void startRanging(){
         try {
+            Log.i(TAG, "BeaconManagerService - Ranging in progess!");
             beaconManager.startRangingBeaconsInRegion(region);
+            beaconManager.startMonitoringBeaconsInRegion(region);
+            Log.i(TAG, "BeaconManagerService - Ranging done already... ok");
         } catch (RemoteException e) {
-            Log.e(TAG,"Error BeaconService - StartRanging",e);
+            Log.e(TAG,"Error BeaconManagerService - StartRanging",e);
         }
     }
 
