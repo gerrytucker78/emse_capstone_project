@@ -2,17 +2,13 @@
       {
         "sensor_id": "1",
         "name": "Test 1",
-        "latlong": {
-          "type": "Point",
-          "coordinates": [
-            39.807222,
-            -76.984722
-          ]
-        }
+        "pixel_loc_x":190,
+        "pixel_loc_y":100
       },
       {
         "sensor_id": "2",
         "name": "Test 2",
-        "latlong": null
+        "pixel_loc_x":195,
+        "pixel_loc_y":100
       }
     ]
