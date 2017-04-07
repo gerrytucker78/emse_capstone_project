@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
 
+
+
         //TODO Find Beacons on create. Move to only find beacons when ready to navigate
         Intent intent = new Intent(this, BeaconManagerService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -90,8 +92,7 @@ public class MainActivity extends AppCompatActivity
 
         //Start Navigation and Data Services
         nav = new Navigation();
-        services = new DataServices();
-        services.updateGraph(nav);
+        nav.beginNavigation(4, 6);
     }
 
     @Override
@@ -138,7 +139,9 @@ public class MainActivity extends AppCompatActivity
             this.startActivity(intent);
             return true;
         } else if (id == R.id.nav_emergency) {
-            Toast.makeText(this, "Emergency Navigation Clicked", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Emergency Navigation Clicked", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, NavigationActivity.class);
+            this.startActivity(intent);
             return true;
 
         } else if (id == R.id.nav_reportEmergency) {

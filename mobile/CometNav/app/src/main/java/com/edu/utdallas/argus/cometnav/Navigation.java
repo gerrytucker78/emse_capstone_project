@@ -2,8 +2,6 @@ package com.edu.utdallas.argus.cometnav;
 
 import android.util.Log;
 
-import net.coderodde.graph.Demo;
-import net.coderodde.graph.DirectedGraph;
 import net.coderodde.graph.DirectedGraphWeightFunction;
 import net.coderodde.graph.Graph;
 import net.coderodde.graph.UndirectedGraph;
@@ -14,6 +12,9 @@ import net.coderodde.graph.pathfinding.HeuristicFunction;
 import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.os.Handler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,21 +56,36 @@ public class Navigation {
      */
     private AbstractPathfinder pathfinder;
 
+    private Timer navTimer;
+
+    private TimerTask timerTask;
+
+    private final Handler handler = new Handler();
+
     /**
      * The current node id.
      */
     private int currentNode;
 
     /**
+     * The start node ID
+     */
+    private int startNode;
+
+    /**
      * The target node id, if any
      */
     private int endNode;
+
+
 
     public enum locTypes
     {
         BLOCKED_AREA,
         ROOM,
         HALL,
+        EXIT,
+        STAIRS,
         UNKNOWN
     };
 
@@ -81,6 +97,10 @@ public class Navigation {
             return locTypes.ROOM;
         else if (str.equals("HALL"))
             return locTypes.HALL;
+        else if (str.equals("EXIT"))
+            return locTypes.EXIT;
+        else if (str.equals("STAIRS"))
+            return locTypes.STAIRS;
         return locTypes.UNKNOWN;
     }
 
@@ -88,6 +108,8 @@ public class Navigation {
     {
         graph = new UndirectedGraph();
         coordinates = new GraphNodeCoordinates();
+
+        DataServices.getLocations(this);
     }
 
     /**
@@ -103,7 +125,8 @@ public class Navigation {
                 JSONObject location = locations.getJSONObject(i);
                 locTypes type = toLocEnum(location.getString("type"));
                 //Log.d("Navigation", "Found location " + location.getInt("location_id") + " " + location.getString("type"));
-                if (type == locTypes.HALL || type == locTypes.ROOM)
+                if (type == locTypes.HALL || type == locTypes.ROOM || type == locTypes.EXIT
+                        || type == locTypes.STAIRS)
                 {
                     int nodeId = location.getInt("location_id");
                     graph.addNode(nodeId);
@@ -116,6 +139,34 @@ public class Navigation {
             Log.d("Navigation", e.getMessage().toString());
         }
         Log.d("Navigation", "Nodes updated: " + graph.getNodeSet().toString());
+        //Paths has to happen after locations is done.
+        DataServices.getPaths(this);
+    }
+
+    /**
+     * Updates the internal graph model with the new blocked areas.
+     * @param blockedAreas Expected to be a JSON array populated with the list of nodes.
+     */
+    public void updateBlockedAreas(JSONArray blockedAreas)
+    {
+        try
+        {
+            for(int i = 0; i < blockedAreas.length(); i++)
+            {
+                JSONObject location = blockedAreas.getJSONObject(i);
+                locTypes type = toLocEnum(location.getString("type"));
+                //Log.d("Navigation", "Found location " + location.getInt("location_id") + " " + location.getString("type"));
+                if (type == locTypes.BLOCKED_AREA)
+                {
+                    int nodeId = location.getInt("location_id");
+                    graph.detach(nodeId);
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            Log.d("Navigation", e.getMessage().toString());
+        }
     }
 
     /**
@@ -144,7 +195,6 @@ public class Navigation {
             Log.d("Navigation", e.getMessage().toString());
         }
 
-
         Log.d("Navigation", "Arcs updated: " + logStr);
         //This needs to happen after arcs are placed
         populateWeightFunction();
@@ -159,7 +209,7 @@ public class Navigation {
      */
     public void beginNavigation(int targetNodeId)
     {
-
+        beginNavigation(currentNode, targetNodeId);
     }
 
     /**
@@ -169,7 +219,23 @@ public class Navigation {
      */
     public void beginNavigation(int startNodeId, int endNodeId)
     {
+        startNode = startNodeId;
+        endNode = endNodeId;
+        Log.d("Navigation", "Beginning navigation from " + startNodeId + " to " + endNodeId);
+        if (pathfinder != null)
+        {
+            DataServices.getBlockedAreas(Navigation.this);
+            updateCurrentRoute();
+        }
+        startNavTimer();
+    }
 
+    /**
+     *
+     */
+    public void stopNavigation()
+    {
+        navTimer.cancel();
     }
 
     /**
@@ -177,8 +243,11 @@ public class Navigation {
      */
     public void updateCurrentRoute()
     {
-        currentRoute = pathfinder.search(currentNode, endNode);
-        Log.d("Navigation", currentRoute.toString());
+        if (pathfinder != null)
+        {
+            currentRoute = pathfinder.search(startNode, endNode);
+            Log.d("Navigation", currentRoute.toString());
+        }
     }
 
     /**
@@ -194,10 +263,49 @@ public class Navigation {
             for (Integer childNodeId : graph.getChildrenOf(nodeId))
             {
                 Point2DF p2 = coordinates.get(childNodeId);
+
                 float distance = p1.distance(p2);
                 weightFunction.put(nodeId, childNodeId, (float)(1.2 * distance));
             }
         }
+    }
+
+    private void startNavTimer()
+    {
+        //set a new Timer
+        navTimer = new Timer();
+        //initialize the TimerTask's job
+        initializeTimerTask();
+        //schedule the timer, after the first 2 seconds the TimerTask will run every 2 seconds
+        navTimer.schedule(timerTask, 2000, 2000); //
+    }
+
+    private void stopNavTimer()
+    {
+        //stop the timer, if it's not already null
+        if (navTimer != null)
+        {
+            navTimer.cancel();
+            navTimer = null;
+        }
+    }
+
+    private void initializeTimerTask()
+    {
+        timerTask = new TimerTask()
+        {
+            public void run()
+            {
+                handler.post(new Runnable()
+                {
+                    public void run()
+                    {
+                        DataServices.getBlockedAreas(Navigation.this);
+                        updateCurrentRoute();
+                    }
+                });
+            }
+        };
     }
 
     /**
