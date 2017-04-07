@@ -35,14 +35,30 @@ public class UndirectedGraph extends DirectedGraph{
     public void addArc(int firstNodeId, int secondNodeId) {
         try
         {
-            childMap.get(firstNodeId).add(secondNodeId);
-            childMap.get(secondNodeId).add(firstNodeId);
-            parentMap.get(secondNodeId).add(firstNodeId);
-            parentMap.get(firstNodeId).add(secondNodeId);
+            Set<Integer> set = childMap.get(firstNodeId);
+            if (set == null)
+                Log.d("Graph", "Attempting to add arc to node " + firstNodeId + ", but node isn't present in graph.");
+            else
+                set.add(secondNodeId);
+            set = childMap.get(secondNodeId);
+            if (set == null)
+                Log.d("Graph", "Attempting to add arc to node " + secondNodeId + ", but node isn't present in graph.");
+            else
+                set.add(firstNodeId);
+            set = parentMap.get(firstNodeId);
+            if (set == null)
+                Log.d("Graph", "Attempting to add arc to node " + secondNodeId + ", but node isn't present in graph.");
+            else
+                set.add(secondNodeId);
+            set = parentMap.get(firstNodeId);
+            if (set == null)
+                Log.d("Graph", "Attempting to add arc to node " + firstNodeId + ", but node isn't present in graph.");
+            else
+                set.add(secondNodeId);
         }
         catch (NullPointerException e)
         {
-            Log.d("Navigation", e.getMessage().toString());
+            Log.d("Navigation", "startNode " + firstNodeId + " endNode " + secondNodeId + " - " + e.getMessage().toString());
         }
     }
 

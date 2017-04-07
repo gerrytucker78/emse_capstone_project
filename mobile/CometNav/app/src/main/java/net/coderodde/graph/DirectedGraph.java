@@ -13,8 +13,8 @@ import java.util.Set;
  * @author Rodion "rodde" Efremov
  * @version 1.61 (Oct 13, 2016)
  */
-public class DirectedGraph implements Graph {
-
+public class DirectedGraph implements Graph
+{
     /**
      * This map maps each directed graph node to the list of its child nodes.
      */
@@ -53,9 +53,20 @@ public class DirectedGraph implements Graph {
      * @param tailNodeId the tail node of the arc.
      * @param headNodeId the head node of the arc.
      */
-    public void addArc(int tailNodeId, int headNodeId) {
+    public void addArc(int tailNodeId, int headNodeId)
+    {
         childMap .get(tailNodeId).add(headNodeId);
         parentMap.get(headNodeId).add(tailNodeId);
+    }
+
+    /**
+     * Detaches all arcs from the given node
+     * @param nodeId The node to detach all arcs from
+     */
+    public void detach(int nodeId)
+    {
+        childMap.put(nodeId, new HashSet<Integer>());
+        parentMap.put(nodeId, new HashSet<Integer>());
     }
 
     /**

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import net.coderodde.graph.DirectedGraphWeightFunction;
 import net.coderodde.graph.Graph;
-import net.coderodde.graph.UndirectedGraph;
 import net.coderodde.graph.pathfinding.AbstractPathfinder;
 import net.coderodde.graph.pathfinding.DirectedGraphPath;
 import net.coderodde.graph.pathfinding.GraphNodeCoordinates;
@@ -19,6 +18,7 @@ import android.os.Handler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import net.coderodde.graph.UndirectedGraph;
 
 /**
  * Created by Daniel on 3/25/2017.

@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import net.coderodde.graph.DirectedGraph;
+
 import net.coderodde.graph.DirectedGraphWeightFunction;
+import net.coderodde.graph.DirectedGraph;
 
 /**
  * This abstract class defines some facilities shared by pathfinding algorithms

@@ -7,12 +7,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
-import net.coderodde.graph.DirectedGraph;
+
 import net.coderodde.graph.DirectedGraphWeightFunction;
 import net.coderodde.graph.pathfinding.AbstractPathfinder;
 import net.coderodde.graph.pathfinding.DirectedGraphPath;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
 import net.coderodde.graph.pathfinding.TargetUnreachableException;
+import net.coderodde.graph.DirectedGraph;
 
 /**
  * This pathfinding algorithm is due to Wim Pijls and Henk Post in "Yet another

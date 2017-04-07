@@ -1,7 +1,5 @@
 package net.coderodde.graph.pathfinding;
-
 import net.coderodde.graph.DirectedGraph;
-
 public class TargetUnreachableException extends RuntimeException {
 
     private final DirectedGraph graph;

@@ -1,10 +1,10 @@
 package net.coderodde.graph.pathfinding.support;
 
-import net.coderodde.graph.DirectedGraph;
 import net.coderodde.graph.DirectedGraphWeightFunction;
 import net.coderodde.graph.pathfinding.AbstractPathfinder;
 import net.coderodde.graph.pathfinding.DirectedGraphPath;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
+import net.coderodde.graph.DirectedGraph;
 
 public final class DijkstraPathfinder extends AbstractPathfinder {
 
