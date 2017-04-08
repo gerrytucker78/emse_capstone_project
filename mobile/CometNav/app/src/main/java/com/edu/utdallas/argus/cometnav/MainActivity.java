@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -91,8 +92,11 @@ public class MainActivity extends AppCompatActivity
         startService(intent);
 
         //Start Navigation and Data Services
-        nav = new Navigation();
-        nav.beginNavigation(4, 6);
+        //nav = new Navigation();
+        //nav.beginNavigation(4, 6);
+        double[][] positions = new double[][] { { 5.0, -6.0 }, { 13.0, -15.0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
+        double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
+        Log.d("Location", LocationFinder.getLocationMatrix(positions, distances).toString());
     }
 
     @Override
