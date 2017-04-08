@@ -10,8 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="380dp"
-        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/common_full_open_on_phone"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
