@@ -112,6 +112,12 @@ public class Navigation {
         DataServices.getLocations(this);
     }
 
+    public Navigation(JSONArray locations) {
+        graph = new UndirectedGraph();
+        coordinates = new GraphNodeCoordinates();
+        this.updateNodes(locations);
+    }
+
     /**
      * Updates the internal graph model with the new locations. Expected to run before updatePaths.
      * @param locations Expected to be a JSON array populated with the list of nodes.
