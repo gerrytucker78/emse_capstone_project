@@ -13,6 +13,7 @@
     <!-- App has to have access to Bluetooth in order to find the Beacons -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
