@@ -86,11 +86,10 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
 
                     localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
                     LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
+                    Log.d(TAG, beaconsList.toString());
                     if(beaconsList.size() > 0) {
                         for (Beacon b : beaconsList) {
-                            Log.d(TAG, "Beacon Bluetooth Address: " + b.getBluetoothAddress()
-                                    + " ID1: " + b.getId1()
-                                    + " ID2: " + b.getId2()
+                            Log.d(TAG, "Beacon ID1: " + b.getId1() + " Distance: " + b.getDistance()
                             );
                         }
                     }else{
