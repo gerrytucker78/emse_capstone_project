@@ -18,11 +18,8 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +27,7 @@ import java.util.Set;
 /**
  * Created by Michelle on 3/25/2017.
  *
- * Intent service to run in the background to find BTL EddyStone beacons
+ * Intent service to run in the background to find BLE EddyStone beacons
  *
  */
 
@@ -39,6 +36,7 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
     protected static final String CometNavRegion = "CometNav"; //Specifies Eddystone region for CometNav beacons
 
     //Null Beacon Namespace and Beacon Instance so we see all beacons
+    //Note: The namespace and beacon instance can be specified if you want to only find a specific set of beacons
     private Region region=new Region(CometNavRegion, null, null, null);
     private BeaconManager beaconManager;
     private static Set<Beacon> beaconsList=new HashSet<Beacon>();
@@ -50,9 +48,9 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
+        //Start scan for beacons
+        //Note: This class is initialized when the intent service is created
         onBeaconServiceConnect();
-        SystemClock.sleep(5000);
     }
 
     @Override
@@ -60,17 +58,17 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                Log.i(TAG, "DETECTED BEACON!!! Region:" + region.getId1() + " Namespace id:" + region.getId2() + " Bluetooth Address: " + region.getBluetoothAddress());
+                Log.i(TAG, "Entered region:" + region.getId1());
             }
 
             @Override
             public void didExitRegion(Region region) {
-
+                Log.i(TAG, "Exited region " + region.getId1());
             }
 
             @Override
             public void didDetermineStateForRegion(int i, Region region) {
-                Log.i(TAG, "DETECTED BEACON!!! Region:" + region.getId1() + " Namespace id:" + region.getId2() + " Bluetooth Address: " + region.getBluetoothAddress());
+                Log.i(TAG, "Region Status: Region: " + region.getId1() + " Status: " + Integer.toString(i));
             }
         });
 
@@ -81,14 +79,23 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                     Intent localIntent = new Intent("BEACON_ACTION");
+                    beaconsList.clear(); //Empty all the beacons, that way we don't list beacons that we can't see anymore
                     beaconsList.addAll(beacons);
-                    Log.d(TAG, "Adding all beacons found");
 
                     List<Beacon> beaconArrayList = new ArrayList<Beacon>(beaconsList);
 
                     localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
                     LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
-                    Log.d(TAG, "Beacons... " + beaconsList.toString());
+                    if(beaconsList.size() > 0) {
+                        for (Beacon b : beaconsList) {
+                            Log.d(TAG, "Beacon Bluetooth Address: " + b.getBluetoothAddress()
+                                    + " ID1: " + b.getId1()
+                                    + " ID2: " + b.getId2()
+                            );
+                        }
+                    }else{
+                        Log.d(TAG, "No beacons detected at this time");
+                    }
                 }
             });
         } catch (Exception e) {
