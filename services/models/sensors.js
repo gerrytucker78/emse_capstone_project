@@ -9,7 +9,9 @@ var dbConfig = config.get("db");
  **/
 var Location = dbData.db.define('sensors', {
     sensor_id: {type: Sequelize.STRING, primaryKey: true},
-    latlong: {type: Sequelize.GEOMETRY},
+    pixel_loc_x: {type: Sequelize.INTEGER},
+    pixel_loc_y: {type: Sequelize.INTEGER},
+    floor: {type: Sequelize.INTEGER},
     name: {type: Sequelize.STRING}
 }, {timestamps: false});
 

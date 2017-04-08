@@ -3,6 +3,7 @@ var config = require('config');
 var simulation = config.get('simulation');
 
 describe('Sensors', function () {
+    this.timeout(10000);
     var server;
     var testSensors = [];
 
