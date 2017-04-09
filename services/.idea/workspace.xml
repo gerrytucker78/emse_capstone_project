@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/data/locations.json" afterPath="$PROJECT_DIR$/scripts/data/locations.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/data/paths.json" afterPath="$PROJECT_DIR$/scripts/data/paths.json" />
     </list>
     <ignored path="services.iws" />
@@ -77,8 +75,8 @@
       <file leaf-file-name="paths.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/data/paths.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="244" column="2" selection-start-line="244" selection-start-column="2" selection-end-line="244" selection-end-column="2" />
+            <state relative-caret-position="15">
+              <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -976,7 +974,7 @@
       <workItem from="1491267447673" duration="2960000" />
       <workItem from="1491668167139" duration="994000" />
       <workItem from="1491677064226" duration="747000" />
-      <workItem from="1491772666794" duration="775000" />
+      <workItem from="1491772666794" duration="834000" />
     </task>
     <servers />
   </component>
@@ -1013,7 +1011,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72890000" />
+    <option name="totallyTimeSpent" value="72949000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1458,8 +1456,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/data/paths.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="244" column="2" selection-start-line="244" selection-start-column="2" selection-end-line="244" selection-end-column="2" />
+        <state relative-caret-position="15">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
           <folding />
         </state>
       </provider>
