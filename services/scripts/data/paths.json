@@ -243,7 +243,6 @@
   
 
   
-	/** Second Floor **/
 	{"start_id": 200,"end_id": 201,"weight":null},
 
 	{"start_id": 201,"end_id": 200,"weight":null},
