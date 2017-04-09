@@ -12,49 +12,49 @@
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "3",
         "name": "00010203040506070820",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "4",
         "name": "00010203040506070824",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "5",
         "name": "00010203040506070826",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "6",
         "name": "0001020304050607081f",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "7",
         "name": "00010203040506070821",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "8",
         "name": "00010203040506070825",
         "pixel_loc_x":195,
         "pixel_loc_y":100,
         "floor": 2
-      }
+      },
 	  {
         "sensor_id": "9",
         "name": "00010203040506070822",
