@@ -1,7 +1,7 @@
 {
   "db": {
     "host": "capstone.cswyqjezev94.us-west-2.rds.amazonaws.com",
-    "db": "capstone_gerry",
+    "db": "capstone",
     "port": 5432,
     "authRequired": "true",
     "user": "argus",
