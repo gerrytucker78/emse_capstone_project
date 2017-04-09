@@ -113,6 +113,106 @@
 
 		{"location_id": 92,"name": "2.710","type":"ROOM","pixel_loc_x":221,"pixel_loc_y":155, "floor":2,"map":null},
 
+		/** Second Floor **/
+		/** 1st Vert Hall Way - NW - Hall **/
 
+		{"location_id": 200,"name": "3.HALL.NW.1","type":"HALL","pixel_loc_x":83,"pixel_loc_y":40,"floor":2,"map":null},
+		{"location_id": 201,"name": "3.HALL.NW.2","type":"HALL","pixel_loc_x":83,"pixel_loc_y":170,"floor":2,"map":null},
+		{"location_id": 202,"name": "3.HALL.NW.3","type":"HALL","pixel_loc_x":83,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 203,"name": "3.HALL.NW.4","type":"HALL","pixel_loc_x":83,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 204,"name": "3.HALL.NW.5","type":"HALL","pixel_loc_x":83,"pixel_loc_y":362,"floor":2,"map":null},
+
+
+
+		/** 2nd Vert Hall Way - NW - Hall **/
+		{"location_id": 205,"name": "3.HALL.NW.6","type":"HALL","pixel_loc_x":327,"pixel_loc_y":40,"floor":2,"map":null},	  
+		{"location_id": 206,"name": "3.HALL.NW.7","type":"HALL","pixel_loc_x":327,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 207,"name": "3.HALL.NW.8","type":"HALL","pixel_loc_x":327,"pixel_loc_y":225,"floor":2,"map":null},
+		{"location_id": 208,"name": "3.HALL.NW.9","type":"HALL","pixel_loc_x":327,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 209,"name": "3.HALL.NW.10","type":"HALL","pixel_loc_x":327,"pixel_loc_y":362,"floor":2,"map":null},
+
+		/** 3rd Vert Hall Way - NW - Hall **/
+		{"location_id": 210,"name": "3.HALL.NW.11","type":"HALL","pixel_loc_x":517,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 211,"name": "3.HALL.NW.12","type":"HALL","pixel_loc_x":517,"pixel_loc_y":362,"floor":2,"map":null},
+
+		/** 1st Horiz Hall Way - NW - Hall **/	  
+		{"location_id": 212,"name": "3.HALL.NW.13","type":"HALL","pixel_loc_x":125,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 213,"name": "3.HALL.NW.14","type":"HALL","pixel_loc_x":160,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 214,"name": "3.HALL.NW.15","type":"HALL","pixel_loc_x":195,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 215,"name": "3.HALL.NW.16","type":"HALL","pixel_loc_x":230,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 216,"name": "3.HALL.NW.17","type":"HALL","pixel_loc_x":265,"pixel_loc_y":195,"floor":2,"map":null},
+		{"location_id": 217,"name": "3.HALL.NW.18","type":"HALL","pixel_loc_x":300,"pixel_loc_y":195,"floor":2,"map":null},
+
+		/** 1st Horiz Hall Way - NW - Rooms - South **/	  
+		{"location_id": 218,"name": "3.417","type":"ROOM","pixel_loc_x":125,"pixel_loc_y":203,"floor":2,"map":null},
+		{"location_id": 219,"name": "3.416","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":203,"floor":2,"map":null},
+		{"location_id": 220,"name": "3.415","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":203,"floor":2,"map":null},
+		{"location_id": 221,"name": "3.414","type":"ROOM","pixel_loc_x":228,"pixel_loc_y":203,"floor":2,"map":null},
+		{"location_id": 222,"name": "3.413","type":"ROOM","pixel_loc_x":263,"pixel_loc_y":203,"floor":2,"map":null},
+		{"location_id": 223,"name": "3.412","type":"ROOM","pixel_loc_x":297,"pixel_loc_y":203,"floor":2,"map":null},
+
+		/** 1st Horiz Hall Way - NW - Rooms - North **/	  
+		{"location_id": 224,"name": "3.402","type":"ROOM","pixel_loc_x":147,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 225,"name": "3.403","type":"ROOM","pixel_loc_x":163,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 226,"name": "3.404","type":"ROOM","pixel_loc_x":179,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 227,"name": "3.405","type":"ROOM","pixel_loc_x":197,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 228,"name": "3.406","type":"ROOM","pixel_loc_x":215,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 229,"name": "3.407","type":"ROOM","pixel_loc_x":232,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 230,"name": "3.408","type":"ROOM","pixel_loc_x":250,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 231,"name": "3.409","type":"ROOM","pixel_loc_x":268,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 232,"name": "3.410","type":"ROOM","pixel_loc_x":284,"pixel_loc_y":188,"floor":2,"map":null},
+		{"location_id": 233,"name": "3.411","type":"ROOM","pixel_loc_x":293,"pixel_loc_y":188,"floor":2,"map":null},
+
+		/** 2nd Horiz Hall Way - NW - Hall **/	  
+		{"location_id": 234,"name": "3.HALL.NW.19","type":"HALL","pixel_loc_x":125,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 235,"name": "3.HALL.NW.20","type":"HALL","pixel_loc_x":160,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 236,"name": "3.HALL.NW.21","type":"HALL","pixel_loc_x":195,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 237,"name": "3.HALL.NW.22","type":"HALL","pixel_loc_x":230,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 238,"name": "3.HALL.NW.23","type":"HALL","pixel_loc_x":265,"pixel_loc_y":248,"floor":2,"map":null},
+		{"location_id": 239,"name": "3.HALL.NW.24","type":"HALL","pixel_loc_x":300,"pixel_loc_y":248,"floor":2,"map":null},
+
+		/** 2nd Horiz Hall Way - Rooms **/
+		{"location_id": 240,"name": "3.623","type":"ROOM","pixel_loc_x":125,"pixel_loc_y":255,"floor":2,"map":null},
+		{"location_id": 241,"name": "3.622","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":255,"floor":2,"map":null},
+		{"location_id": 242,"name": "3.621","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":255,"floor":2,"map":null},
+		{"location_id": 243,"name": "3.620","type":"ROOM","pixel_loc_x":230,"pixel_loc_y":255,"floor":2,"map":null},
+		{"location_id": 244,"name": "3.619","type":"ROOM","pixel_loc_x":265,"pixel_loc_y":255,"floor":2,"map":null},
+		{"location_id": 245,"name": "3.618","type":"ROOM","pixel_loc_x":300,"pixel_loc_y":255,"floor":2,"map":null},
+
+		/** 3rd Horiz Hall Way - NW - Hall **/	  
+		{"location_id": 246,"name": "3.HALL.NW.19","type":"HALL","pixel_loc_x":125,"pixel_loc_y":362,"floor":2,"map":null},
+		{"location_id": 247,"name": "3.HALL.NW.20","type":"HALL","pixel_loc_x":160,"pixel_loc_y":362,"floor":2,"map":null},
+		{"location_id": 248,"name": "3.HALL.NW.21","type":"HALL","pixel_loc_x":195,"pixel_loc_y":362,"floor":2,"map":null},
+		{"location_id": 249,"name": "3.HALL.NW.22","type":"HALL","pixel_loc_x":230,"pixel_loc_y":362,"floor":2,"map":null},
+		{"location_id": 250,"name": "3.HALL.NW.23","type":"HALL","pixel_loc_x":265,"pixel_loc_y":362,"floor":2,"map":null},
+		{"location_id": 251,"name": "3.HALL.NW.24","type":"HALL","pixel_loc_x":300,"pixel_loc_y":362,"floor":2,"map":null},
+
+		/** 3rd Horiz Hall Way - Rooms - North **/
+		{"location_id": 252,"name": "3.213","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":355,"floor":2,"map":null},
+		{"location_id": 253,"name": "3.214","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":355,"floor":2,"map":null},
+		{"location_id": 254,"name": "3.215","type":"ROOM","pixel_loc_x":230,"pixel_loc_y":355,"floor":2,"map":null},
+		{"location_id": 255,"name": "3.216","type":"ROOM","pixel_loc_x":265,"pixel_loc_y":355,"floor":2,"map":null},
+		{"location_id": 256,"name": "3.217","type":"ROOM","pixel_loc_x":300,"pixel_loc_y":355,"floor":2,"map":null},
+
+		/** 3rd Hall Way - Rooms - South **/
+		{"location_id": 257,"name": "3.212","type":"ROOM","pixel_loc_x":114,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 258,"name": "3.211","type":"ROOM","pixel_loc_x":130,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 259,"name": "3.210","type":"ROOM","pixel_loc_x":146,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 260,"name": "3.209","type":"ROOM","pixel_loc_x":166,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 261,"name": "3.208","type":"ROOM","pixel_loc_x":183,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 262,"name": "3.207","type":"ROOM","pixel_loc_x":200,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 263,"name": "3.206","type":"ROOM","pixel_loc_x":217,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 264,"name": "3.205","type":"ROOM","pixel_loc_x":234,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 265,"name": "3.204","type":"ROOM","pixel_loc_x":251,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 266,"name": "3.203","type":"ROOM","pixel_loc_x":269,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 267,"name": "3.202","type":"ROOM","pixel_loc_x":287,"pixel_loc_y":367,"floor":2,"map":null},
+		{"location_id": 268,"name": "3.201","type":"ROOM","pixel_loc_x":304,"pixel_loc_y":367,"floor":2,"map":null},
+
+		/** All Floor - Stairs **/
+		{"location_id": 269,"name": "3.STAIRS.1","type":"STAIRS","pixel_loc_x":95,"pixel_loc_y":170,"floor":2,"map":null},
+		{"location_id": 270,"name": "3.STAIRS.2","type":"STAIRS","pixel_loc_x":342,"pixel_loc_y":47,"floor":2,"map":null},
+		{"location_id": 271,"name": "3.STAIRS.3","type":"STAIRS","pixel_loc_x":336,"pixel_loc_y":223,"floor":2,"map":null},
+		{"location_id": 272,"name": "3.STAIRS.4","type":"STAIRS","pixel_loc_x":336,"pixel_loc_y":387,"floor":2,"map":null},
+		
 		{"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null}
     ]

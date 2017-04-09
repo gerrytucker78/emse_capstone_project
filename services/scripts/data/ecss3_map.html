@@ -1,0 +1,478 @@
+<html>
+<head>
+	<script>
+	
+	</script>
+</head>
+<body>
+<img src="../../data/ECSS3.png" border="0" sytle="visibility: hidden" usemap="#room_map" alt="" id="mapImage"/>
+
+
+<script>
+/**
+		{id: 0,name: "3.HALL.NW.1",type:"HALL",pixelLoc:{x:190,y:105},"floor":2,"map":null},
+		{id: 1,name: "3.HALL.NW.2",type:"HALL",pixelLoc:{x:190,y:180},"floor":2,"map":null},
+		{id: 2,name: "2.201",type:"ROOM",pixelLoc:{x:170,y:190},"floor":2,"map":null},
+		{id: 3,name: "2.202",type:"ROOM",pixelLoc:{x:165,y:178},"floor":2,"map":null},
+		{id: 4,name: "2.203",type:"ROOM",pixelLoc:{x:170,y:170},"floor":2,"map":null},
+		{id: 5,name: "2.204",type:"ROOM",pixelLoc:{x:195,y:100},"floor":2,"map":null},
+		{id: 6,name: "2.2R1",type:"ROOM",pixelLoc:{x:198,y:195},"floor":2,"map":null},
+		{id: 7,name: "2.2R2",type:"ROOM",pixelLoc:{x:198,y:217},"floor":2,"map":null},
+		{id: 8,name: "3.HALL.NW.3",type:"HALL",pixelLoc:{x:190,y:210},"floor":2,"map":null},
+
+		{id: 9,name: "3.HALL.NW.4",type:"HALL",pixelLoc:{x:190,y:242},"floor":2,"map":null},
+		{id: 10,name: "2.TEMP",type:"ROOM",pixelLoc:{x:208,y:242},"floor":2,"map":null},
+		{id: 11,name: "2.TEMP",type:"ROOM",pixelLoc:{x:213,y:250},"floor":2,"map":null},
+		{id: 12,name: "2.TEMP",type:"ROOM",pixelLoc:{x:225,y:238},"floor":2,"map":null},
+**/
+	var halls = true;
+	var rooms = true;
+	var showPaths = true;
+	var exits = true;
+	var stairs = true;
+	var labels = true;
+	
+	var locations = [
+	  /** 1st Vert Hall Way - NW - Hall **/
+
+      {"location_id": 200,"name": "3.HALL.NW.1","type":"HALL","pixel_loc_x":83,"pixel_loc_y":40,"floor":2,"map":null},
+      {"location_id": 201,"name": "3.HALL.NW.2","type":"HALL","pixel_loc_x":83,"pixel_loc_y":170,"floor":2,"map":null},
+      {"location_id": 202,"name": "3.HALL.NW.3","type":"HALL","pixel_loc_x":83,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 203,"name": "3.HALL.NW.4","type":"HALL","pixel_loc_x":83,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 204,"name": "3.HALL.NW.5","type":"HALL","pixel_loc_x":83,"pixel_loc_y":362,"floor":2,"map":null},
+
+
+	  
+	  /** 2nd Vert Hall Way - NW - Hall **/
+	  {"location_id": 205,"name": "3.HALL.NW.6","type":"HALL","pixel_loc_x":327,"pixel_loc_y":40,"floor":2,"map":null},	  
+      {"location_id": 206,"name": "3.HALL.NW.7","type":"HALL","pixel_loc_x":327,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 207,"name": "3.HALL.NW.8","type":"HALL","pixel_loc_x":327,"pixel_loc_y":225,"floor":2,"map":null},
+      {"location_id": 208,"name": "3.HALL.NW.9","type":"HALL","pixel_loc_x":327,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 209,"name": "3.HALL.NW.10","type":"HALL","pixel_loc_x":327,"pixel_loc_y":362,"floor":2,"map":null},
+
+	  /** 3rd Vert Hall Way - NW - Hall **/
+      {"location_id": 210,"name": "3.HALL.NW.11","type":"HALL","pixel_loc_x":517,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 211,"name": "3.HALL.NW.12","type":"HALL","pixel_loc_x":517,"pixel_loc_y":362,"floor":2,"map":null},
+
+	  /** 1st Horiz Hall Way - NW - Hall **/	  
+      {"location_id": 212,"name": "3.HALL.NW.13","type":"HALL","pixel_loc_x":125,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 213,"name": "3.HALL.NW.14","type":"HALL","pixel_loc_x":160,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 214,"name": "3.HALL.NW.15","type":"HALL","pixel_loc_x":195,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 215,"name": "3.HALL.NW.16","type":"HALL","pixel_loc_x":230,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 216,"name": "3.HALL.NW.17","type":"HALL","pixel_loc_x":265,"pixel_loc_y":195,"floor":2,"map":null},
+      {"location_id": 217,"name": "3.HALL.NW.18","type":"HALL","pixel_loc_x":300,"pixel_loc_y":195,"floor":2,"map":null},
+
+	  /** 1st Horiz Hall Way - NW - Rooms - South **/	  
+      {"location_id": 218,"name": "3.417","type":"ROOM","pixel_loc_x":125,"pixel_loc_y":203,"floor":2,"map":null},
+      {"location_id": 219,"name": "3.416","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":203,"floor":2,"map":null},
+      {"location_id": 220,"name": "3.415","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":203,"floor":2,"map":null},
+      {"location_id": 221,"name": "3.414","type":"ROOM","pixel_loc_x":228,"pixel_loc_y":203,"floor":2,"map":null},
+      {"location_id": 222,"name": "3.413","type":"ROOM","pixel_loc_x":263,"pixel_loc_y":203,"floor":2,"map":null},
+      {"location_id": 223,"name": "3.412","type":"ROOM","pixel_loc_x":297,"pixel_loc_y":203,"floor":2,"map":null},
+
+	  /** 1st Horiz Hall Way - NW - Rooms - North **/	  
+      {"location_id": 224,"name": "3.402","type":"ROOM","pixel_loc_x":147,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 225,"name": "3.403","type":"ROOM","pixel_loc_x":163,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 226,"name": "3.404","type":"ROOM","pixel_loc_x":179,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 227,"name": "3.405","type":"ROOM","pixel_loc_x":197,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 228,"name": "3.406","type":"ROOM","pixel_loc_x":215,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 229,"name": "3.407","type":"ROOM","pixel_loc_x":232,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 230,"name": "3.408","type":"ROOM","pixel_loc_x":250,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 231,"name": "3.409","type":"ROOM","pixel_loc_x":268,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 232,"name": "3.410","type":"ROOM","pixel_loc_x":284,"pixel_loc_y":188,"floor":2,"map":null},
+      {"location_id": 233,"name": "3.411","type":"ROOM","pixel_loc_x":293,"pixel_loc_y":188,"floor":2,"map":null},
+
+ 	  /** 2nd Horiz Hall Way - NW - Hall **/	  
+      {"location_id": 234,"name": "3.HALL.NW.19","type":"HALL","pixel_loc_x":125,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 235,"name": "3.HALL.NW.20","type":"HALL","pixel_loc_x":160,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 236,"name": "3.HALL.NW.21","type":"HALL","pixel_loc_x":195,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 237,"name": "3.HALL.NW.22","type":"HALL","pixel_loc_x":230,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 238,"name": "3.HALL.NW.23","type":"HALL","pixel_loc_x":265,"pixel_loc_y":248,"floor":2,"map":null},
+      {"location_id": 239,"name": "3.HALL.NW.24","type":"HALL","pixel_loc_x":300,"pixel_loc_y":248,"floor":2,"map":null},
+
+	  /** 2nd Horiz Hall Way - Rooms **/
+      {"location_id": 240,"name": "3.623","type":"ROOM","pixel_loc_x":125,"pixel_loc_y":255,"floor":2,"map":null},
+      {"location_id": 241,"name": "3.622","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":255,"floor":2,"map":null},
+      {"location_id": 242,"name": "3.621","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":255,"floor":2,"map":null},
+      {"location_id": 243,"name": "3.620","type":"ROOM","pixel_loc_x":230,"pixel_loc_y":255,"floor":2,"map":null},
+      {"location_id": 244,"name": "3.619","type":"ROOM","pixel_loc_x":265,"pixel_loc_y":255,"floor":2,"map":null},
+      {"location_id": 245,"name": "3.618","type":"ROOM","pixel_loc_x":300,"pixel_loc_y":255,"floor":2,"map":null},
+
+ 	  /** 3rd Horiz Hall Way - NW - Hall **/	  
+      {"location_id": 246,"name": "3.HALL.NW.19","type":"HALL","pixel_loc_x":125,"pixel_loc_y":362,"floor":2,"map":null},
+      {"location_id": 247,"name": "3.HALL.NW.20","type":"HALL","pixel_loc_x":160,"pixel_loc_y":362,"floor":2,"map":null},
+      {"location_id": 248,"name": "3.HALL.NW.21","type":"HALL","pixel_loc_x":195,"pixel_loc_y":362,"floor":2,"map":null},
+      {"location_id": 249,"name": "3.HALL.NW.22","type":"HALL","pixel_loc_x":230,"pixel_loc_y":362,"floor":2,"map":null},
+      {"location_id": 250,"name": "3.HALL.NW.23","type":"HALL","pixel_loc_x":265,"pixel_loc_y":362,"floor":2,"map":null},
+      {"location_id": 251,"name": "3.HALL.NW.24","type":"HALL","pixel_loc_x":300,"pixel_loc_y":362,"floor":2,"map":null},
+
+	  /** 3rd Horiz Hall Way - Rooms - North **/
+      {"location_id": 252,"name": "3.213","type":"ROOM","pixel_loc_x":160,"pixel_loc_y":355,"floor":2,"map":null},
+      {"location_id": 253,"name": "3.214","type":"ROOM","pixel_loc_x":195,"pixel_loc_y":355,"floor":2,"map":null},
+      {"location_id": 254,"name": "3.215","type":"ROOM","pixel_loc_x":230,"pixel_loc_y":355,"floor":2,"map":null},
+      {"location_id": 255,"name": "3.216","type":"ROOM","pixel_loc_x":265,"pixel_loc_y":355,"floor":2,"map":null},
+      {"location_id": 256,"name": "3.217","type":"ROOM","pixel_loc_x":300,"pixel_loc_y":355,"floor":2,"map":null},
+
+	  /** 3rd Hall Way - Rooms - South **/
+      {"location_id": 257,"name": "3.212","type":"ROOM","pixel_loc_x":114,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 258,"name": "3.211","type":"ROOM","pixel_loc_x":130,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 259,"name": "3.210","type":"ROOM","pixel_loc_x":146,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 260,"name": "3.209","type":"ROOM","pixel_loc_x":166,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 261,"name": "3.208","type":"ROOM","pixel_loc_x":183,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 262,"name": "3.207","type":"ROOM","pixel_loc_x":200,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 263,"name": "3.206","type":"ROOM","pixel_loc_x":217,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 264,"name": "3.205","type":"ROOM","pixel_loc_x":234,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 265,"name": "3.204","type":"ROOM","pixel_loc_x":251,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 266,"name": "3.203","type":"ROOM","pixel_loc_x":269,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 267,"name": "3.202","type":"ROOM","pixel_loc_x":287,"pixel_loc_y":367,"floor":2,"map":null},
+      {"location_id": 268,"name": "3.201","type":"ROOM","pixel_loc_x":304,"pixel_loc_y":367,"floor":2,"map":null},
+
+	  /** All Floor - Stairs **/
+      {"location_id": 269,"name": "3.STAIRS.1","type":"STAIRS","pixel_loc_x":95,"pixel_loc_y":170,"floor":2,"map":null},
+      {"location_id": 270,"name": "3.STAIRS.2","type":"STAIRS","pixel_loc_x":342,"pixel_loc_y":47,"floor":2,"map":null},
+      {"location_id": 271,"name": "3.STAIRS.3","type":"STAIRS","pixel_loc_x":336,"pixel_loc_y":223,"floor":2,"map":null},
+      {"location_id": 272,"name": "3.STAIRS.4","type":"STAIRS","pixel_loc_x":336,"pixel_loc_y":387,"floor":2,"map":null},
+
+		];
+	var paths = [
+		{"start_id": 200,"end_id": 201,"weight":null},
+
+		{"start_id": 201,"end_id": 200,"weight":null},
+		{"start_id": 201,"end_id": 202,"weight":null},
+		{"start_id": 201,"end_id": 269,"weight":null},
+
+		{"start_id": 202,"end_id": 201,"weight":null},
+		{"start_id": 202,"end_id": 203,"weight":null},
+		{"start_id": 202,"end_id": 206,"weight":null},
+		{"start_id": 202,"end_id": 212,"weight":null},
+
+		{"start_id": 203,"end_id": 202,"weight":null},
+		{"start_id": 203,"end_id": 204,"weight":null},
+		{"start_id": 203,"end_id": 208,"weight":null},
+		{"start_id": 203,"end_id": 234,"weight":null},
+
+		{"start_id": 204,"end_id": 203,"weight":null},		
+		{"start_id": 204,"end_id": 209,"weight":null},
+		{"start_id": 204,"end_id": 246,"weight":null},
+
+		{"start_id": 205,"end_id": 206,"weight":null},
+		{"start_id": 205,"end_id": 270,"weight":null},
+		
+		{"start_id": 206,"end_id": 202,"weight":null},
+		{"start_id": 206,"end_id": 205,"weight":null},
+		{"start_id": 206,"end_id": 207,"weight":null},
+		{"start_id": 206,"end_id": 217,"weight":null},
+
+		{"start_id": 207,"end_id": 206,"weight":null},
+		{"start_id": 207,"end_id": 208,"weight":null},
+		{"start_id": 207,"end_id": 271,"weight":null},
+
+		{"start_id": 208,"end_id": 203,"weight":null},
+		{"start_id": 208,"end_id": 207,"weight":null},
+		{"start_id": 208,"end_id": 209,"weight":null},
+		{"start_id": 208,"end_id": 210,"weight":null},
+		{"start_id": 208,"end_id": 239,"weight":null},
+		
+		{"start_id": 209,"end_id": 204,"weight":null},
+		{"start_id": 209,"end_id": 208,"weight":null},
+		{"start_id": 209,"end_id": 211,"weight":null},
+		{"start_id": 209,"end_id": 251,"weight":null},
+		{"start_id": 209,"end_id": 272,"weight":null},
+		
+		{"start_id": 210,"end_id": 208,"weight":null},
+		{"start_id": 210,"end_id": 211,"weight":null},
+
+		{"start_id": 211,"end_id": 209,"weight":null},
+		{"start_id": 211,"end_id": 210,"weight":null},
+
+		{"start_id": 212,"end_id": 202,"weight":null},
+		{"start_id": 212,"end_id": 213,"weight":null},
+		{"start_id": 212,"end_id": 218,"weight":null},
+
+		{"start_id": 213,"end_id": 212,"weight":null},
+		{"start_id": 213,"end_id": 214,"weight":null},
+		{"start_id": 213,"end_id": 219,"weight":null},
+		{"start_id": 213,"end_id": 224,"weight":null},
+		{"start_id": 213,"end_id": 225,"weight":null},
+
+		{"start_id": 214,"end_id": 213,"weight":null},
+		{"start_id": 214,"end_id": 215,"weight":null},
+		{"start_id": 214,"end_id": 220,"weight":null},
+		{"start_id": 214,"end_id": 226,"weight":null},
+		{"start_id": 214,"end_id": 227,"weight":null},
+		{"start_id": 214,"end_id": 228,"weight":null},
+
+		{"start_id": 215,"end_id": 214,"weight":null},
+		{"start_id": 215,"end_id": 216,"weight":null},
+		{"start_id": 215,"end_id": 221,"weight":null},
+		{"start_id": 215,"end_id": 229,"weight":null},
+		{"start_id": 215,"end_id": 230,"weight":null},
+
+		{"start_id": 216,"end_id": 215,"weight":null},
+		{"start_id": 216,"end_id": 217,"weight":null},
+		{"start_id": 216,"end_id": 222,"weight":null},
+		{"start_id": 216,"end_id": 231,"weight":null},
+
+		{"start_id": 217,"end_id": 216,"weight":null},
+		{"start_id": 217,"end_id": 223,"weight":null},
+		{"start_id": 217,"end_id": 232,"weight":null},
+		{"start_id": 217,"end_id": 233,"weight":null},
+		{"start_id": 217,"end_id": 206,"weight":null},
+
+		{"start_id": 218,"end_id": 212,"weight":null},
+		{"start_id": 219,"end_id": 213,"weight":null},
+		{"start_id": 220,"end_id": 214,"weight":null},
+		{"start_id": 221,"end_id": 215,"weight":null},
+		{"start_id": 222,"end_id": 216,"weight":null},
+		{"start_id": 223,"end_id": 217,"weight":null},
+		{"start_id": 224,"end_id": 213,"weight":null},
+		{"start_id": 225,"end_id": 213,"weight":null},
+		{"start_id": 226,"end_id": 213,"weight":null},
+		{"start_id": 227,"end_id": 214,"weight":null},
+		{"start_id": 228,"end_id": 214,"weight":null},
+		{"start_id": 229,"end_id": 215,"weight":null},
+		{"start_id": 230,"end_id": 215,"weight":null},
+		{"start_id": 231,"end_id": 216,"weight":null},
+		{"start_id": 232,"end_id": 217,"weight":null},
+		{"start_id": 233,"end_id": 217,"weight":null},
+
+		{"start_id": 234,"end_id": 203,"weight":null},
+		{"start_id": 234,"end_id": 235,"weight":null},
+		{"start_id": 234,"end_id": 240,"weight":null},
+
+		{"start_id": 235,"end_id": 234,"weight":null},
+		{"start_id": 235,"end_id": 236,"weight":null},
+		{"start_id": 235,"end_id": 241,"weight":null},
+
+		{"start_id": 236,"end_id": 235,"weight":null},
+		{"start_id": 236,"end_id": 237,"weight":null},
+		{"start_id": 236,"end_id": 242,"weight":null},
+
+		{"start_id": 237,"end_id": 236,"weight":null},		
+		{"start_id": 237,"end_id": 238,"weight":null},
+		{"start_id": 237,"end_id": 243,"weight":null},
+
+		{"start_id": 238,"end_id": 237,"weight":null},
+		{"start_id": 238,"end_id": 239,"weight":null},
+		{"start_id": 238,"end_id": 244,"weight":null},
+
+		{"start_id": 239,"end_id": 208,"weight":null},		
+		{"start_id": 239,"end_id": 238,"weight":null},
+		{"start_id": 239,"end_id": 245,"weight":null},
+
+		{"start_id": 240,"end_id": 234,"weight":null},
+		{"start_id": 241,"end_id": 235,"weight":null},
+		{"start_id": 242,"end_id": 236,"weight":null},
+		{"start_id": 243,"end_id": 237,"weight":null},
+		{"start_id": 244,"end_id": 238,"weight":null},
+		{"start_id": 245,"end_id": 239,"weight":null},
+
+		
+		{"start_id": 246,"end_id": 204,"weight":null},
+		{"start_id": 246,"end_id": 247,"weight":null},
+		{"start_id": 246,"end_id": 257,"weight":null},
+		{"start_id": 246,"end_id": 258,"weight":null},
+
+		{"start_id": 247,"end_id": 246,"weight":null},
+		{"start_id": 247,"end_id": 248,"weight":null},
+		{"start_id": 247,"end_id": 252,"weight":null},
+		{"start_id": 247,"end_id": 259,"weight":null},
+		{"start_id": 247,"end_id": 260,"weight":null},
+
+		{"start_id": 248,"end_id": 247,"weight":null},
+		{"start_id": 248,"end_id": 249,"weight":null},
+		{"start_id": 248,"end_id": 253,"weight":null},
+		{"start_id": 248,"end_id": 261,"weight":null},
+		{"start_id": 248,"end_id": 262,"weight":null},
+
+		{"start_id": 249,"end_id": 248,"weight":null},
+		{"start_id": 249,"end_id": 250,"weight":null},
+		{"start_id": 249,"end_id": 254,"weight":null},
+		{"start_id": 249,"end_id": 263,"weight":null},
+		{"start_id": 249,"end_id": 264,"weight":null},
+
+		{"start_id": 250,"end_id": 249,"weight":null},
+		{"start_id": 250,"end_id": 251,"weight":null},
+		{"start_id": 250,"end_id": 255,"weight":null},
+		{"start_id": 250,"end_id": 265,"weight":null},
+		{"start_id": 250,"end_id": 266,"weight":null},
+
+		{"start_id": 251,"end_id": 209,"weight":null},
+		{"start_id": 251,"end_id": 250,"weight":null},
+		{"start_id": 251,"end_id": 256,"weight":null},
+		{"start_id": 251,"end_id": 267,"weight":null},
+		{"start_id": 251,"end_id": 268,"weight":null},
+
+		{"start_id": 252,"end_id": 247,"weight":null},
+		{"start_id": 253,"end_id": 248,"weight":null},
+		{"start_id": 254,"end_id": 249,"weight":null},
+		{"start_id": 255,"end_id": 250,"weight":null},
+		{"start_id": 256,"end_id": 251,"weight":null},
+		{"start_id": 257,"end_id": 246,"weight":null},
+		{"start_id": 258,"end_id": 246,"weight":null},
+		{"start_id": 259,"end_id": 247,"weight":null},
+		{"start_id": 260,"end_id": 247,"weight":null},
+		{"start_id": 261,"end_id": 248,"weight":null},
+		{"start_id": 262,"end_id": 248,"weight":null},
+		{"start_id": 263,"end_id": 249,"weight":null},
+		{"start_id": 264,"end_id": 249,"weight":null},
+		{"start_id": 265,"end_id": 250,"weight":null},
+		{"start_id": 266,"end_id": 250,"weight":null},
+		{"start_id": 267,"end_id": 251,"weight":null},
+		{"start_id": 268,"end_id": 251,"weight":null},
+		
+		{"start_id": 269,"end_id": 201,"weight":null},
+		{"start_id": 270,"end_id": 205,"weight":null},
+		{"start_id": 271,"end_id": 207,"weight":null},
+		{"start_id": 272,"end_id": 209,"weight":null},
+		
+		];
+
+	
+	
+</script>
+<hr />
+<canvas id="myCanvas" width="800" height="500" border="1"></canvas>
+<script>
+window.onload = function() {
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var img = document.getElementById("mapImage");
+    ctx.drawImage(img, 0, 0);
+
+	var markerSize = 5;
+	var markerOffset = markerSize/2;
+	
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+
+	for (var i = 0; i < locations.length; i++) {
+		var loc = locations[i];
+		ctx.font="10px Arial";
+		
+		
+		if ( (locations[i].type == "HALL" && halls) || (locations[i].type == "ROOM" && rooms) || (locations[i].type == "EXIT" && exits) || (locations[i].type == "STAIRS" && stairs)) {
+			if (labels) {
+				ctx.fillText(i,locations[i].pixel_loc_x-markerOffset-10,locations[i].pixel_loc_y+10);
+			}
+
+			ctx.fillRect((loc.pixel_loc_x + markerOffset),(loc.pixel_loc_y + markerOffset),5,5);	
+		}
+	}
+
+	for (var i = 0; i < paths.length; i++) {
+		var cPath = paths[i];
+
+		if (showPaths) {
+			ctx.beginPath();
+			ctx.moveTo(locations[cPath.start_id - 200].pixel_loc_x+markerSize,locations[cPath.start_id - 200].pixel_loc_y+markerSize);
+			ctx.lineTo(locations[cPath.end_id - 200].pixel_loc_x+markerSize,locations[cPath.end_id - 200].pixel_loc_y+markerSize);
+			ctx.stroke();
+		}
+	}
+
+	
+}
+</script>
+
+<map name="room_map" id="mapper">
+	<area shape="poly" coords="301,257,329,272,330,271,343,276,349,265,340,261,340,257,331,257,331,256,330,253,324,253,316,248,301,257" href="2.104A1"  />
+<area shape="poly" coords="293,240,293,252,295,253,295,257,301,257,316,248,316,240,293,240" href="2.102D"  />
+<area shape="poly" coords="205,253,225,253,225,257,226,264,227,269,228,272,213,279,212,277,210,272,208,266,207,261,205,253" href="2.103B1"  />
+<area shape="poly" coords="222,187,222,241,234,241,234,240,283,240,283,187,222,187" href="2.103"  />
+<area shape="poly" coords="201,224,201,215,204,215,204,211,221,211,221,224,201,224" href="2.2R2"  />
+<area shape="poly" coords="201,224,221,224,221,241,211,241,211,240,202,240,201,224" href="2.2R2A"  />
+<area shape="poly" coords="193,310,210,328,215,322,201,305,193,310" href="2.101"  />
+<area shape="poly" coords="356,284,366,290,376,260,365,258,356,284" href="2.411"  />
+<area shape="poly" coords="349,296,332,314,338,324,360,302,349,296" href="2.413"  />
+<area shape="poly" coords="377,251,375,260,366,289,363,296,409,323,413,317,417,307,421,299,423,291,426,283,428,272,429,264,430,258,430,253,408,253,407,251,377,251" href="2.410"  />
+<area shape="poly" coords="331,330,355,306,362,296,409,322,404,331,400,337,395,341,392,346,387,351,380,358,376,362,371,366,366,370,362,372,360,374,348,354,345,356,331,330" href="2.412"  />
+<area shape="poly" coords="336,361,347,354,355,367,343,373,336,361" href="2.414"  />
+<area shape="poly" coords="285,332,285,345,316,338,309,327,287,332,285,332" href="2.416"  />
+<area shape="poly" coords="277,346,277,398,291,397,300,397,313,394,324,391,339,385,347,381,335,361,337,359,325,336,316,338,285,345,277,346" href="2.415"  />
+<area shape="poly" coords="343,276,334,294,329,299,318,308,305,314,292,318,277,320,261,318,243,311,236,307,226,297,218,288,213,279,227,272,226,266,226,259,226,250,263,250,263,253,295,252,295,257,300,257,329,272,331,271,343,276" href="2.102"  />
+<area shape="poly" coords="340,257,340,261,348,264,349,264,350,256,346,255,346,257,340,257" href="2.1E4"  />
+<area shape="poly" coords="211,253,211,242,234,241,234,250,226,250,225,253,211,253" href="2.103B"  />
+<area shape="poly" coords="330,240,346,240,346,257,330,257,330,240" href="2.104A"  />
+<area shape="poly" coords="316,240,316,249,325,253,330,253,330,240,316,240" href="2.104B"  />
+<area shape="poly" coords="367,199,367,217,378,217,379,230,379,234,397,235,396,240,403,240,403,201,393,201,393,198,367,199" href="2.4R3A"  />
+<area shape="poly" coords="368,33,392,33,392,100,367,100,367,97,371,96,371,88,367,87,368,33" href="2.4D2"  />
+<area shape="poly" coords="403,164,391,164,391,144,389,145,390,151,376,151,368,149,367,144,367,135,403,135,403,164" href="2.4R4A"  />
+<area shape="poly" coords="389,199,392,199,393,201,402,201,403,188,389,188,389,199" href="2.3D2"  />
+<area shape="poly" coords="322,160,322,177,338,177,339,164,329,164,329,161,322,160" href="2.701"  />
+<area shape="poly" coords="218,158,218,165,216,165,216,177,228,177,228,158,218,158" href="2.710"  />
+<area shape="poly" coords="227,86,257,86,257,108,227,108,227,86" href="2.502"  />
+<area shape="poly" coords="257,86,273,86,273,108,257,108,257,86" href="2.503"  />
+<area shape="poly" coords="377,240,403,240,403,251,377,251,377,240" href="2.409"  />
+<area shape="poly" coords="368,217,378,217,378,230,368,230,368,217" href="2.4R3"  />
+<area shape="poly" coords="403,199,457,199,457,243,403,243,403,199" href="2.312"  />
+<area shape="poly" coords="457,198,511,198,511,243,457,243,457,198" href="2.311"  />
+<area shape="poly" coords="474,192,487,192,487,199,474,199,474,192" href="2.310"  />
+<area shape="poly" coords="487,188,511,188,511,200,487,200,487,188" href="2.311A"  />
+<area shape="poly" coords="495,175,508,175,508,188,495,188,495,175" href="2.308"  />
+<area shape="poly" coords="487,165,513,165,513,175,487,175,487,165" href="2.306A"  />
+<area shape="poly" coords="427,165,439,165,439,172,427,172,427,165" href="2.304"  />
+<area shape="poly" coords="474,165,487,165,487,173,474,173,474,165" href="2.307"  />
+<area shape="poly" coords="403,165,416,165,416,175,403,175,403,165" href="2.305A"  />
+<area shape="poly" coords="415,165,427,165,427,175,415,175,415,165" href="2.3R1"  />
+<area shape="poly" coords="427,192,439,192,439,198,427,198,427,192" href="2.313"  />
+<area shape="poly" coords="403,188,427,188,427,199,403,199,403,188" href="2.312A"  />
+<area shape="poly" coords="208,117,217,117,217,127,208,127,208,117" href="2.804"  />
+<area shape="poly" coords="201,117,207,117,207,127,201,127,201,117" href="2.2E1"  />
+<area shape="poly" coords="189,88,204,88,204,101,189,101,189,88" href="2.204"  />
+<area shape="poly" coords="263,240,293,240,293,252,263,252,263,240" href="2.102D1"  />
+<area shape="poly" coords="246,240,263,240,263,250,246,250,246,240" href="2.103A"  />
+<area shape="poly" coords="234,240,247,240,247,250,234,250,234,240" href="2.1D1"  />
+<area shape="poly" coords="345,114,355,114,355,127,345,127,345,114" href="2.401"  />
+<area shape="poly" coords="345,127,355,127,355,165,345,165,345,127" href="2.4V1"  />
+<area shape="poly" coords="338,164,355,164,355,177,338,177,338,164" href="2.3E2"  />
+<area shape="poly" coords="310,158,322,158,322,177,310,177,310,158" href="2.702"  />
+<area shape="poly" coords="298,158,310,158,310,177,298,177,298,158" href="2.703"  />
+<area shape="poly" coords="287,158,298,158,298,177,287,177,287,158" href="2.704"  />
+<area shape="poly" coords="275,158,286,158,286,177,275,177,275,158" href="2.705"  />
+<area shape="poly" coords="263,158,275,158,275,177,263,177,263,158" href="2.706"  />
+<area shape="poly" coords="251,158,263,158,263,177,251,177,251,158" href="2.707"  />
+<area shape="poly" coords="240,158,251,158,251,177,240,177,240,158" href="2.708"  />
+<area shape="poly" coords="228,158,240,158,240,177,228,177,228,158" href="2.709"  />
+<area shape="poly" coords="201,164,215,164,215,177,201,177,201,164" href="2.2D1"  />
+<area shape="poly" coords="201,152,218,152,218,164,201,164,201,152" href="2.801"  />
+<area shape="poly" coords="201,140,218,140,218,152,201,152,201,140" href="2.802"  />
+<area shape="poly" coords="201,128,218,128,218,140,201,140,201,128" href="2.803"  />
+<area shape="poly" coords="224,139,239,139,239,152,224,152,224,139" href="2.711"  />
+<area shape="poly" coords="224,127,240,127,240,139,224,139,224,127" href="2.805"  />
+<area shape="poly" coords="273,86,288,86,288,108,273,108,273,86" href="2.504"  />
+<area shape="poly" coords="288,86,305,86,305,108,288,108,288,86" href="2.505"  />
+<area shape="poly" coords="305,86,321,86,321,108,305,108,305,86" href="2.506"  />
+<area shape="poly" coords="368,100,392,100,392,124,368,124,368,100" href="2.4D1"  />
+<area shape="poly" coords="239,133,251,133,251,152,239,152,239,133" href="2.712"  />
+<area shape="poly" coords="251,133,263,133,263,152,251,152,251,133" href="2.713"  />
+<area shape="poly" coords="240,122,263,122,263,133,240,133,240,122" href="2.502A"  />
+<area shape="poly" coords="263,133,275,133,275,152,263,152,263,133" href="2.714"  />
+<area shape="poly" coords="275,133,286,133,286,152,275,152,275,133" href="2.715"  />
+<area shape="poly" coords="286,133,298,133,298,152,286,152,286,133" href="2.716"  />
+<area shape="poly" coords="298,133,310,133,310,152,298,152,298,133" href="2.717"  />
+<area shape="poly" coords="310,133,322,133,322,152,310,152,310,133" href="2.718"  />
+<area shape="poly" coords="310,114,322,114,322,133,310,133,310,114" href="2.508"  />
+<area shape="poly" coords="298,114,310,114,310,133,298,133,298,114" href="2.509"  />
+<area shape="poly" coords="286,114,298,114,298,133,286,133,286,114" href="2.510"  />
+<area shape="poly" coords="275,114,286,114,286,133,275,133,275,114" href="2.511"  />
+<area shape="poly" coords="263,114,275,114,275,133,263,133,263,114" href="2.512"  />
+<area shape="poly" coords="329,152,345,152,345,164,329,164,329,152" href="2.604"  />
+<area shape="poly" coords="329,139,345,139,345,152,329,152,329,139" href="2.603"  />
+<area shape="poly" coords="329,127,345,127,345,139,329,139,329,127" href="2.602"  />
+<area shape="poly" coords="329,114,345,114,345,127,329,127,329,114" href="2.601"  />
+<area shape="poly" coords="321,86,351,86,351,108,321,108,321,86" href="2.507"  />
+<area shape="poly" coords="339,29,351,29,351,47,339,47,339,29" href="2.402"  />
+<area shape="poly" coords="457,122,513,122,513,165,457,165,457,122" href="2.306"  />
+<area shape="poly" coords="403,122,457,122,457,165,403,165,403,122" href="2.305"  />
+<area shape="poly" coords="345,187,355,187,355,240,345,240,345,187" href="2.3C1"  />
+<area shape="poly" coords="283,187,345,187,345,240,283,240,283,187" href="2.104"  />
+<area shape="poly" coords="201,198,221,198,221,211,201,211,201,198" href="2.2R1"  />
+<area shape="poly" coords="201,187,221,187,221,198,201,198,201,187" href="2.2R1A"  />
+<area shape="poly" coords="137,192,188,192,188,242,137,242,137,192" href="2.201"  />
+<area shape="poly" coords="138,182,153,182,153,192,138,192,138,182" href="2.201A"  />
+<area shape="poly" coords="153,171,171,171,171,192,153,192,153,171" href="2.202"  />
+<area shape="poly" coords="138,171,153,171,153,182,138,182,138,171" href="2.303A"  />
+<area shape="poly" coords="138,122,189,122,189,171,138,171,138,122" href="2.203"  />
+</map>
+</body></html>
