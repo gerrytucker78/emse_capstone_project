@@ -1,5 +1,5 @@
 [
-	/** First Floor **/
+  
 	{"start_id": 0,"end_id": 1,"weight":null},
 	{"start_id": 0,"end_id": 5,"weight":null},
 	{"start_id": 1,"end_id": 2,"weight":null},
@@ -242,7 +242,7 @@
 	{"start_id": 92,"end_id": 61,"weight":null},
   
 
-  
+
 	{"start_id": 200,"end_id": 201,"weight":null},
 
 	{"start_id": 201,"end_id": 200,"weight":null},
