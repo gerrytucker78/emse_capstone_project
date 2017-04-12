@@ -16,18 +16,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <shape
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:shape="oval">
-
-        <solid
-            android:color="#666666"/>
-
-        <size
-            android:width="120dp"
-            android:height="120dp"/>
-    </shape>
-
 </android.support.v7.widget.LinearLayoutCompat>
 
     <!--app:srcCompat="@drawable/common_full_open_on_phone"-->
