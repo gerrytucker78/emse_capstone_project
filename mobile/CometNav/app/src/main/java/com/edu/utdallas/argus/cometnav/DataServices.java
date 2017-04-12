@@ -74,28 +74,6 @@ class DataServices {
         });
     }
 
-    public static void getMap(final NavigationActivity activity, File file)
-    {
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.get("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png", new FileAsyncHttpResponseHandler(file)
-        {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, File response)
-            {
-                // Do something with the file `response`
-                activity.updateMap(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, File response)
-            {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                activity.updateMap(response);
-            }
-        });
-    }
-
     public static void getEmergencies(final EmergencyClient emergencyClient) {
         DataServicesClient.get("emergencies", null, new JsonHttpResponseHandler() {
             @Override
