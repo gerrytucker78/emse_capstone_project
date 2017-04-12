@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
-
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.View;
 import org.altbeacon.beacon.Beacon;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -36,15 +38,15 @@ public class NavigationActivity extends AppCompatActivity
         }
         super.onDestroy();
     }
-
+    private ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 //        image = (ImageView) findViewById(R.id.imageView2);
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
-                .execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
+        /*new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
+                .execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");*/
 
         // your oncreate code should be
         Log.d("Navigation", "Creating NavigationActivity!");
@@ -65,6 +67,38 @@ public class NavigationActivity extends AppCompatActivity
         registerReceiver(receiver, filter);
 
 //        DataServices.getMap(this, file);
+        //setContentView(new MyView(this)); //TODO Remove this reference "MyView"
+        img=(ImageView) findViewById(R.id.locator);
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_locate);
+
+        new LocationPointer(icon,img);
+    }
+    //TODO Remove this class "MyView"
+    public class MyView extends View
+    {
+        Paint paint = null;
+        public MyView(Context context)
+        {
+            super(context);
+            paint = new Paint();
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas)
+        {
+            super.onDraw(canvas);
+            int x = getWidth();
+            int y = getHeight();
+            int radius;
+            radius = 100;
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.WHITE);
+            canvas.drawPaint(paint);
+            // Use Color.parseColor to define HTML colors
+            paint.setColor(Color.parseColor("#CD5C5C"));
+            canvas.drawCircle(x / 2, y / 2, radius, paint);
+        }
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
