@@ -32,13 +32,6 @@ public class NavigationActivity extends AppCompatActivity
 //        DataServices.getMap(this, file);
     }
 
-    public void updateMap(File map)
-    {
-        Log.d("NavigationActivity", "Got image callback");
-        Bitmap bitmap = BitmapFactory.decodeFile(map.getAbsolutePath());
-//        image.setImageBitmap(bitmap);
-    }
-
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
