@@ -18,6 +18,7 @@ import static java.security.AccessController.getContext;
  */
 class DataServices {
 
+
     public static void getLocations(final Navigation nav)
     {
         DataServicesClient.get("locations", null, new JsonHttpResponseHandler()
@@ -72,4 +73,21 @@ class DataServices {
             }
         });
     }
+
+    public static void getEmergencies(final EmergencyClient emergencyClient) {
+        DataServicesClient.get("emergencies", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                Log.d("DataServices", "Warning! emergencies returned as object and not array");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray emergencies) {
+                //Update the navigation with locations
+                emergencyClient.receiveEmergencies(emergencies);
+            }
+        });
+    }
+
 }
