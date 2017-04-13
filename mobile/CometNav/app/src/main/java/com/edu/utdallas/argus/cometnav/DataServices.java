@@ -62,7 +62,7 @@ class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! paths returned as object and not array");
+                Log.d("DataServices", "Warning! blocked areas returned as object and not array");
             }
 
             @Override
@@ -86,6 +86,22 @@ class DataServices {
             public void onSuccess(int statusCode, Header[] headers, JSONArray emergencies) {
                 //Update the navigation with locations
                 emergencyClient.receiveEmergencies(emergencies);
+            }
+        });
+    }
+
+    public static void getBeacons(final Navigation nav) {
+        DataServicesClient.get("sensors", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                Log.d("DataServices", "Warning! beacons returned as object and not array");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray beacons) {
+                //Update the navigation with locations
+                //nav.updateBeacons(beacons);
             }
         });
     }

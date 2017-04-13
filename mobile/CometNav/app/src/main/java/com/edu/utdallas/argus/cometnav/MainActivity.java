@@ -86,10 +86,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        //TODO Find Beacons on create. Move to only find beacons when ready to navigate
-        Intent intent = new Intent(this, BeaconManagerService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startService(intent);
+
 
         //Start Navigation and Data Services
         //nav = new Navigation();

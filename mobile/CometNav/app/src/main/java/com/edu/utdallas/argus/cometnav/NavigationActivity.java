@@ -30,7 +30,6 @@ public class NavigationActivity extends AppCompatActivity
 //    ImageView image;
     private BroadcastReceiver receiver;
 
-
     protected void onDestroy() {
         if (receiver != null) {
             unregisterReceiver(receiver);
@@ -47,13 +46,15 @@ public class NavigationActivity extends AppCompatActivity
 //        image = (ImageView) findViewById(R.id.imageView2);
         /*new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
                 .execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");*/
+        //TODO Find Beacons on create. Move to only find beacons when ready to navigate
+        Intent intent = new Intent(this, BeaconManagerService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
 
         // your oncreate code should be
         Log.d("Navigation", "Creating NavigationActivity!");
         IntentFilter filter = new IntentFilter();
         filter.addAction("BEACON_ACTION");
-        filter.addAction("BEACON_LIST");
-        //filter.addAction("SOME_OTHER_ACTION");
 
         receiver = new BroadcastReceiver() {
             @Override
@@ -74,6 +75,7 @@ public class NavigationActivity extends AppCompatActivity
 
         new LocationPointer(icon,img);
     }
+
     //TODO Remove this class "MyView"
     public class MyView extends View
     {

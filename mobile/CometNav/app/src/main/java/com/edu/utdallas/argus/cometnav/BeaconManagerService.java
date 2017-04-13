@@ -85,17 +85,19 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                     List<Beacon> beaconArrayList = new ArrayList<Beacon>(beaconsList);
 
                     localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
-                    LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
-                    if(beaconsList.size() > 0) {
-                        for (Beacon b : beaconsList) {
-                            Log.d(TAG, "Beacon Bluetooth Address: " + b.getBluetoothAddress()
-                                    + " ID1: " + b.getId1()
-                                    + " ID2: " + b.getId2()
-                            );
-                        }
-                    }else{
-                        Log.d(TAG, "No beacons detected at this time");
-                    }
+                    //this doesn't work for some reason. Shrug.
+                    //LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
+                    sendBroadcast(localIntent);
+//                    if(beaconsList.size() > 0) {
+//                        for (Beacon b : beaconsList) {
+//                            Log.d(TAG, "Beacon Bluetooth Address: " + b.getBluetoothAddress()
+//                                    + " ID1: " + b.getId1()
+//                                    + " ID2: " + b.getId2()
+//                            );
+//                        }
+//                    }else{
+//                        Log.d(TAG, "No beacons detected at this time");
+//                    }
                 }
             });
         } catch (Exception e) {
