@@ -16,6 +16,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
+
+import com.github.chrisbanes.photoview.PhotoView;
+
 import org.altbeacon.beacon.Beacon;
 
 import java.io.InputStream;
@@ -28,6 +31,7 @@ public class NavigationActivity extends AppCompatActivity
 
 //    File file = new File("./mapFile");
 //    ImageView image;
+
     private BroadcastReceiver receiver;
 
     protected void onDestroy() {
@@ -38,14 +42,19 @@ public class NavigationActivity extends AppCompatActivity
         super.onDestroy();
     }
     private ImageView img;
+    private PhotoView photoView;
+    private DownloadImageTask task;
+    private LocationPointer pointer;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-//        image = (ImageView) findViewById(R.id.imageView2);
-        /*new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
-                .execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");*/
+
+        photoView = (PhotoView) findViewById(R.id.photo_view);
+        //img = (ImageView) findViewById(R.id.imageView2);
+        task = new DownloadImageTask(photoView);
+        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
         //TODO Find Beacons on create. Move to only find beacons when ready to navigate
         Intent intent = new Intent(this, BeaconManagerService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -69,11 +78,12 @@ public class NavigationActivity extends AppCompatActivity
 
 //        DataServices.getMap(this, file);
         //setContentView(new MyView(this)); //TODO Remove this reference "MyView"
-        img=(ImageView) findViewById(R.id.locator);
+        //img=(ImageView) findViewById(R.id.locator);
 
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_locate);
 
-        new LocationPointer(icon,img);
+        //Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_locate);
+        //pointer = new LocationPointer(icon, img);
+        //new LocationPointer(icon,img);
     }
 
     //TODO Remove this class "MyView"
@@ -104,10 +114,15 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        PhotoView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
+        public DownloadImageTask(PhotoView bmImage) {
+
             this.bmImage = bmImage;
+            if (bmImage == null)
+                Log.d("Navigation", "bmImage is set to null on create?");
+            else
+                Log.d("Navigation", "bmImage is not null");
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -124,7 +139,12 @@ public class NavigationActivity extends AppCompatActivity
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            if (bmImage != null) {
+                bmImage.setImageBitmap(result);
+
+            }
+            else
+                Log.d("Navigation", "bmImage is null?");
         }
     }
 }

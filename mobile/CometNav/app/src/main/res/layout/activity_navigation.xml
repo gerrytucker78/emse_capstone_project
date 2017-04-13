@@ -7,7 +7,7 @@
     tools:context="com.edu.utdallas.argus.cometnav.NavigationActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp"
-    android:background="@drawable/ecss" android:scaleType="centerCrop">
+    android:scaleType="centerCrop">
 
     <!--<ImageView
         android:id="@+id/imageView2"
@@ -25,11 +25,18 @@
         android:scaleType="fitCenter"
         android:background="@drawable/ecss">
     </RelativeLayout>-->
-    <ImageView
+
+ <!--   <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/locator"
-        />
+        android:scaleType="center"
+        /> -->
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/photo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </android.support.v7.widget.LinearLayoutCompat>
 
     <!--app:srcCompat="@drawable/common_full_open_on_phone"-->
