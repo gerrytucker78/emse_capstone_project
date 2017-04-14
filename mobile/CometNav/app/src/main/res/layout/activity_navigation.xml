@@ -9,6 +9,8 @@
     tools:layout_editor_absoluteY="81dp"
     android:scaleType="centerCrop">
 
+
+
     <!--<ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
@@ -32,6 +34,8 @@
         android:id="@+id/locator"
         android:scaleType="center"
         /> -->
+
+
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
         android:layout_width="match_parent"
