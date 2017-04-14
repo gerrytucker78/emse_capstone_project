@@ -101,7 +101,7 @@ class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray beacons) {
                 //Update the navigation with locations
-                //nav.updateBeacons(beacons);
+                nav.updateBeacons(beacons);
             }
         });
     }

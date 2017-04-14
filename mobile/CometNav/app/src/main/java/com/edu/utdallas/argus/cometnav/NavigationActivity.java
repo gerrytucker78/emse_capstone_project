@@ -34,11 +34,18 @@ import static android.graphics.BitmapFactory.*;
 
 public class NavigationActivity extends AppCompatActivity
 {
-
-//    File file = new File("./mapFile");
-//    ImageView image;
-
     private BroadcastReceiver receiver;
+    private PhotoView photoView;
+    private DownloadImageTask task;
+    private Canvas locDot;
+    private Paint paint;
+    private Bitmap immutableMap;
+    private Bitmap mutableMap;
+    private float cumulScaleFactor = 1;
+    private boolean showLocDot = false;
+    private int xPos = 200;
+    private int yPos = 250;
+    private int mRadius = 10;
 
     protected void onDestroy() {
         if (receiver != null) {
@@ -48,22 +55,11 @@ public class NavigationActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-    private PhotoView photoView;
-    private DownloadImageTask task;
-
-    private Canvas locDot;
-    private Paint paint;
-    private Bitmap immutableMap;
-    private Bitmap mutableMap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        //mCustomDrawableView = new CustomDrawableView(this);
-        //setContentView(mCustomDrawableView);
-        //setContentView(new MyView(this));
 
         photoView = (PhotoView) findViewById(R.id.photo_view);
         task = new DownloadImageTask(photoView);
@@ -91,7 +87,7 @@ public class NavigationActivity extends AppCompatActivity
         registerReceiver(receiver, filter);
 
         photoView.setAdjustViewBounds(true);
-        photoView.setOnPhotoTapListener(new PhotoTapListener());
+        //photoView.setOnPhotoTapListener(new PhotoTapListener());
         photoView.setOnScaleChangeListener(new ScaleChangeListener());
     }
 
@@ -107,56 +103,22 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    private float cumulScaleFactor = 1;
-    private int mX = 200;
-    private int mY = 250;
+
     private class ScaleChangeListener implements OnScaleChangedListener {
 
+        //This resizes the current location dot
         public void onScaleChange(float scaleFactor, float focusX, float focusY) {
-            cumulScaleFactor = cumulScaleFactor * scaleFactor;
-            //Log.d("Navigation", "Scale changed: " + cumulScaleFactor);
-
-            locDot.save();
-            //TODO! This clears the entire map! need a way to not do that
-            //locDot.drawColor(0, PorterDuff.Mode.CLEAR);
-
-            locDot.translate(mX+=10, mY);
-            float scaleVal = (1/cumulScaleFactor);
-            Log.d("Navigation", "scaleVal: " + scaleVal);
-            locDot.scale(scaleVal, scaleVal);
-            locDot.drawCircle(0, 0, 10, paint);
-            locDot.restore();
+            if (showLocDot) {
+                cumulScaleFactor = cumulScaleFactor * scaleFactor;
+                locDot.save();
+                locDot.drawBitmap(immutableMap, 0, 0, paint);
+                locDot.translate(xPos, yPos);
+                float scaleVal = (1 / cumulScaleFactor);
+                locDot.scale(scaleVal, scaleVal);
+                locDot.drawCircle(0, 0, mRadius, paint);
+                locDot.restore();
+            }
         }
-    }
-
-    //TODO Remove this class "MyView"
-    public class MyView extends View
-    {
-        private Paint   mBitmapPaint;
-        private Bitmap  mBitmap;
-        private Canvas  mCanvas;
-
-        public MyView(Context context)
-        {
-            super(context);
-            mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-            BitmapFactory.Options myOptions = new BitmapFactory.Options();
-            myOptions.inDither = true;
-            myOptions.inScaled = false;
-            myOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// important
-            myOptions.inPurgeable = true;
-            mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ecss,myOptions);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas)
-        {
-            //canvas.drawColor(0xFFAAAAAA);
-            canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-            canvas.drawCircle(200, 250, 10, mBitmapPaint);
-            //canvas.drawPath(mPath, mPaint);
-        }
-
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -203,7 +165,7 @@ public class NavigationActivity extends AppCompatActivity
                 mutableMap = immutableMap.copy(Bitmap.Config.ARGB_8888, true);
 
                 locDot = new Canvas(mutableMap);
-                locDot.drawCircle(200, 250, 10, paint);
+                locDot.drawCircle(xPos, yPos, mRadius, paint);
 
                 bmImage.setImageBitmap(mutableMap);
             }

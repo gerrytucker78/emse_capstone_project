@@ -79,6 +79,8 @@ public class Navigation {
 
 
 
+
+
     public enum locTypes
     {
         BLOCKED_AREA,
@@ -110,12 +112,14 @@ public class Navigation {
         coordinates = new GraphNodeCoordinates();
 
         DataServices.getLocations(this);
+        DataServices.getBeacons(this);
     }
 
     public Navigation(JSONArray locations) {
         graph = new UndirectedGraph();
         coordinates = new GraphNodeCoordinates();
         this.updateNodes(locations);
+
     }
 
     /**
@@ -173,6 +177,26 @@ public class Navigation {
         {
             Log.d("Navigation", e.getMessage().toString());
         }
+    }
+
+    public void updateBeacons(JSONArray beacons)
+    {
+        try
+        {
+            for(int i = 0; i < beacons.length(); i++)
+            {
+                JSONObject beacon = beacons.getJSONObject(i);
+
+
+            }
+        }
+        catch (JSONException e)
+        {
+            Log.d("Navigation", e.getMessage().toString());
+        }
+        Log.d("Navigation", "Beacons updated: " + beacons.toString());
+        //Paths has to happen after locations is done.
+        DataServices.getPaths(this);
     }
 
     /**
