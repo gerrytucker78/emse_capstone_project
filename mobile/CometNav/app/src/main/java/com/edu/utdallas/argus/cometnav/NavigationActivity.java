@@ -51,7 +51,7 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        photoView = (PhotoView) findViewById(R.id.photo_view);
+        //photoView = (PhotoView) findViewById(R.id.photo_view);
         //img = (ImageView) findViewById(R.id.imageView2);
         task = new DownloadImageTask(photoView);
         task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
@@ -75,6 +75,36 @@ public class NavigationActivity extends AppCompatActivity
             }
         };
         registerReceiver(receiver, filter);
+
+
+
+        /*Draw a circle on an existing image - starts here*/
+        BitmapFactory.Options myOptions = new BitmapFactory.Options();
+        myOptions.inDither = true;
+        myOptions.inScaled = false;
+        myOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// important
+        myOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ecss,myOptions);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLUE);
+
+
+        Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+
+        Canvas canvas = new Canvas(mutableBitmap);
+        canvas.drawCircle(200, 250, 10, paint);
+
+
+        ImageView imageView = (ImageView)findViewById(R.id.photo_view);
+        imageView.setAdjustViewBounds(true);
+        imageView.setImageBitmap(mutableBitmap);
+
+        /*Draw a circle on an existing image - ends here*/
+
 
 //        DataServices.getMap(this, file);
         //setContentView(new MyView(this)); //TODO Remove this reference "MyView"
