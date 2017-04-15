@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static android.graphics.BitmapFactory.*;
 
@@ -37,7 +38,11 @@ public class NavigationActivity extends AppCompatActivity
     private Canvas locDot;
     private Canvas paths;
     private Canvas backgroundCanvas;
+    private Canvas beacons;
     private Paint paint;
+    private Paint beaconPaint;
+    private Paint pathPaint;
+
     private float[] mPathArray;
     private Bitmap immutableMap;
     private Bitmap mutableMap;
@@ -48,6 +53,7 @@ public class NavigationActivity extends AppCompatActivity
     private int mRadius = 0;
     private final int MIN_RADIUS = 10;
     private Navigation navigation = Navigation.getInstance();
+    private List<CometNavBeacon> cnBeaconList = new ArrayList<>();
 
     protected void onDestroy() {
         if (receiver != null) {
@@ -82,16 +88,43 @@ public class NavigationActivity extends AppCompatActivity
         paths.save();
         if (mPathArray.length > 0)
         {
-            paths.drawLines(mPathArray, paint);
+            paths.drawLines(mPathArray, pathPaint);
         }
         paths.restore();
     }
+
+    private void drawBeacons()
+    {
+        if (beacons == null) {
+            return;
+        }
+
+
+
+        for (int i = 0; i < this.cnBeaconList.size(); i++) {
+            beacons.save();
+
+            CometNavBeacon cnb = this.cnBeaconList.get(i);
+
+            beacons.translate(cnb.getxLoc(), cnb.getyLoc());
+            float scaleVal = (1 / cumulScaleFactor);
+            beacons.scale(scaleVal, scaleVal);
+            beacons.drawCircle(0, 0, 5, beaconPaint);
+
+            beacons.restore();
+
+        }
+
+
+    }
+
 
     private void updateDraw()
     {
         if (backgroundCanvas != null)
             backgroundCanvas.drawBitmap(immutableMap, 0, 0, paint);
-        drawCurrentLoc();
+         drawCurrentLoc();
+        drawBeacons();
         drawPath();
         //Forces a redraw
         photoView.invalidate();
@@ -121,14 +154,7 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 List<Beacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
-                List<CometNavBeacon> cnBeaconList = new ArrayList<>();
-                for (Beacon beacon : beaconArrayList)
-                {
-                    CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
-                    cnBeaconList.add(cnBeacon);
-                    Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
-                }
-                Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+                updateNavBeaconList(beaconArrayList);
                 CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
                 //If we have a radius, that means there's only 1 beacon
                 if (loc.getRadius() != 0)
@@ -258,6 +284,14 @@ public class NavigationActivity extends AppCompatActivity
                 paint.setAntiAlias(true);
                 paint.setColor(Color.BLUE);
 
+                beaconPaint = new Paint();
+                beaconPaint.setAntiAlias(true);
+                beaconPaint.setColor(Color.RED);
+
+                pathPaint = new Paint();
+                pathPaint.setAntiAlias(true);
+                pathPaint.setColor(Color.GREEN);
+
                 //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_view,myOptions);
                 immutableMap = result;
                 mutableMap = immutableMap.copy(Bitmap.Config.ARGB_8888, true);
@@ -265,6 +299,7 @@ public class NavigationActivity extends AppCompatActivity
                 backgroundCanvas = new Canvas(mutableMap);
                 locDot = new Canvas(mutableMap);
                 paths = new Canvas(mutableMap);
+                beacons = new Canvas(mutableMap);
 
                 bmImage.setImageBitmap(mutableMap);
 
@@ -273,5 +308,23 @@ public class NavigationActivity extends AppCompatActivity
             else
                 Log.d("Navigation", "bmImage is null?");
         }
+    }
+
+    private void updateNavBeaconList(List<Beacon> beaconArrayList) {
+        this.cnBeaconList = new ArrayList<>();
+        Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
+
+        for (Beacon beacon : beaconArrayList)
+        {
+            CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
+            CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
+            cnBeacon.setxLoc(refBeacon.getxLoc());
+            cnBeacon.setyLoc(refBeacon.getyLoc());
+            cnBeacon.setFloor(refBeacon.getFloor());
+
+            cnBeaconList.add(cnBeacon);
+            Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
+        }
+        Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
     }
 }

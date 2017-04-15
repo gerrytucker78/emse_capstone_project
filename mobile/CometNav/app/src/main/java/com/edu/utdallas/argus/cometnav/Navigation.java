@@ -19,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 
-import org.altbeacon.beacon.Beacon;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,10 +81,18 @@ public class Navigation {
      */
     private int endNode;
 
+    private HashMap<Integer, CometNavBeacon> beaconMap;
+
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
      */
-    private HashMap<Integer, CometNavBeacon> beaconMap;
+    public HashMap<Integer, CometNavBeacon> getBeaconMap() {
+        return beaconMap;
+    }
+
+    public void setBeaconMap(HashMap<Integer, CometNavBeacon> beaconMap) {
+        this.beaconMap = beaconMap;
+    }
 
     public enum locTypes
     {
@@ -118,7 +125,7 @@ public class Navigation {
     {
         graph = new UndirectedGraph();
         coordinates = new GraphNodeCoordinates();
-        beaconMap = new HashMap<>();
+        setBeaconMap(new HashMap<>());
         mRouteChangedListeners = new ArrayList<OnRouteChangedListener>();
 
         DataServices.getLocations(this);
@@ -191,14 +198,14 @@ public class Navigation {
             {
                 JSONObject beacon = beacons.getJSONObject(i);
                 CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
-                beaconMap.put(cnBeacon.getName(), cnBeacon);
+                getBeaconMap().put(cnBeacon.getName(), cnBeacon);
             }
         }
         catch (JSONException | NullPointerException e)
         {
             Log.d("Navigation", e.toString());
         }
-        Log.d("Navigation", "Beacons updated: " + beaconMap.toString());
+        Log.d("Navigation", "Beacons updated: " + getBeaconMap().toString());
     }
 
     /**
@@ -300,7 +307,7 @@ public class Navigation {
             //distance.
             Log.d("Navigation", "Beacon in beaconList: " + beacon.toString());
 
-            CometNavBeacon foundBeacon = beaconMap.get(beacon.getName());
+            CometNavBeacon foundBeacon = getBeaconMap().get(beacon.getName());
             if (foundBeacon != null)
             {
                 count++;
