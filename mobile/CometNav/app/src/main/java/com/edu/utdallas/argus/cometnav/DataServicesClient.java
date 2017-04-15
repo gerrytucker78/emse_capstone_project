@@ -1,5 +1,7 @@
 package com.edu.utdallas.argus.cometnav;
 
+import android.util.Log;
+
 import com.loopj.android.http.*;
 
 /**
@@ -7,12 +9,14 @@ import com.loopj.android.http.*;
  */
 
 public class DataServicesClient {
+    private static final String TAG="DataServicesClient";
     private static final String BASE_URL = "http://52.32.181.216/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
+        Log.d(TAG, "URL:" + getAbsoluteUrl(url).toString());
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

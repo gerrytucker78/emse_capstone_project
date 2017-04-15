@@ -13,7 +13,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Daniel on 4/1/2017.
  */
 class DataServices {
-
+    private static final String TAG="DataServices";
 
     public static void getLocations(final Navigation nav)
     {
@@ -23,7 +23,7 @@ class DataServices {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response)
             {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! Locations returned as object and not array");
+                Log.d(TAG, "Warning! Locations returned as object and not array");
             }
 
             @Override
@@ -40,7 +40,7 @@ class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! paths returned as object and not array");
+                Log.d(TAG, "Warning! paths returned as object and not array");
             }
 
             @Override
@@ -57,7 +57,7 @@ class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! blocked areas returned as object and not array");
+                Log.d(TAG, "Warning! blocked areas returned as object and not array");
             }
 
             @Override
@@ -69,18 +69,20 @@ class DataServices {
         });
     }
 
-    public static void getEmergencies(final EmergencyClient emergencyClient) {
+    public static void getEmergencies(final EmergencyClientInterface emergencyClient) {
         DataServicesClient.get("emergencies", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! emergencies returned as object and not array");
+                Log.d(TAG, "Warning! emergencies returned as object and not array");
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray emergencies) {
                 //Update the navigation with locations
                 emergencyClient.receiveEmergencies(emergencies);
+
+                Log.i(TAG, "Emergiencies received from callback: " + emergencies.toString());
             }
         });
     }
@@ -90,7 +92,7 @@ class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
-                Log.d("DataServices", "Warning! beacons returned as object and not array");
+                Log.d(TAG, "Warning! beacons returned as object and not array");
             }
 
             @Override

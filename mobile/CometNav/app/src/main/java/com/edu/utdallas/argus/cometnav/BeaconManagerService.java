@@ -83,8 +83,6 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                     List<Beacon> beaconArrayList = new ArrayList<Beacon>(beaconsList);
 
                     localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
-                    //this doesn't work for some reason. Shrug.
-                    //LocalBroadcastManager.getInstance(BeaconManagerService.this).sendBroadcast(localIntent);
                     sendBroadcast(localIntent);
 //                    if(beaconsList.size() > 0) {
 //                        for (Beacon b : beaconsList) {

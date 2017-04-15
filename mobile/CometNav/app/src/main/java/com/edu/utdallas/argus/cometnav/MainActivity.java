@@ -84,8 +84,10 @@ public class MainActivity extends AppCompatActivity
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
 
-        // Emergency Service
-        Service emService;
+        // Start Emergency Service - Run until the app is killed
+        Intent intent = new Intent(this, EmergencyService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
 
 
         //This triggers the Singleton and creates the Navigation object.
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity
         //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
         //Log.d("Location", LocationFinder.getLocationMatrix(positions, distances).toString());
         try {
+            //TODO Delete this later
             //LocationFinder.trilateration1DExact1();
             //LocationFinder.trilateration2DExact1();
             //LocationFinder.trilateration3DExact();

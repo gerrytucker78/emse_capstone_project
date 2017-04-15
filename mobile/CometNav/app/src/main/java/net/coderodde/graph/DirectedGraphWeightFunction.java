@@ -27,7 +27,8 @@ public class DirectedGraphWeightFunction {
      */
     public void put(int tailNodeId, int headNodeId, float weight) {
         checkWeight(weight);
-        map.putIfAbsent(tailNodeId, new HashMap<Integer, Float>());
+        //map.putIfAbsent(tailNodeId, new HashMap<Integer, Float>());
+        map.put(tailNodeId, new HashMap<Integer, Float>());
         map.get(tailNodeId).put(headNodeId, weight);
     }
 
