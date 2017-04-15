@@ -42,6 +42,7 @@ public class NavigationActivity extends AppCompatActivity
     private int xPos = 0;
     private int yPos = 0;
     private int mRadius = 0;
+    private final int MIN_RADIUS = 10;
     private Navigation navigation = Navigation.getInstance();
 
     protected void onDestroy() {
@@ -57,15 +58,19 @@ public class NavigationActivity extends AppCompatActivity
      */
     private void drawCurrentLoc()
     {
+        if (locDot == null)
+            return;
+        locDot.save();
+        locDot.drawBitmap(immutableMap, 0, 0, paint);
         if (showLocDot) {
-            locDot.save();
-            locDot.drawBitmap(immutableMap, 0, 0, paint);
             locDot.translate(xPos, yPos);
             float scaleVal = (1 / cumulScaleFactor);
             locDot.scale(scaleVal, scaleVal);
             locDot.drawCircle(0, 0, mRadius, paint);
-            locDot.restore();
         }
+        locDot.restore();
+        //Forces a redraw
+        photoView.invalidate();
     }
 
     @Override
@@ -110,8 +115,9 @@ public class NavigationActivity extends AppCompatActivity
                     yPos = loc.getyLoc();
                     //right now I'm assuming we're on the right floor
                     mRadius = (int)Math.round(loc.getRadius());
+                    if (mRadius < MIN_RADIUS)
+                        mRadius = MIN_RADIUS;
                     Log.d("Navigation", "Found a position! " + loc.toString());
-                    drawCurrentLoc();
                 }
                 //otherwise we'll have x y and floor
                 else if (loc.getxLoc() != 0)
@@ -119,15 +125,16 @@ public class NavigationActivity extends AppCompatActivity
                     showLocDot = true;
                     xPos = loc.getxLoc();
                     yPos = loc.getyLoc();
-                    mRadius = 10;
+                    mRadius = MIN_RADIUS;
                     Log.d("Navigation", "Found a position! " + loc.toString());
-                    drawCurrentLoc();
                 }
                 //If we don't have x, that means we don't have a location. Hide our current location.
                 else
                 {
                     showLocDot = false;
                 }
+                //We always want to redraw
+                drawCurrentLoc();
             }
         };
         registerReceiver(receiver, filter);
