@@ -2,50 +2,50 @@
       {
         "sensor_id": "1",
         "name": "00010203040506070823",
-        "pixel_loc_x":190,
-        "pixel_loc_y":100,
+        "pixel_loc_x":460,
+        "pixel_loc_y":195,
         "floor": 2
       },
       {
         "sensor_id": "2",
         "name": "0001020304050607081d",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":420,
+        "pixel_loc_y":170,
         "floor": 2
       },
 	  {
         "sensor_id": "3",
         "name": "00010203040506070820",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":460,
+        "pixel_loc_y":160,
         "floor": 2
       },
 	  {
         "sensor_id": "4",
         "name": "00010203040506070824",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":350,
+        "pixel_loc_y":170,
         "floor": 2
       },
 	  {
         "sensor_id": "5",
         "name": "00010203040506070826",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":350,
+        "pixel_loc_y":220,
         "floor": 2
       },
 	  {
         "sensor_id": "6",
         "name": "0001020304050607081f",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":340,
+        "pixel_loc_y":230,
         "floor": 2
       },
 	  {
         "sensor_id": "7",
         "name": "00010203040506070821",
-        "pixel_loc_x":195,
-        "pixel_loc_y":100,
+        "pixel_loc_x":360,
+        "pixel_loc_y":255,
         "floor": 2
       },
 	  {
