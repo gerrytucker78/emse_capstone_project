@@ -24,6 +24,7 @@ import org.altbeacon.beacon.Beacon;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.graphics.BitmapFactory.*;
@@ -34,7 +35,10 @@ public class NavigationActivity extends AppCompatActivity
     private PhotoView photoView;
     private DownloadImageTask task;
     private Canvas locDot;
+    private Canvas paths;
+    private Canvas backgroundCanvas;
     private Paint paint;
+    private float[] mPathArray;
     private Bitmap immutableMap;
     private Bitmap mutableMap;
     private float cumulScaleFactor = 1;
@@ -61,7 +65,7 @@ public class NavigationActivity extends AppCompatActivity
         if (locDot == null)
             return;
         locDot.save();
-        locDot.drawBitmap(immutableMap, 0, 0, paint);
+        //locDot.drawBitmap(immutableMap, 0, 0, paint);
         if (showLocDot) {
             locDot.translate(xPos, yPos);
             float scaleVal = (1 / cumulScaleFactor);
@@ -69,6 +73,26 @@ public class NavigationActivity extends AppCompatActivity
             locDot.drawCircle(0, 0, mRadius, paint);
         }
         locDot.restore();
+    }
+
+    private void drawPath()
+    {
+        if (paths == null)
+            return;
+        paths.save();
+        if (mPathArray.length > 0)
+        {
+            paths.drawLines(mPathArray, paint);
+        }
+        paths.restore();
+    }
+
+    private void updateDraw()
+    {
+        if (backgroundCanvas != null)
+            backgroundCanvas.drawBitmap(immutableMap, 0, 0, paint);
+        drawCurrentLoc();
+        drawPath();
         //Forces a redraw
         photoView.invalidate();
     }
@@ -104,7 +128,7 @@ public class NavigationActivity extends AppCompatActivity
                     cnBeaconList.add(cnBeacon);
                     Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
                 }
-                //Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+                Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
                 CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
                 //If we have a radius, that means there's only 1 beacon
                 if (loc.getRadius() != 0)
@@ -134,7 +158,7 @@ public class NavigationActivity extends AppCompatActivity
                     showLocDot = false;
                 }
                 //We always want to redraw
-                drawCurrentLoc();
+                updateDraw();
             }
         };
         registerReceiver(receiver, filter);
@@ -142,6 +166,37 @@ public class NavigationActivity extends AppCompatActivity
         photoView.setAdjustViewBounds(true);
         //photoView.setOnPhotoTapListener(new PhotoTapListener());
         photoView.setOnScaleChangeListener(new ScaleChangeListener());
+
+        navigation.setOnRouteChangedListener(new OnRouteChangedListener()
+        {
+            boolean shouldAlt = false;
+
+            @Override
+            public void onRouteChange(int[] routeArcs) {
+                Log.d("Navigation", "Updating route: " + Arrays.toString(routeArcs));
+                //Each intermediate node will be present twice
+                mPathArray = new float[(routeArcs.length * 4) - 4];
+                int pathArrayCounter = 0;
+                for (int i = 0; i < routeArcs.length; i++)
+                {
+                    int[] coords = navigation.getNodePos(routeArcs[i]);
+                    mPathArray[pathArrayCounter] = coords[0];
+                    mPathArray[pathArrayCounter + 1] = coords[1];
+                    if (pathArrayCounter > 0  && i != routeArcs.length-1)
+                    {
+                        mPathArray[pathArrayCounter + 2] = coords[0];
+                        mPathArray[pathArrayCounter + 3] = coords[1];
+                        pathArrayCounter+=2;
+                    }
+                    //Log.d("Navigation", "Found path: ")
+                    pathArrayCounter+=2;
+                }
+
+                updateDraw();
+            }
+        });
+
+        navigation.beginNavigation(52, 45);
     }
 
     private class PhotoTapListener implements OnPhotoTapListener {
@@ -161,7 +216,7 @@ public class NavigationActivity extends AppCompatActivity
         //This resizes the current location dot
         public void onScaleChange(float scaleFactor, float focusX, float focusY) {
             cumulScaleFactor = cumulScaleFactor * scaleFactor;
-            drawCurrentLoc();
+            updateDraw();
         }
     }
 
@@ -192,7 +247,6 @@ public class NavigationActivity extends AppCompatActivity
 
         protected void onPostExecute(Bitmap result) {
             if (bmImage != null) {
-
                  /*Draw a circle on an existing image - starts here*/
                 BitmapFactory.Options myOptions = new BitmapFactory.Options();
                 myOptions.inDither = true;
@@ -208,11 +262,13 @@ public class NavigationActivity extends AppCompatActivity
                 immutableMap = result;
                 mutableMap = immutableMap.copy(Bitmap.Config.ARGB_8888, true);
 
+                backgroundCanvas = new Canvas(mutableMap);
                 locDot = new Canvas(mutableMap);
-                if (showLocDot)
-                    locDot.drawCircle(xPos, yPos, mRadius, paint);
+                paths = new Canvas(mutableMap);
 
                 bmImage.setImageBitmap(mutableMap);
+
+                updateDraw();
             }
             else
                 Log.d("Navigation", "bmImage is null?");

@@ -19,6 +19,16 @@ public class Point2DF {
         return (float) Math.sqrt(Math.pow(this.point.x - other.getPoint().x, 2) + Math.pow(this.point.y - other.getPoint().y, 2));
     }
 
+    public float getX()
+    {
+        return point.x;
+    }
+
+    public float getY()
+    {
+        return point.y;
+    }
+
     private PointF getPoint() {
         return point;
     }

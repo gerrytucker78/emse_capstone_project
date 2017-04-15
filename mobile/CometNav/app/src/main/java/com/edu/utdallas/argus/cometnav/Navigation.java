@@ -119,9 +119,11 @@ public class Navigation {
         graph = new UndirectedGraph();
         coordinates = new GraphNodeCoordinates();
         beaconMap = new HashMap<>();
+        mRouteChangedListeners = new ArrayList<OnRouteChangedListener>();
 
         DataServices.getLocations(this);
         DataServices.getBeacons(this);
+
     }
 
     /**
@@ -268,16 +270,16 @@ public class Navigation {
         navTimer.cancel();
     }
 
-    /**
-     *
-     */
-    public void updateCurrentRoute()
+    public int[] getNodePos(int nodeId)
     {
-        if (pathfinder != null)
+        int[] retArray = new int[2];
+        Point2DF point = coordinates.get(nodeId);
+        if (point != null)
         {
-            currentRoute = pathfinder.search(startNode, endNode);
-            Log.d("Navigation", currentRoute.toString());
+            retArray[0] = Math.round(point.getX());
+            retArray[1] = Math.round(point.getY());
         }
+        return retArray;
     }
 
     public CurrentLocation calculateCurrentPos(List<CometNavBeacon> beaconList)
@@ -326,40 +328,15 @@ public class Navigation {
             loc.setFloor((int)Math.round(posList.get(0).get(2)));
             loc.setRadius((int)Math.round(distanceList.get(0)));
         }
-        else if (count == 2)
-        {
-            //With 2 points we can do a 1d trilateration which returns an estimated point.
-            //First determine if the beacons are on the same floor
-            if (floorList.get(0) == floorList.get(1))
-            {
-                //We're on the same floor - pretend like we're between the 2 beacons
-            }
-            else
-            {
-                //If the 2 beacons are on different floors, find the closest beacon
-            }
-            //see what happens if I try to trilaterate with only 2 points
-            double[][] positions = new double[posList.size()][];
-            for (int i = 0; i < posList.size(); i++) {
-                ArrayList<Double> row = posList.get(i);
-                for (int j = 0; j < row.size(); j++) {
-                    positions[i][j] = row.get(j).doubleValue();
-                }
-            }
-            double[] distances = new double[distanceList.size()];
-            for (int i = 0; i < distanceList.size(); i++) {
-                distances[i] = distanceList.get(i).doubleValue();
-            }
-            double[] resultPoint =  LocationFinder.getLocationPoint(positions, distances);
-            loc.setxLoc((int)Math.round(resultPoint[0]));
-            loc.setyLoc((int)Math.round(resultPoint[1]));
-            loc.setFloor((int)Math.round(resultPoint[2]));
-        }
         else
         {
+            //With 2 points we can do a 1d trilateration which returns an estimated point that is
+            //fairly innacurate. 3 points is where we really can trilaterate our position.
+            //First determine if the beacons are on the same floor
             double[][] positions = new double[posList.size()][];
             for (int i = 0; i < posList.size(); i++) {
                 ArrayList<Double> row = posList.get(i);
+                positions[i] = new double[row.size()];
                 for (int j = 0; j < row.size(); j++) {
                     positions[i][j] = row.get(j).doubleValue();
                 }
@@ -375,6 +352,12 @@ public class Navigation {
         }
         return loc;
     }
+    private List<OnRouteChangedListener> mRouteChangedListeners;
+
+    public void setOnRouteChangedListener(OnRouteChangedListener listener)
+    {
+        mRouteChangedListeners.add(listener);
+    }
 
     /**
      * Visualize a graph
@@ -383,6 +366,25 @@ public class Navigation {
     public static void visualize(Graph graph)
     {
 
+    }
+
+    /**
+     * Updates the current route and notifies listeners
+     */
+    private void updateCurrentRoute()
+    {
+        if (pathfinder != null)
+        {
+            currentRoute = pathfinder.search(startNode, endNode);
+            Log.d("Navigation", currentRoute.toString());
+            int[] notifyArray = currentRoute.toArray();
+            //Log.d("Navigation", notifyArray.toString());
+            //notify listeners
+            for (OnRouteChangedListener listener : mRouteChangedListeners)
+            {
+                listener.onRouteChange(notifyArray);
+            }
+        }
     }
 
     /**
