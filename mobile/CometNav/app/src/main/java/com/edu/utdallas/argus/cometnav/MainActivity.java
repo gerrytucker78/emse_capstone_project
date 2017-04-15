@@ -1,5 +1,6 @@
 package com.edu.utdallas.argus.cometnav;
 
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -83,8 +84,8 @@ public class MainActivity extends AppCompatActivity
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
 
-
-
+        // Emergency Service
+        Service emService;
 
 
         //This triggers the Singleton and creates the Navigation object.
