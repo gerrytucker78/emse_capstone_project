@@ -12,11 +12,14 @@ import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 
+import org.altbeacon.beacon.Beacon;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -275,6 +278,102 @@ public class Navigation {
             currentRoute = pathfinder.search(startNode, endNode);
             Log.d("Navigation", currentRoute.toString());
         }
+    }
+
+    public CurrentLocation calculateCurrentPos(List<CometNavBeacon> beaconList)
+    {
+        //double[][] positions = [3][2];
+        int iterator = 0;
+        //We need at least 3 beacons to preform trilateration.
+        int count = 0;
+        ArrayList<ArrayList<Double>> posList = new ArrayList<>();
+        ArrayList<Double> distanceList = new ArrayList<>();
+        ArrayList<Double> floorList = new ArrayList<>();
+        CurrentLocation loc = new CurrentLocation();
+        for (CometNavBeacon beacon : beaconList)
+        {
+            //foundBeacon is a known beacon we have stored on the web server. It contains the
+            //beacon coordinates.
+            //beacon is one of the beacons we are currently detecting. It contains the beacon's
+            //distance.
+            Log.d("Navigation", "Beacon in beaconList: " + beacon.toString());
+
+            CometNavBeacon foundBeacon = beaconMap.get(beacon.getName());
+            if (foundBeacon != null)
+            {
+                count++;
+                ArrayList<Double> list = new ArrayList<Double>();
+                list.add((double)foundBeacon.getxLoc());
+                list.add((double)foundBeacon.getyLoc());
+                //Iffy on this one
+                list.add((double)foundBeacon.getFloor());
+                posList.add(list);
+                distanceList.add(beacon.getDistance());
+                floorList.add((double) foundBeacon.getFloor());
+            }
+        }
+        if (count == 0)
+        {
+            Log.d("Navigation", "Warning! no beacons in list, cannot determine position");
+        }
+        else if (count == 1)
+        {
+            //If we see only 1 beacon, we are effectively a circle of radius distance around
+            //said beacon on its floor. We can't know anything else.
+            //return point and radius
+            loc.setxLoc((int)Math.round(posList.get(0).get(0)));
+            loc.setyLoc((int)Math.round(posList.get(0).get(1)));
+            loc.setFloor((int)Math.round(posList.get(0).get(2)));
+            loc.setRadius((int)Math.round(distanceList.get(0)));
+        }
+        else if (count == 2)
+        {
+            //With 2 points we can do a 1d trilateration which returns an estimated point.
+            //First determine if the beacons are on the same floor
+            if (floorList.get(0) == floorList.get(1))
+            {
+                //We're on the same floor - pretend like we're between the 2 beacons
+            }
+            else
+            {
+                //If the 2 beacons are on different floors, find the closest beacon
+            }
+            //see what happens if I try to trilaterate with only 2 points
+            double[][] positions = new double[posList.size()][];
+            for (int i = 0; i < posList.size(); i++) {
+                ArrayList<Double> row = posList.get(i);
+                for (int j = 0; j < row.size(); j++) {
+                    positions[i][j] = row.get(j).doubleValue();
+                }
+            }
+            double[] distances = new double[distanceList.size()];
+            for (int i = 0; i < distanceList.size(); i++) {
+                distances[i] = distanceList.get(i).doubleValue();
+            }
+            double[] resultPoint =  LocationFinder.getLocationPoint(positions, distances);
+            loc.setxLoc((int)Math.round(resultPoint[0]));
+            loc.setyLoc((int)Math.round(resultPoint[1]));
+            loc.setFloor((int)Math.round(resultPoint[2]));
+        }
+        else
+        {
+            double[][] positions = new double[posList.size()][];
+            for (int i = 0; i < posList.size(); i++) {
+                ArrayList<Double> row = posList.get(i);
+                for (int j = 0; j < row.size(); j++) {
+                    positions[i][j] = row.get(j).doubleValue();
+                }
+            }
+            double[] distances = new double[distanceList.size()];
+            for (int i = 0; i < distanceList.size(); i++) {
+                distances[i] = distanceList.get(i).doubleValue();
+            }
+            double[] resultPoint =  LocationFinder.getLocationPoint(positions, distances);
+            loc.setxLoc((int)Math.round(resultPoint[0]));
+            loc.setyLoc((int)Math.round(resultPoint[1]));
+            loc.setFloor((int)Math.round(resultPoint[2]));
+        }
+        return loc;
     }
 
     /**

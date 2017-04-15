@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     private static final int BLUETOOTH_ENABLE_REQUEST_ID = 300;
 
     private boolean hasLocationPermissions = false;
-    DataServices services;
+    private Navigation navigation = Navigation.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +88,22 @@ public class MainActivity extends AppCompatActivity
 
 
         //This triggers the Singleton and creates the Navigation object.
-        Navigation.getInstance();
         //nav.beginNavigation(4, 6);
-        //double[][] positions = new double[][] { { 5.0, -6.0 }, { 13.0, -15.0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
+        //double[][] positions = new double[][] { { 0, 0 }, { 10, 0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
         //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
         //Log.d("Location", LocationFinder.getLocationMatrix(positions, distances).toString());
+        try {
+            //LocationFinder.trilateration1DExact1();
+            //LocationFinder.trilateration2DExact1();
+            //LocationFinder.trilateration3DExact();
+            //LocationFinder.trilateration3DInexact();
+            //LocationFinder.trilateration2DInexact1();
+            //LocationFinder.trilateration2DExact3();
+        }
+        catch (Exception e)
+        {
+            Log.d("LocTest", e.toString());
+        }
     }
 
     @Override

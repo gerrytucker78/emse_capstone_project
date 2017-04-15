@@ -23,6 +23,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 import org.altbeacon.beacon.Beacon;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.BitmapFactory.*;
@@ -38,9 +39,10 @@ public class NavigationActivity extends AppCompatActivity
     private Bitmap mutableMap;
     private float cumulScaleFactor = 1;
     private boolean showLocDot = false;
-    private int xPos = 200;
-    private int yPos = 250;
-    private int mRadius = 10;
+    private int xPos = 0;
+    private int yPos = 0;
+    private int mRadius = 0;
+    private Navigation navigation = Navigation.getInstance();
 
     protected void onDestroy() {
         if (receiver != null) {
@@ -48,6 +50,22 @@ public class NavigationActivity extends AppCompatActivity
             receiver = null;
         }
         super.onDestroy();
+    }
+
+    /**
+     * Draws our current location
+     */
+    private void drawCurrentLoc()
+    {
+        if (showLocDot) {
+            locDot.save();
+            locDot.drawBitmap(immutableMap, 0, 0, paint);
+            locDot.translate(xPos, yPos);
+            float scaleVal = (1 / cumulScaleFactor);
+            locDot.scale(scaleVal, scaleVal);
+            locDot.drawCircle(0, 0, mRadius, paint);
+            locDot.restore();
+        }
     }
 
     @Override
@@ -74,9 +92,42 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 List<Beacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
-                Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
-                //This is a type ArrayList<Beacon>
-                //do something based on the intent's action
+                List<CometNavBeacon> cnBeaconList = new ArrayList<>();
+                for (Beacon beacon : beaconArrayList)
+                {
+                    CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
+                    cnBeaconList.add(cnBeacon);
+                    Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
+                }
+                //Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+                CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
+                //If we have a radius, that means there's only 1 beacon
+                if (loc.getRadius() != 0)
+                {
+                    showLocDot = true;
+                    //Draw circle at location
+                    xPos = loc.getxLoc();
+                    yPos = loc.getyLoc();
+                    //right now I'm assuming we're on the right floor
+                    mRadius = (int)Math.round(loc.getRadius());
+                    Log.d("Navigation", "Found a position! " + loc.toString());
+                    drawCurrentLoc();
+                }
+                //otherwise we'll have x y and floor
+                else if (loc.getxLoc() != 0)
+                {
+                    showLocDot = true;
+                    xPos = loc.getxLoc();
+                    yPos = loc.getyLoc();
+                    mRadius = 10;
+                    Log.d("Navigation", "Found a position! " + loc.toString());
+                    drawCurrentLoc();
+                }
+                //If we don't have x, that means we don't have a location. Hide our current location.
+                else
+                {
+                    showLocDot = false;
+                }
             }
         };
         registerReceiver(receiver, filter);
@@ -98,21 +149,12 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-
     private class ScaleChangeListener implements OnScaleChangedListener {
 
         //This resizes the current location dot
         public void onScaleChange(float scaleFactor, float focusX, float focusY) {
-            if (showLocDot) {
-                cumulScaleFactor = cumulScaleFactor * scaleFactor;
-                locDot.save();
-                locDot.drawBitmap(immutableMap, 0, 0, paint);
-                locDot.translate(xPos, yPos);
-                float scaleVal = (1 / cumulScaleFactor);
-                locDot.scale(scaleVal, scaleVal);
-                locDot.drawCircle(0, 0, mRadius, paint);
-                locDot.restore();
-            }
+            cumulScaleFactor = cumulScaleFactor * scaleFactor;
+            drawCurrentLoc();
         }
     }
 
@@ -160,7 +202,8 @@ public class NavigationActivity extends AppCompatActivity
                 mutableMap = immutableMap.copy(Bitmap.Config.ARGB_8888, true);
 
                 locDot = new Canvas(mutableMap);
-                locDot.drawCircle(xPos, yPos, mRadius, paint);
+                if (showLocDot)
+                    locDot.drawCircle(xPos, yPos, mRadius, paint);
 
                 bmImage.setImageBitmap(mutableMap);
             }
