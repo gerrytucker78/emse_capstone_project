@@ -64,6 +64,10 @@
             android:name=".BeaconManagerService"
             android:label="BeaconManagerService"></service>
 
+        <service
+            android:name=".EmergencyService"
+            android:label="EmergencyService"></service>
+
         <activity android:name=".NavigationActivity"></activity>
     </application>
 
