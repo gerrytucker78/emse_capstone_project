@@ -11,6 +11,8 @@ import net.coderodde.graph.pathfinding.HeuristicFunction;
 import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
+
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
@@ -77,9 +79,10 @@ public class Navigation {
      */
     private int endNode;
 
-
-
-
+    /**
+     * Hashmap of beacon names (an int) to a CometNavBeacon object
+     */
+    private HashMap<Integer, CometNavBeacon> beaconMap;
 
     public enum locTypes
     {
@@ -106,20 +109,16 @@ public class Navigation {
         return locTypes.UNKNOWN;
     }
 
-    public Navigation()
+    private static final Navigation navigation = new Navigation();
+    public static Navigation getInstance() { return navigation;}
+    private Navigation()
     {
         graph = new UndirectedGraph();
         coordinates = new GraphNodeCoordinates();
+        beaconMap = new HashMap<>();
 
         DataServices.getLocations(this);
         DataServices.getBeacons(this);
-    }
-
-    public Navigation(JSONArray locations) {
-        graph = new UndirectedGraph();
-        coordinates = new GraphNodeCoordinates();
-        this.updateNodes(locations);
-
     }
 
     /**
@@ -186,17 +185,15 @@ public class Navigation {
             for(int i = 0; i < beacons.length(); i++)
             {
                 JSONObject beacon = beacons.getJSONObject(i);
-
-
+                CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
+                beaconMap.put(cnBeacon.getName(), cnBeacon);
             }
         }
-        catch (JSONException e)
+        catch (JSONException | NullPointerException e)
         {
-            Log.d("Navigation", e.getMessage().toString());
+            Log.d("Navigation", e.toString());
         }
-        Log.d("Navigation", "Beacons updated: " + beacons.toString());
-        //Paths has to happen after locations is done.
-        DataServices.getPaths(this);
+        Log.d("Navigation", "Beacons updated: " + beaconMap.toString());
     }
 
     /**
@@ -281,6 +278,15 @@ public class Navigation {
     }
 
     /**
+     * Visualize a graph
+     * @param graph The graph to visualize
+     */
+    public static void visualize(Graph graph)
+    {
+
+    }
+
+    /**
      * Populates the weight function. Should be run after updating the graph and coordinates.
      */
     private void populateWeightFunction()
@@ -338,12 +344,5 @@ public class Navigation {
         };
     }
 
-    /**
-     * Visualize a graph
-     * @param graph The graph to visualize
-     */
-    public static void visualize(Graph graph)
-    {
 
-    }
 }

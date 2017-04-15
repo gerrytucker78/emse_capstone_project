@@ -13,6 +13,9 @@ android {
         jackOptions {
             enabled true
         }
+        dexOptions {
+            javaMaxHeapSize "2048M"
+        }
     }
     buildTypes {
         release {

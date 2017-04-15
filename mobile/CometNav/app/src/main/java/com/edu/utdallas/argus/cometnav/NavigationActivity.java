@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +15,7 @@ import android.widget.ImageView;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.View;
 
-import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -79,8 +74,8 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 List<Beacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
-               // Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
-
+                Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+                //This is a type ArrayList<Beacon>
                 //do something based on the intent's action
             }
         };

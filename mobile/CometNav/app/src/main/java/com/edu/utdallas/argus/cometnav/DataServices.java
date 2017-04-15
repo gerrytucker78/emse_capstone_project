@@ -7,11 +7,7 @@ import android.util.Log;
 import org.json.*;
 import com.loopj.android.http.*;
 
-import java.io.File;
-
 import cz.msebera.android.httpclient.Header;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Daniel on 4/1/2017.
@@ -35,7 +31,6 @@ class DataServices {
             {
                 //Update the navigation with locations
                 nav.updateNodes(locations);
-
             }
         });
     }
