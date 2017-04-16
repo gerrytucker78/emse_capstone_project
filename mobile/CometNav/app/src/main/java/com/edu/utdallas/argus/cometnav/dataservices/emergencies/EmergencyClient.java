@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.dataservices.emergencies;
 
 import android.util.Log;
 

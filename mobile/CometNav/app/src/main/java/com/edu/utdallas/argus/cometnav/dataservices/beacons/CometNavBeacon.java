@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.dataservices.beacons;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,5 +1,8 @@
 package com.edu.utdallas.argus.cometnav;
 
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyClient;
+
 import org.json.JSONArray;
 import org.junit.Test;
 

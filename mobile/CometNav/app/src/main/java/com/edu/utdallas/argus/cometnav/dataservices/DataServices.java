@@ -1,10 +1,13 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.dataservices;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 //import java.io.
 import org.json.*;
+
+import com.edu.utdallas.argus.cometnav.navigation.DataServicesClient;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyClientInterface;
+import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 import com.loopj.android.http.*;
 
 import cz.msebera.android.httpclient.Header;
@@ -12,7 +15,7 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by Daniel on 4/1/2017.
  */
-class DataServices {
+public class DataServices {
     private static final String TAG="DataServices";
 
     public static void getLocations(final Navigation nav)
@@ -82,7 +85,7 @@ class DataServices {
                 //Update the navigation with locations
                 emergencyClient.receiveEmergencies(emergencies);
 
-                Log.i(TAG, "Emergiencies received from callback: " + emergencies.toString());
+                Log.i(TAG, "Emergencies received from callback: " + emergencies.toString());
             }
         });
     }

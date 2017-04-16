@@ -51,11 +51,11 @@
         </activity>
 
         <service
-            android:name=".BeaconManagerService"
+            android:name=".dataservices.beacons.BeaconManagerService"
             android:label="BeaconManagerService"></service>
 
         <service
-            android:name=".EmergencyService"
+            android:name=".dataservices.emergencies.EmergencyService"
             android:label="EmergencyService"></service>
 
         <activity android:name=".NavigationActivity"></activity>

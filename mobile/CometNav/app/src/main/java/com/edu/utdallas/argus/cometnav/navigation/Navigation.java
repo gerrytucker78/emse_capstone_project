@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.navigation;
 
 import android.util.Log;
 
@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
+
+import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
+import com.edu.utdallas.argus.cometnav.dataservices.DataServices;
 
 import org.json.JSONArray;
 import org.json.JSONException;

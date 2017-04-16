@@ -1,6 +1,5 @@
 package com.edu.utdallas.argus.cometnav;
 
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
+import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
