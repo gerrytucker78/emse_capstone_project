@@ -121,5 +121,11 @@ describe('Locations', function () {
         });
     });
 
+    it('getNearbyHalls', function (done) {
+        var nearbyHalls = [testLocations[1],testLocations[8]]
+        request(server).get('/locations/halls/nearby/190,180,30').expect(nearbyHalls).expect(200, done);
+    });
+
+
 });
 
