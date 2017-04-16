@@ -37,6 +37,23 @@ router.get('/paths', function (req, res, next) {
     }
 });
 
+/* GET Nearby HALLs. */
+router.get('/halls/nearby/:x,:y,:dist', function (req, res, next) {
+    if (simulation.get("enabled") == "true") {
+        res.send(simDataSet);
+    } else {
+
+        minX = parseInt(req.params.x) - parseInt(req.params.dist);
+        maxX = parseInt(req.params.x) + parseInt(req.params.dist);
+        minY = parseInt(req.params.y) - parseInt(req.params.dist);
+        maxY = parseInt(req.params.y) + parseInt(req.params.dist);
+
+        Location.findAll({where: {type: "HALL", pixel_loc_x: {$gte: minX, $lte: maxX }, pixel_loc_y: {$gte: minY, $lte: maxY }}, order: [['location_id', 'ASC']]}).then(function (locations) {
+            return res.send(locations)
+        });
+    }
+});
+
 /* GET ALL Floors listing. */
 router.get('/floors', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
