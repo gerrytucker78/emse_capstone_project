@@ -1,5 +1,7 @@
 package com.edu.utdallas.argus.cometnav;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.altbeacon.beacon.Beacon;
@@ -10,7 +12,7 @@ import org.json.JSONObject;
  * Created by Daniel on 4/14/2017.
  */
 
-public class CometNavBeacon {
+public class CometNavBeacon implements Parcelable {
 
     private int name = 0;
     private int floor = 0;
@@ -116,4 +118,39 @@ public class CometNavBeacon {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.name);
+        dest.writeInt(this.floor);
+        dest.writeInt(this.xLoc);
+        dest.writeInt(this.yLoc);
+        dest.writeDouble(this.distance);
+    }
+
+    protected CometNavBeacon(Parcel in) {
+        this.name = in.readInt();
+        this.floor = in.readInt();
+        this.xLoc = in.readInt();
+        this.yLoc = in.readInt();
+        this.distance = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<CometNavBeacon> CREATOR = new Parcelable.Creator<CometNavBeacon>() {
+        @Override
+        public CometNavBeacon createFromParcel(Parcel source) {
+            return new CometNavBeacon(source);
+        }
+
+        @Override
+        public CometNavBeacon[] newArray(int size) {
+            return new CometNavBeacon[size];
+        }
+    };
 }

@@ -16,10 +16,15 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.service.ArmaRssiFilter;
+import org.altbeacon.beacon.service.RunningAverageRssiFilter;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,12 +37,18 @@ import java.util.Set;
 public class BeaconManagerService extends IntentService implements BeaconConsumer{
     private static final String TAG="BeaconManagerService";
     protected static final String CometNavRegion = "CometNav"; //Specifies Eddystone region for CometNav beacons
+    private static final int BEACON_VERIFY_ITERATIONS = 1;
+    private static final double BEACON_VERIFY_THRESHOLD = .4;
+    private static int beaconVerifyCount = 1;
+
+    private static Map<Beacon, Integer> beaconScore = new HashMap<Beacon, Integer>();
+    private static Map<Beacon, Double> beaconDistance = new HashMap<Beacon, Double>();
 
     //Null Beacon Namespace and Beacon Instance so we see all beacons
     //Note: The namespace and beacon instance can be specified if you want to only find a specific set of beacons
     private Region region=new Region(CometNavRegion, null, null, null);
     private BeaconManager beaconManager;
-    private static Set<Beacon> beaconsList=new HashSet<Beacon>();
+    private static Set<CometNavBeacon> beaconsList=new HashSet<CometNavBeacon>();
 
 
     public BeaconManagerService(){
@@ -73,17 +84,78 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         try {
             beaconManager.setRegionStatePeristenceEnabled(false);
             startRanging();
-            beaconManager.setRangeNotifier(new RangeNotifier() {
+            beaconManager.addRangeNotifier(new RangeNotifier() {
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                    Intent localIntent = new Intent("BEACON_ACTION");
-                    beaconsList.clear(); //Empty all the beacons, that way we don't list beacons that we can't see anymore
-                    beaconsList.addAll(beacons);
+                    Log.i(TAG,"Range Beacons in Region");
+                    /**
+                     * Simple algorithm for now to determine total # of counts we have seen the sensor
+                     */
+                    for (Beacon b : beacons) {
+                        Object value = beaconScore.get(b);
+                        int currentScore;
 
-                    List<Beacon> beaconArrayList = new ArrayList<Beacon>(beaconsList);
+                        if (value == null) {
+                            currentScore = 0;
+                        } else {
+                            currentScore = (Integer)value;
+                        }
+                        currentScore++;
+                        beaconScore.put(b, currentScore);
 
-                    localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
-                    sendBroadcast(localIntent);
+                        // Build up average distance
+                        Object distValue = beaconDistance.get(b);
+                        double distTotal= 0;
+
+                        if (distValue == null) {
+                            distTotal = b.getDistance();
+                        } else {
+                            distTotal = distTotal + b.getDistance();
+                        }
+
+                        beaconDistance.put(b, distTotal);
+                    }
+
+                    if (beaconVerifyCount == BEACON_VERIFY_ITERATIONS) {
+                        Intent localIntent = new Intent("BEACON_ACTION");
+                        beaconsList.clear(); //Empty all the beacons, that way we don't list beacons that we can't see anymore
+                        // beaconsList.addAll(beacons);
+
+                        /**
+                         * Loop through beacon scores for the beacons seen and determine if they stay in
+                         */
+                        for (Beacon b : beaconScore.keySet()) {
+                            Integer count = beaconScore.get(b);
+
+                            if (count >= Math.round(BEACON_VERIFY_ITERATIONS * BEACON_VERIFY_THRESHOLD) ) {
+
+                                /**
+                                 * Select the Beacon and use it's average distance
+                                 */
+                                CometNavBeacon cnBeacon = new CometNavBeacon(b);
+                                cnBeacon.setDistance(beaconDistance.get(b)/count);
+
+                                beaconsList.add(cnBeacon);
+                                Log.i(TAG,"Beacon " + b.getId1() + " made the cut: " + count + " with an average distance of " + cnBeacon.getDistance());
+
+
+                            } else {
+                                Log.i(TAG,"Beacon " + b.getId1()+ " DID NOT MAKE the cut: " + count + " with an average distance of " + beaconDistance.get(b)/count);
+                            }
+                        }
+
+                        beaconScore.clear();
+
+                        List<CometNavBeacon> beaconArrayList = new ArrayList<CometNavBeacon>(beaconsList);
+
+                        localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
+                        sendBroadcast(localIntent);
+                        beaconVerifyCount = 1;
+                    } else {
+                        beaconVerifyCount++;
+                        Log.i(TAG, "Still checking " + beaconVerifyCount);
+                    }
+                }
 //                    if(beaconsList.size() > 0) {
 //                        for (Beacon b : beaconsList) {
 //                            Log.d(TAG, "Beacon Bluetooth Address: " + b.getBluetoothAddress()
@@ -94,7 +166,6 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
 //                    }else{
 //                        Log.d(TAG, "No beacons detected at this time");
 //                    }
-                }
             });
         } catch (Exception e) {
             Log.e(TAG,"Exception Error when ",e);
@@ -116,6 +187,9 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.EDDYSTONE_URL_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.URI_BEACON_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT));
+        beaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
+        //beaconManager.setRssiFilterImplClass(RunningAverageRssiFilter.class);
+        //RunningAverageRssiFilter.setSampleExpirationMilliseconds(2000l);
         beaconManager.bind(this);
     }
 

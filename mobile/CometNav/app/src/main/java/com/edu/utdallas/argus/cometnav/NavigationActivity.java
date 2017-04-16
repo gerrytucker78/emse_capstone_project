@@ -153,7 +153,7 @@ public class NavigationActivity extends AppCompatActivity
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                List<Beacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
+                List<CometNavBeacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
                 updateNavBeaconList(beaconArrayList);
                 CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
                 //If we have a radius, that means there's only 1 beacon
@@ -310,13 +310,12 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    private void updateNavBeaconList(List<Beacon> beaconArrayList) {
+    private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
         this.cnBeaconList = new ArrayList<>();
         Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
 
-        for (Beacon beacon : beaconArrayList)
+        for (CometNavBeacon cnBeacon : beaconArrayList)
         {
-            CometNavBeacon cnBeacon = new CometNavBeacon(beacon);
             CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
             cnBeacon.setxLoc(refBeacon.getxLoc());
             cnBeacon.setyLoc(refBeacon.getyLoc());
