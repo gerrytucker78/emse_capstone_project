@@ -18,6 +18,9 @@ import android.graphics.Paint;
 
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.ILocationClient;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
 import com.edu.utdallas.argus.cometnav.navigation.CurrentLocation;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 import com.edu.utdallas.argus.cometnav.navigation.OnRouteChangedListener;
@@ -33,7 +36,7 @@ import java.util.Map;
 
 import static android.graphics.BitmapFactory.*;
 
-public class NavigationActivity extends AppCompatActivity
+public class NavigationActivity extends AppCompatActivity implements ILocationClient
 {
     private BroadcastReceiver receiver;
     private PhotoView photoView;
@@ -153,43 +156,8 @@ public class NavigationActivity extends AppCompatActivity
         IntentFilter filter = new IntentFilter();
         filter.addAction("BEACON_ACTION");
 
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                List<CometNavBeacon> beaconArrayList = intent.getParcelableArrayListExtra("BEACON_LIST");
-                updateNavBeaconList(beaconArrayList);
-                CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
-                //If we have a radius, that means there's only 1 beacon
-                if (loc.getRadius() != 0)
-                {
-                    showLocDot = true;
-                    //Draw circle at location
-                    xPos = loc.getxLoc();
-                    yPos = loc.getyLoc();
-                    //right now I'm assuming we're on the right floor
-                    mRadius = (int)Math.round(loc.getRadius());
-                    if (mRadius < MIN_RADIUS)
-                        mRadius = MIN_RADIUS;
-                    Log.d("Navigation", "Found a position! " + loc.toString());
-                }
-                //otherwise we'll have x y and floor
-                else if (loc.getxLoc() != 0)
-                {
-                    showLocDot = true;
-                    xPos = loc.getxLoc();
-                    yPos = loc.getyLoc();
-                    mRadius = MIN_RADIUS;
-                    Log.d("Navigation", "Found a position! " + loc.toString());
-                }
-                //If we don't have x, that means we don't have a location. Hide our current location.
-                else
-                {
-                    showLocDot = false;
-                }
-                //We always want to redraw
-                updateDraw();
-            }
-        };
+        receiver = new BeaconBroadcastReceiver();
+
         registerReceiver(receiver, filter);
 
         photoView.setAdjustViewBounds(true);
@@ -225,8 +193,85 @@ public class NavigationActivity extends AppCompatActivity
             }
         });
 
+        /**
+         * @// TODO: 4/16/2017 Need to integrate with list selection
+         */
         navigation.beginNavigation(52, 45);
     }
+
+    private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
+        this.cnBeaconList = new ArrayList<>();
+        Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
+
+        for (CometNavBeacon cnBeacon : beaconArrayList)
+        {
+            CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
+            cnBeacon.setxLoc(refBeacon.getxLoc());
+            cnBeacon.setyLoc(refBeacon.getyLoc());
+            cnBeacon.setFloor(refBeacon.getFloor());
+
+            cnBeaconList.add(cnBeacon);
+            Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
+        }
+        Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+    }
+
+    @Override
+    public void receiveNavigableLocations(List<Location> locations) {
+        throw new UnsupportedOperationException("Method not implemented for this class");
+    }
+
+    @Override
+    public void receiveBlockedAreas(List<Location> locations) {
+        throw new UnsupportedOperationException("Method not implemented for this class");
+    }
+
+    @Override
+    public void receivePaths(List<Path> paths) {
+        throw new UnsupportedOperationException("Method not implemented for this class");
+    }
+
+
+    private class BeaconBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Update Beacons
+            updateNavBeaconList(intent.getParcelableArrayListExtra("BEACON_LIST"));
+
+            // Determine Current Location
+            CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
+
+            // If we have a radius, that means there's only 1 beacon
+            if (loc.getRadius() != 0)
+            {
+                showLocDot = true;
+                //Draw circle at location
+                xPos = loc.getxLoc();
+                yPos = loc.getyLoc();
+                //right now I'm assuming we're on the right floor
+                mRadius = (int)Math.round(loc.getRadius());
+                if (mRadius < MIN_RADIUS)
+                    mRadius = MIN_RADIUS;
+                Log.d("Navigation", "Found a position! " + loc.toString());
+            }
+            //otherwise we'll have x y and floor
+            else if (loc.getxLoc() != 0)
+            {
+                showLocDot = true;
+                xPos = loc.getxLoc();
+                yPos = loc.getyLoc();
+                mRadius = MIN_RADIUS;
+                Log.d("Navigation", "Found a position! " + loc.toString());
+            }
+            //If we don't have x, that means we don't have a location. Hide our current location.
+            else
+            {
+                showLocDot = false;
+            }
+
+        }
+
+}
 
     private class PhotoTapListener implements OnPhotoTapListener {
 
@@ -313,20 +358,5 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
-        this.cnBeaconList = new ArrayList<>();
-        Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
 
-        for (CometNavBeacon cnBeacon : beaconArrayList)
-        {
-            CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
-            cnBeacon.setxLoc(refBeacon.getxLoc());
-            cnBeacon.setyLoc(refBeacon.getyLoc());
-            cnBeacon.setFloor(refBeacon.getFloor());
-
-            cnBeaconList.add(cnBeacon);
-            Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
-        }
-        Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
-    }
 }

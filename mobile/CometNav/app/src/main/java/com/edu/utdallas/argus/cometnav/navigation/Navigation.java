@@ -37,7 +37,7 @@ import net.coderodde.graph.UndirectedGraph;
  */
 
 public class Navigation implements ILocationClient {
-
+    private static final String TAG = Navigation.class.toString();
     /**
      * The node IDs mapped to coordinates
      */
@@ -90,6 +90,8 @@ public class Navigation implements ILocationClient {
     private int endNode;
 
     private HashMap<Integer, CometNavBeacon> beaconMap;
+
+    private List<Location> navigableLocations;
 
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
@@ -186,6 +188,8 @@ public class Navigation implements ILocationClient {
         ArrayList<Double> distanceList = new ArrayList<>();
         ArrayList<Double> floorList = new ArrayList<>();
         CurrentLocation loc = new CurrentLocation();
+        boolean locationFound = false;
+
         for (CometNavBeacon beacon : beaconList) {
             //foundBeacon is a known beacon we have stored on the web server. It contains the
             //beacon coordinates.
@@ -216,6 +220,7 @@ public class Navigation implements ILocationClient {
             loc.setyLoc((int) Math.round(posList.get(0).get(1)));
             loc.setFloor((int) Math.round(posList.get(0).get(2)));
             loc.setRadius((int) Math.round(distanceList.get(0)));
+            locationFound = true;
         } else {
             //With 2 points we can do a 1d trilateration which returns an estimated point that is
             //fairly innacurate. 3 points is where we really can trilaterate our position.
@@ -236,7 +241,40 @@ public class Navigation implements ILocationClient {
             loc.setxLoc((int) Math.round(resultPoint[0]));
             loc.setyLoc((int) Math.round(resultPoint[1]));
             loc.setFloor((int) Math.round(resultPoint[2]));
+            locationFound = true;
         }
+
+        // Look for nearby navigable location to projected location and set to the nearest
+        if (locationFound) {
+            double smallestZ = 0;
+            Location closestNavLoc = null;
+            for (Location navLoc : this.navigableLocations) {
+
+                if (navLoc.getFloor() == loc.getFloor()) {
+                    double x = loc.getxLoc() - navLoc.getPixelLocX();
+                    double y = loc.getyLoc() - navLoc.getPixelLocY();
+
+
+                    double z = 0;
+
+                    z = (y*y) + (x*x);
+
+                    if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
+                        smallestZ = z;
+                        closestNavLoc = navLoc;
+                    }
+                }
+            }
+
+            Log.d(TAG,"OriginalLoc: " + loc.getxLoc() + ", " + loc.getyLoc() + " || Z: " + smallestZ + " ClosestNavLoc => " + closestNavLoc.toString());
+
+            // Rest loc x and y with closest hall x and y
+            if (closestNavLoc != null) {
+                loc.setxLoc(closestNavLoc.getPixelLocX());
+                loc.setyLoc(closestNavLoc.getPixelLocY());
+            }
+        }
+
         return loc;
     }
 
@@ -244,15 +282,6 @@ public class Navigation implements ILocationClient {
 
     public void setOnRouteChangedListener(OnRouteChangedListener listener) {
         mRouteChangedListeners.add(listener);
-    }
-
-    /**
-     * Visualize a graph
-     *
-     * @param graph The graph to visualize
-     */
-    public static void visualize(Graph graph) {
-
     }
 
     /**
@@ -325,6 +354,8 @@ public class Navigation implements ILocationClient {
      */
     @Override
     public void receiveNavigableLocations(List<Location> locations) {
+        this.navigableLocations = locations;
+
         for (int i = 0; i < locations.size(); i++) {
             Location location = locations.get(i);
 
@@ -375,5 +406,6 @@ public class Navigation implements ILocationClient {
         heuristics = new EuclideanHeuristicFunction(coordinates);
         pathfinder = new NBAStarPathfinder(graph, weightFunction, heuristics);
     }
+
 }
 

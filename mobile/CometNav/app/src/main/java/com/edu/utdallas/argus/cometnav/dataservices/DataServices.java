@@ -12,32 +12,32 @@ import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 import com.loopj.android.http.*;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Daniel on 4/1/2017.
  */
 public class DataServices {
-    private static final String TAG="DataServices";
+    private static final String TAG = "DataServices";
 
     private static final String LOCATIONS_NAVIGABLE = "locations/navigable";
     private static final String LOCATIONS_BLOCKED_AREAS = "locations/blockedAreas";
     private static final String LOCATIONS_PATHS = "locations/paths";
+    private static final String LOCATIONS_HALLS_NEARBY = "locations/halls/nearby";
 
-    public static void getNavigableLocations(final ILocationClient client)
-    {
-        DataServicesClient.get(LOCATIONS_NAVIGABLE, null, new JsonHttpResponseHandler()
-        {
+    public static void getNavigableLocations(final ILocationClient client) {
+        DataServicesClient.get(LOCATIONS_NAVIGABLE, null, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response)
-            {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 Log.d(TAG, "Warning! Locations returned as object and not array");
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray locations)
-            {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray locations) {
                 client.receiveNavigableLocations(Location.createLocations(locations));
             }
         });
@@ -59,8 +59,7 @@ public class DataServices {
     }
 
     public static void getBlockedAreas(final ILocationClient client) {
-        DataServicesClient.get(LOCATIONS_BLOCKED_AREAS, null, new JsonHttpResponseHandler()
-        {
+        DataServicesClient.get(LOCATIONS_BLOCKED_AREAS, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
@@ -68,8 +67,7 @@ public class DataServices {
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray blockedAreas)
-            {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray blockedAreas) {
                 client.receiveBlockedAreas(Location.createLocations(blockedAreas));
             }
         });

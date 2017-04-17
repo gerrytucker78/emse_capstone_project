@@ -109,6 +109,17 @@ public class Location {
         this.pixelLocY = pixelLocY;
     }
 
+    public String toString() {
+        String result = JSON_LOCATION_ID + ": " + this.locationId +
+                ", " + JSON_NAME + ": " + this.name +
+                ", " + JSON_TYPE + ": " + this.type +
+                ", " + JSON_PIXEL_LOC_X + ": " + this.pixelLocX +
+                ", " + JSON_PIXEL_LOC_Y + ": " + this.pixelLocY +
+                ", " + JSON_FLOOR + ": " + this.floor;
+
+        return result;
+    }
+
     public enum Type {
         BLOCKED_AREA,
         ROOM,
