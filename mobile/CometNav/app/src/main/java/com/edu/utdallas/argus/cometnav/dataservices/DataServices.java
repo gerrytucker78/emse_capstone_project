@@ -5,7 +5,6 @@ import android.util.Log;
 //import java.io.
 import org.json.*;
 
-import com.edu.utdallas.argus.cometnav.navigation.DataServicesClient;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyClientInterface;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 import com.loopj.android.http.*;
