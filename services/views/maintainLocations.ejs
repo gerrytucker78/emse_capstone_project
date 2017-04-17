@@ -16,7 +16,7 @@
 
 
 
-    var locations = [
+    var old_locations = [
 
         {"location_id": 0,"name": "2.HALL.NW.1","type":"HALL","pixel_loc_x":190,"pixel_loc_y":105,"floor":2,"map":null,"latlong":null},
         {"location_id": 1,"name": "2.HALL.NW.2","type":"HALL","pixel_loc_x":190,"pixel_loc_y":180,"floor":2,"map":null,"latlong":null},
@@ -143,7 +143,7 @@
         {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
 
     ];
-    var paths = [
+    var old_paths = [
         {"start_id": 0,"end_id": 1,"weight":null},
         {"start_id": 0,"end_id": 5,"weight":null},
         {"start_id": 1,"end_id": 2,"weight":null},
@@ -397,10 +397,11 @@
         <canvas id="myCanvas" width="800" height="500" border="1"></canvas>
 
 <hr>
-        <button ng-click='vote()'>Load Data</button>
+        <button ng-click='loadData()'>Load Data</button>
         <button ng-click='togglePaths()'>Toggle Paths</button>
         <button ng-click='toggleHalls()'>Toggle Halls</button>
         <button ng-click='toggleRooms()'>Toggle Rooms</button>
+        <button ng-click='toggleLables()'>Toggle Labels</button>
         <button ng-click='toggleBeacons()'>Toggle Beacons</button>
 
         <hr />
