@@ -49,6 +49,19 @@ describe('Sensors', function () {
         request(server).get('/sensors/id/' + testSensors[0].sensor_id).expect(testSensors[0]).expect(200, done);
     });
 
+    it('Bulk Update By Id', function (done) {
+        var testSens = [];
+        testSensors[0].floor = 99;
+        testSensors[1].floor = 99;
+       ;
+
+        testSens.push(testSensors[0]);
+        testSens.push(testSensors[1]);
+
+
+        request(server).put('/sensors/update/').send(testSens).expect(testSens).expect(200,done);
+    });
+
     it('completeReplace', function(done) {
         request(server).put('/sensors').send(testSensors).expect(testSensors).expect(200,done);
     })

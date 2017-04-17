@@ -37,26 +37,32 @@ function LocationShape(location, w, h, fill) {
     this.location = location;
     this.visible = true;
     this.valid = true;
+    this.floor = this.location.floor;
 };
 
+/**
+ * Method called to load the edit form with the appropriate data
+ */
 LocationShape.prototype.edit = function() {
     document.getElementById("location_name").value = this.location.name;
     document.getElementById("location_type").value = this.location.type;
 };
 
 /**
- * Draw the shape
+ * Draw the location shape
  * @param ctx
  */
 LocationShape.prototype.draw = function(ctx) {
-//    if (this.visible) {
-        ctx.fillStyle = this.fill;
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-//    }
+    ctx.fillStyle = this.fill;
+    ctx.fillRect(this.x, this.y, this.w, this.h);
 };
 
-
-// Determine if a point is inside the shape's bounds
+/**
+ * Determine if shape contains the provided point
+ * @param mx
+ * @param my
+ * @returns {boolean}
+ */
 LocationShape.prototype.contains = function(mx, my) {
     // All we have to do is make sure the Mouse X,Y fall in the area between
     // the shape's X and (X + Width) and its Y and (Y + Height)
@@ -68,6 +74,72 @@ LocationShape.prototype.contains = function(mx, my) {
  * End LocationShape Class Definition
  * *****************************************************************************************************
  */
+
+
+/*****************************************************************************************************
+ * BeaconShape Class Definition
+ * *****************************************************************************************************
+ */
+
+
+/**
+ * Constructor for wrapper object BeaconShape that allows for drawing / moving sensor and eventual
+ * save to the database later.
+ * @param sensor
+ * @param w
+ * @param h
+ * @param fill
+ * @constructor
+ */
+function BeaconShape(sensor, w, h, fill) {
+    // This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
+    // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
+    // But we aren't checking anything else! We could put "Lalala" for the value of x
+    this.x = sensor.pixel_loc_x || 0;
+    this.y = sensor.pixel_loc_y || 0;
+    this.w = w || 1;
+    this.h = h || 1;
+    this.fill = fill || '#AAAAAA';
+    this.sensor = sensor;
+    this.visible = true;
+    this.floor = this.sensor.floor;
+    this.valid = true;
+};
+
+/**
+ * Method called to load the edit form with the appropriate data
+ */
+BeaconShape.prototype.edit = function() {
+    document.getElementById("beacon_name").value = this.sensor.name;
+};
+
+/**
+ * Draw the beacon shape
+ * @param ctx
+ */
+BeaconShape.prototype.draw = function(ctx) {
+    ctx.fillStyle = this.fill;
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+};
+
+/**
+ * Determine if shape contains the provided point
+ * @param mx
+ * @param my
+ * @returns {boolean}
+ */
+BeaconShape.prototype.contains = function(mx, my) {
+    // All we have to do is make sure the Mouse X,Y fall in the area between
+    // the shape's X and (X + Width) and its Y and (Y + Height)
+    return  (this.x <= mx) && (this.x + this.w >= mx) &&
+        (this.y <= my) && (this.y + this.h >= my);
+};
+
+/*****************************************************************************************************
+ * End BeaconShape Class Definition
+ * *****************************************************************************************************
+ */
+
 
 /*******************************************************************************************************
  * TypeVisible Class Definition
@@ -215,6 +287,12 @@ function CanvasState(canvas, image, floor) {
             myState.shapesAdded.push(newShape);
             myState.addShape(newShape);
             myState.valid = false;
+        } else if (addType == "BEACON") {
+            var newShape = new BeaconShape({name: "New Beacon", pixel_loc_x: mouse.x - 5, pixel_loc_y: mouse.y - 5, floor: myState.floor}, 5, 5, "#FF0000");
+            newShape.valid = false;
+            myState.shapesAdded.push(newShape);
+            myState.addShape(newShape);
+            myState.valid = false;
         }
     }, true);
 
@@ -260,7 +338,7 @@ CanvasState.prototype.draw = function() {
             if (shape.x > this.width || shape.y > this.height ||
                 shape.x + shape.w < 0 || shape.y + shape.h < 0) continue;
 
-            if (shape.location.floor == this.floor) {
+            if (shape.floor == this.floor) {
                 shapes[i].draw(ctx);
             }
         }
@@ -306,16 +384,3 @@ CanvasState.prototype.getMouse = function(e) {
     return {x: mx, y: my};
 };
 
-// If you dont want to use <body onLoad='init()'>
-// You could uncomment this init() reference and place the script reference inside the body tag
-//init();
-/**
-function init() {
-    var s = new CanvasState(document.getElementById('canvas1'));
-    s.addShape(new Shape(40,40,50,50)); // The default is gray
-    s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
-    // Lets make some partially transparent
-    s.addShape(new Shape(80,150,60,30, 'rgba(127, 255, 212, .5)'));
-    s.addShape(new Shape(125,80,30,80, 'rgba(245, 222, 179, .7)'));
-}
- **/

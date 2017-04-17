@@ -1,10 +1,3 @@
-var beacons = true;
-var halls = false;
-var rooms = false;
-var showPaths = true;
-var exits = true;
-var stairs = true;
-var labels = true;
 var floor;
 
 var locations = {};
@@ -62,7 +55,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
                 $http.get('/sensors').success(function (data, status, headers, config) {
                     sensors = data;
-                    loadData();
+                    loadData(floor);
                 }).error(function (data, status, headers, config) {
                     // TO-DO: Need to fill in.
                 });
@@ -76,34 +69,68 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
     };
 
-    $scope.saveData = function() {
-      var changedLocations = [];
-        var locationShapes = canvasState.shapes;
+    $scope.saveLocationData = function () {
+        var changedLocations = [];
+        var shapes = canvasState.shapes;
 
         // Loop through all locations and pull out changed ones
-        for (var i = 0; i < locationShapes.length; i++) {
-            if (!locationShapes[i].valid) {
-                var location = locationShapes[i].location;
-                location.pixel_loc_x = locationShapes[i].x;
-                location.pixel_loc_y = locationShapes[i].y;
-                locationShapes[i].valid = true;
-                changedLocations.push(location);
+        for (var i = 0; i < shapes.length; i++) {
+            if (!shapes[i].valid) {
+                if (shapes[i] instanceof LocationShape) {
+                    var location = shapes[i].location;
+                    location.pixel_loc_x = shapes[i].x;
+                    location.pixel_loc_y = shapes[i].y;
+                    shapes[i].valid = true;
+                    changedLocations.push(location);
+                }
             }
         }
 
         // Put updates
-        $http.put('/locations/update',changedLocations).success(function (data, status, headers, config) {
+        $http.put('/locations/update', changedLocations).success(function (data, status, headers, config) {
             $scope.loadData();
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });
     };
 
-    $scope.updateLocationData = function() {
+    $scope.updateLocationData = function () {
         canvasState.selection.location.name = document.getElementById("location_name").value
         canvasState.selection.location.type = document.getElementById("location_type").value
     };
 
+    /**
+     * Function to update backend database for beacons
+     */
+    $scope.saveBeaconData = function () {
+        var changedBeacons = [];
+        var shapes = canvasState.shapes;
+
+        // Loop through all locations and pull out changed ones
+        for (var i = 0; i < shapes.length; i++) {
+            if (!shapes[i].valid) {
+                if (shapes[i] instanceof BeaconShape) {
+                    var beacon = shapes[i].sensor;
+                    beacon.pixel_loc_x = shapes[i].x;
+                    beacon.pixel_loc_y = shapes[i].y;
+                    changedBeacons.push(beacon);
+                }
+            }
+        }
+
+        // Put updates
+        $http.put('/sensors/update', changedBeacons).success(function (data, status, headers, config) {
+            $scope.loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
+
+
+    $scope.updateBeaconData = function () {
+        canvasState.selection.sensor.name = document.getElementById("beacon_name").value
+    };
 }]);
 
 function initDrawing(currentFloor) {
@@ -120,6 +147,10 @@ function loadData(currentFloor) {
     for (var i in locations) {
 
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
+    }
+
+    for (var i = 0; i < sensors.length; i++) {
+        canvasState.addShape(new BeaconShape(sensors[i], 5, 5, "#FF0000"));
     }
 }
 
