@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/shapes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/maintainLocations.js" afterPath="$PROJECT_DIR$/controllers/maintainLocations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/locations.js" afterPath="$PROJECT_DIR$/routes/locations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/locations.js" afterPath="$PROJECT_DIR$/tests/locations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/maintainLocations.ejs" afterPath="$PROJECT_DIR$/views/maintainLocations.ejs" />
     </list>
     <ignored path="services.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,40 +42,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="84" column="57" selection-start-line="84" selection-start-column="57" selection-end-line="84" selection-end-column="57" />
+            <state relative-caret-position="-899">
+              <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/locations.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="61">
-              <caret line="192" column="19" selection-start-line="192" selection-start-column="19" selection-end-line="192" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/locations.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="142" column="26" selection-start-line="142" selection-start-column="26" selection-end-line="142" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shapes.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="shapes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-840">
+            <state relative-caret-position="-360">
               <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -170,9 +145,9 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/controllers/shapes.js" />
         <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
-        <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
         <option value="$PROJECT_DIR$/tests/locations.js" />
         <option value="$PROJECT_DIR$/routes/locations.js" />
+        <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
       </list>
     </option>
   </component>
@@ -344,7 +319,7 @@
       <recent name="$PROJECT_DIR$/models" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.Locations">
+  <component name="RunManager" selected="Node.js.bin/www">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -958,7 +933,7 @@
       <workItem from="1492375836466" duration="3041000" />
       <workItem from="1492390584604" duration="2808000" />
       <workItem from="1492400266442" duration="325000" />
-      <workItem from="1492400638522" duration="12868000" />
+      <workItem from="1492400638522" duration="13399000" />
     </task>
     <servers />
   </component>
@@ -995,7 +970,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92997000" />
+    <option name="totallyTimeSpent" value="93528000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1018,7 +993,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959481" sideWeight="0.50606585" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32090396" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32090396" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1420,21 +1395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-840">
-          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#345#590#0" expanded="false" />
-            <element signature="e#1366#1405#0" expanded="false" />
-            <element signature="e#1941#2190#0" expanded="false" />
-            <element signature="e#2192#2437#0" expanded="false" />
-            <element signature="e#3261#3510#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/locations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -1453,9 +1413,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="84" column="57" selection-start-line="84" selection-start-column="57" selection-end-line="84" selection-end-column="57" />
+        <state relative-caret-position="-899">
+          <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-360">
+          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#345#590#0" expanded="false" />
+            <element signature="e#1366#1405#0" expanded="false" />
+            <element signature="e#1941#2190#0" expanded="false" />
+            <element signature="e#2192#2437#0" expanded="false" />
+            <element signature="e#3261#3510#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

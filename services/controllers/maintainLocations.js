@@ -82,9 +82,20 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         // Loop through all locations and pull out changed ones
         for (var i = 0; i < locationShapes.length; i++) {
             if (!locationShapes[i].valid) {
-                changedLocations.push(locationShapes[i]);
+                var location = locationShapes[i].location;
+                location.pixel_loc_x = locationShapes[i].x;
+                location.pixel_loc_y = locationShapes[i].y;
+
+                changedLocations.push(location);
             }
         }
+
+        // Put updates
+        $http.put('/locations/update',changedLocations).success(function (data, status, headers, config) {
+            loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
     };
 
 }]);
