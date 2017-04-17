@@ -49,7 +49,7 @@ router.get('/paths', function (req, res, next) {
 });
 
 /* GET Nearby HALLs. */
-router.get('/halls/nearby/:x,:y,:dist', function (req, res, next) {
+router.get('/halls/nearby/:floor,:x,:y,:dist', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simDataSet);
     } else {
@@ -59,7 +59,7 @@ router.get('/halls/nearby/:x,:y,:dist', function (req, res, next) {
         minY = parseInt(req.params.y) - parseInt(req.params.dist);
         maxY = parseInt(req.params.y) + parseInt(req.params.dist);
 
-        Location.findAll({where: {type: "HALL", pixel_loc_x: {$gte: minX, $lte: maxX }, pixel_loc_y: {$gte: minY, $lte: maxY }}, order: [['location_id', 'ASC']]}).then(function (locations) {
+        Location.findAll({where: {floor: req.params.floor, type: "HALL", pixel_loc_x: {$gte: minX, $lte: maxX }, pixel_loc_y: {$gte: minY, $lte: maxY }}, order: [['location_id', 'ASC']]}).then(function (locations) {
             return res.send(locations)
         });
     }
