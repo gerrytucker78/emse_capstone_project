@@ -1,0 +1,424 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
+
+    <script src="/controllers/maintainLocations.js"></script>
+
+    <script>
+
+    </script>
+</head>
+<body>
+
+<script>
+
+
+
+
+    var locations = [
+
+        {"location_id": 0,"name": "2.HALL.NW.1","type":"HALL","pixel_loc_x":190,"pixel_loc_y":105,"floor":2,"map":null,"latlong":null},
+        {"location_id": 1,"name": "2.HALL.NW.2","type":"HALL","pixel_loc_x":190,"pixel_loc_y":180,"floor":2,"map":null,"latlong":null},
+        {"location_id": 2,"name": "2.201","type":"ROOM","pixel_loc_x":170,"pixel_loc_y":190,"floor":2,"map":null,"latlong":null},
+        {"location_id": 3,"name": "2.202","type":"ROOM","pixel_loc_x":165,"pixel_loc_y":178,"floor":2,"map":null,"latlong":null},
+        {"location_id": 4,"name": "2.203","type":"ROOM","pixel_loc_x":170,"pixel_loc_y":170,"floor":2,"map":null,"latlong":null},
+        {"location_id": 5,"name": "2.204","type":"ROOM","pixel_loc_x":190,"pixel_loc_y":95,"floor":2,"map":null,"latlong":null},
+        {"location_id": 6,"name": "2.2R1","type":"ROOM","pixel_loc_x":198,"pixel_loc_y":195,"floor":2,"map":null,"latlong":null},
+        {"location_id": 7,"name": "2.2R2","type":"ROOM","pixel_loc_x":198,"pixel_loc_y":217,"floor":2,"map":null,"latlong":null},
+        {"location_id": 8,"name": "2.HALL.NW.3","type":"HALL","pixel_loc_x":190,"pixel_loc_y":210,"floor":2,"map":null,"latlong":null},
+        {"location_id": 9,"name": "2.HALL.NW.4","type":"HALL","pixel_loc_x":190,"pixel_loc_y":242,"floor":2,"map":null,"latlong":null},
+
+
+        {"location_id": 10,"name": "2.103B","type":"ROOM","pixel_loc_x":208,"pixel_loc_y":242,"floor":2,"map":null,"latlong":null},
+        {"location_id": 11,"name": "2.103B1","type":"ROOM","pixel_loc_x":213,"pixel_loc_y":250,"floor":2,"map":null,"latlong":null},
+        {"location_id": 12,"name": "2.103","type":"ROOM","pixel_loc_x":225,"pixel_loc_y":230,"floor":2,"map":null,"latlong":null},
+        {"location_id": 13,"name": "Blocked 1","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+        {"location_id": 14,"name": "Blocked 2","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 15,"name": "2.HALL.NW.4","type":"HALL","pixel_loc_x":190,"pixel_loc_y":275,"floor":2,"map":null,"latlong":null},
+        {"location_id": 16,"name": "2.HALL.NW.5","type":"HALL","pixel_loc_x":200,"pixel_loc_y":290,"floor":2,"map":null,"latlong":null},
+        {"location_id": 17,"name": "2.HALL.NW.6","type":"HALL","pixel_loc_x":220,"pixel_loc_y":315,"floor":2,"map":null,"latlong":null},
+        {"location_id": 18,"name": "2.HALL.NW.7","type":"HALL","pixel_loc_x":260,"pixel_loc_y":320,"floor":2,"map":null,"latlong":null},
+        {"location_id": 19,"name": "2.HALL.NW.8","type":"HALL","pixel_loc_x":278,"pixel_loc_y":320,"floor":2,"map":null,"latlong":null},
+        {"location_id": 20,"name": "2.HALL.NW.9","type":"HALL","pixel_loc_x":318,"pixel_loc_y":315,"floor":2,"map":null,"latlong":null},
+        {"location_id": 21,"name": "2.HALL.NW.10","type":"HALL","pixel_loc_x":333,"pixel_loc_y":295,"floor":2,"map":null,"latlong":null},
+        {"location_id": 22,"name": "2.HALL.NW.11","type":"HALL","pixel_loc_x":345,"pixel_loc_y":280,"floor":2,"map":null,"latlong":null},
+        {"location_id": 23,"name": "2.HALL.NW.12","type":"HALL","pixel_loc_x":350,"pixel_loc_y":250,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 24,"name": "2.HALL.NW.13","type":"HALL","pixel_loc_x":355,"pixel_loc_y":230,"floor":2,"map":null,"latlong":null},
+        {"location_id": 25,"name": "2.HALL.NW.14","type":"HALL","pixel_loc_x":355,"pixel_loc_y":180,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 26,"name": "2.101","type":"EXIT","pixel_loc_x":198,"pixel_loc_y":313,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 27,"name": "2.102","type":"ROOM","pixel_loc_x":210,"pixel_loc_y":279,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 28,"name": "2.415","type":"ROOM","pixel_loc_x":276,"pixel_loc_y":340,"floor":2,"map":null,"latlong":null},
+        {"location_id": 29,"name": "2.415","type":"ROOM","pixel_loc_x":313,"pixel_loc_y":330,"floor":2,"map":null,"latlong":null},
+        {"location_id": 30,"name": "2.414","type":"EXIT","pixel_loc_x":342,"pixel_loc_y":362, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 31,"name": "2.102","type":"ROOM","pixel_loc_x":328,"pixel_loc_y":291, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 32,"name": "2.412","type":"ROOM","pixel_loc_x":328,"pixel_loc_y":320, "floor":2,"map":null,"latlong":null},
+        {"location_id": 33,"name": "2.412","type":"ROOM","pixel_loc_x":355,"pixel_loc_y":294, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 34,"name": "2.410","type":"ROOM","pixel_loc_x":357,"pixel_loc_y":287, "floor":2,"map":null,"latlong":null},
+        {"location_id": 35,"name": "2.410","type":"ROOM","pixel_loc_x":373,"pixel_loc_y":252, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 36,"name": "2.103A","type":"ROOM","pixel_loc_x":245,"pixel_loc_y":235, "floor":2,"map":null,"latlong":null},
+        {"location_id": 37,"name": "2.102D1","type":"ROOM","pixel_loc_x":268,"pixel_loc_y":235, "floor":2,"map":null,"latlong":null},
+        {"location_id": 38,"name": "2.104","type":"ROOM","pixel_loc_x":278,"pixel_loc_y":220, "floor":2,"map":null,"latlong":null},
+        {"location_id": 39,"name": "2.102D","type":"ROOM","pixel_loc_x":287,"pixel_loc_y":243, "floor":2,"map":null,"latlong":null},
+        {"location_id": 40,"name": "2.102","type":"ROOM","pixel_loc_x":287,"pixel_loc_y":250, "floor":2,"map":null,"latlong":null},
+        {"location_id": 41,"name": "2.104","type":"ROOM","pixel_loc_x":293,"pixel_loc_y":237, "floor":2,"map":null,"latlong":null},
+        {"location_id": 42,"name": "2.104A","type":"ROOM","pixel_loc_x":310,"pixel_loc_y":255, "floor":2,"map":null,"latlong":null},
+        {"location_id": 43,"name": "2.104A","type":"ROOM","pixel_loc_x":330,"pixel_loc_y":252, "floor":2,"map":null,"latlong":null},
+        {"location_id": 44,"name": "2.104B","type":"ROOM","pixel_loc_x":315,"pixel_loc_y":237, "floor":2,"map":null,"latlong":null},
+        {"location_id": 45,"name": "2.104","type":"ROOM","pixel_loc_x":315,"pixel_loc_y":220, "floor":2,"map":null,"latlong":null},
+        {"location_id": 46,"name": "2.104A","type":"ROOM","pixel_loc_x":340,"pixel_loc_y":240, "floor":2,"map":null,"latlong":null},
+        {"location_id": 47,"name": "2.NSE.1","type":"STAIRS","pixel_loc_x":365,"pixel_loc_y":230, "floor":2,"map":null,"latlong":null},
+        {"location_id": 48,"name": "2.HALL.NW.15","type":"HALL","pixel_loc_x":450,"pixel_loc_y":180, "floor":2,"map":null,"latlong":null},
+        {"location_id": 49,"name": "2.308","type":"EXIT","pixel_loc_x":500,"pixel_loc_y":178, "floor":2,"map":null,"latlong":null},
+        {"location_id": 50,"name": "2.305","type":"ROOM","pixel_loc_x":439,"pixel_loc_y":160, "floor":2,"map":null,"latlong":null},
+        {"location_id": 51,"name": "2.306","type":"ROOM","pixel_loc_x":463,"pixel_loc_y":160, "floor":2,"map":null,"latlong":null},
+        {"location_id": 52,"name": "2.311","type":"ROOM","pixel_loc_x":463,"pixel_loc_y":195, "floor":2,"map":null,"latlong":null},
+        {"location_id": 53,"name": "2.312","type":"ROOM","pixel_loc_x":439,"pixel_loc_y":195, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 54,"name": "2.HALL.NW.16","type":"HALL","pixel_loc_x":355,"pixel_loc_y":125, "floor":2,"map":null,"latlong":null},
+        {"location_id": 55,"name": "2.HALL.NW.17","type":"HALL","pixel_loc_x":355,"pixel_loc_y":107, "floor":2,"map":null,"latlong":null},
+        {"location_id": 56,"name": "2.HALL.NW.18","type":"HALL","pixel_loc_x":355,"pixel_loc_y":3, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 57,"name": "2.HALL.NW.19","type":"HALL","pixel_loc_x":320,"pixel_loc_y":107, "floor":2,"map":null,"latlong":null},
+        {"location_id": 58,"name": "2.HALL.NW.20","type":"HALL","pixel_loc_x":293,"pixel_loc_y":107, "floor":2,"map":null,"latlong":null},
+        {"location_id": 59,"name": "2.HALL.NW.21","type":"HALL","pixel_loc_x":270,"pixel_loc_y":107, "floor":2,"map":null,"latlong":null},
+        {"location_id": 60,"name": "2.HALL.NW.22","type":"HALL","pixel_loc_x":215,"pixel_loc_y":107, "floor":2,"map":null,"latlong":null},
+        {"location_id": 61,"name": "2.HALL.NW.23","type":"HALL","pixel_loc_x":215,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+        {"location_id": 62,"name": "2.HALL.NW.24","type":"HALL","pixel_loc_x":234,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+        {"location_id": 63,"name": "2.HALL.NW.25","type":"HALL","pixel_loc_x":246,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+        {"location_id": 64,"name": "2.HALL.NW.26","type":"HALL","pixel_loc_x":270,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+        {"location_id": 65,"name": "2.HALL.NW.27","type":"HALL","pixel_loc_x":294,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+        {"location_id": 66,"name": "2.HALL.NW.28","type":"HALL","pixel_loc_x":320,"pixel_loc_y":150, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 67,"name": "2.507","type":"ROOM","pixel_loc_x":318,"pixel_loc_y":103, "floor":2,"map":null,"latlong":null},
+        {"location_id": 68,"name": "2.506","type":"ROOM","pixel_loc_x":304,"pixel_loc_y":103, "floor":2,"map":null,"latlong":null},
+        {"location_id": 69,"name": "2.505","type":"ROOM","pixel_loc_x":296,"pixel_loc_y":103, "floor":2,"map":null,"latlong":null},
+        {"location_id": 70,"name": "2.504","type":"ROOM","pixel_loc_x":280,"pixel_loc_y":103, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 71,"name": "2.508","type":"ROOM","pixel_loc_x":308,"pixel_loc_y":111, "floor":2,"map":null,"latlong":null},
+        {"location_id": 72,"name": "2.509","type":"ROOM","pixel_loc_x":301,"pixel_loc_y":111, "floor":2,"map":null,"latlong":null},
+        {"location_id": 73,"name": "2.510","type":"ROOM","pixel_loc_x":285,"pixel_loc_y":111, "floor":2,"map":null,"latlong":null},
+        {"location_id": 74,"name": "2.511","type":"ROOM","pixel_loc_x":280,"pixel_loc_y":111, "floor":2,"map":null,"latlong":null},
+        {"location_id": 75,"name": "2.512","type":"ROOM","pixel_loc_x":260,"pixel_loc_y":111, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 76,"name": "2.718","type":"ROOM","pixel_loc_x":308,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 77,"name": "2.717","type":"ROOM","pixel_loc_x":301,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 78,"name": "2.716","type":"ROOM","pixel_loc_x":285,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 79,"name": "2.715","type":"ROOM","pixel_loc_x":280,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 80,"name": "2.714","type":"ROOM","pixel_loc_x":260,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 81,"name": "2.702","type":"ROOM","pixel_loc_x":308,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 82,"name": "2.703","type":"ROOM","pixel_loc_x":301,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 83,"name": "2.704","type":"ROOM","pixel_loc_x":285,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 84,"name": "2.705","type":"ROOM","pixel_loc_x":280,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 85,"name": "2.706","type":"ROOM","pixel_loc_x":260,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 86,"name": "2.713","type":"ROOM","pixel_loc_x":255,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 87,"name": "2.712","type":"ROOM","pixel_loc_x":236,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+        {"location_id": 88,"name": "2.707","type":"ROOM","pixel_loc_x":255,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 89,"name": "2.708","type":"ROOM","pixel_loc_x":236,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 90,"name": "2.709","type":"ROOM","pixel_loc_x":231,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+        {"location_id": 91,"name": "2.711","type":"ROOM","pixel_loc_x":231,"pixel_loc_y":145, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 92,"name": "2.710","type":"ROOM","pixel_loc_x":221,"pixel_loc_y":155, "floor":2,"map":null,"latlong":null},
+
+        {"location_id": 93,"name": "B1","type":"BEACON","pixel_loc_x":460,"pixel_loc_y":195,"floor":2,"map":null,"latlong":null},
+        {"location_id": 94,"name": "B2","type":"BEACON","pixel_loc_x":420,"pixel_loc_y":170,"floor":2,"map":null,"latlong":null},
+        {"location_id": 95,"name": "B3","type":"BEACON","pixel_loc_x":460,"pixel_loc_y":160,"floor":2,"map":null,"latlong":null},
+        {"location_id": 96,"name": "B4","type":"BEACON","pixel_loc_x":350,"pixel_loc_y":170,"floor":2,"map":null,"latlong":null},
+        {"location_id": 97,"name": "B5","type":"BEACON","pixel_loc_x":350,"pixel_loc_y":220,"floor":2,"map":null,"latlong":null},
+        {"location_id": 98,"name": "B6","type":"BEACON","pixel_loc_x":340,"pixel_loc_y":230,"floor":2,"map":null,"latlong":null},
+        {"location_id": 99,"name": "B7","type":"BEACON","pixel_loc_x":360,"pixel_loc_y":255,"floor":2,"map":null,"latlong":null},
+
+        {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null,"latlong":null},
+
+    ];
+    var paths = [
+        {"start_id": 0,"end_id": 1,"weight":null},
+        {"start_id": 0,"end_id": 5,"weight":null},
+        {"start_id": 1,"end_id": 2,"weight":null},
+        {"start_id": 1,"end_id": 3,"weight":null},
+        {"start_id": 1,"end_id": 4,"weight":null},
+        {"start_id": 1,"end_id": 8,"weight":null},
+        {"start_id": 1, "end_id": 0, "weight":null},
+        {"start_id": 1, "end_id": 25, "weight":null},
+
+        {"start_id": 2, "end_id": 1, "weight":null},
+        {"start_id": 3, "end_id": 1, "weight":null},
+        {"start_id": 4, "end_id": 1, "weight":null},
+        {"start_id": 5,"end_id": 0,"weight":null},
+        {"start_id": 6, "end_id": 8, "weight":null},
+        {"start_id": 7, "end_id": 8, "weight":null},
+        {"start_id": 8, "end_id": 1, "weight":null},
+        {"start_id": 8,"end_id": 6,"weight":null},
+        {"start_id": 8,"end_id": 7,"weight":null},
+        {"start_id": 8,"end_id": 9,"weight":null},
+        {"start_id": 9, "end_id": 8, "weight":null},
+        {"start_id": 9,"end_id": 10,"weight":null},
+        {"start_id": 9,"end_id": 15,"weight":null},
+        {"start_id": 10,"end_id": 9, "weight":null},
+        {"start_id": 10,"end_id": 11,"weight":null},
+        {"start_id": 11,"end_id": 10,"weight":null},
+        {"start_id": 11,"end_id": 12,"weight":null},
+        {"start_id": 12,"end_id": 11,"weight":null},
+        {"start_id": 12,"end_id": 36,"weight":null},
+        {"start_id": 12,"end_id": 37,"weight":null},
+        {"start_id": 12,"end_id": 38,"weight":null},
+
+        {"start_id": 15,"end_id": 9,"weight":null},
+        {"start_id": 15,"end_id": 16,"weight":null},
+        {"start_id": 15,"end_id": 27,"weight":null},
+
+        {"start_id": 16,"end_id": 15,"weight":null},
+        {"start_id": 16,"end_id": 26,"weight":null},
+        {"start_id": 16,"end_id": 27,"weight":null},
+
+        {"start_id": 17,"end_id": 16,"weight":null},
+        {"start_id": 17,"end_id": 18,"weight":null},
+        {"start_id": 17,"end_id": 26,"weight":null},
+
+        {"start_id": 18,"end_id": 17,"weight":null},
+        {"start_id": 18,"end_id": 19,"weight":null},
+
+        {"start_id": 19,"end_id": 18,"weight":null},
+        {"start_id": 19,"end_id": 20,"weight":null},
+        {"start_id": 19,"end_id": 28,"weight":null},
+
+        {"start_id": 20,"end_id": 19,"weight":null},
+        {"start_id": 20,"end_id": 21,"weight":null},
+        {"start_id": 20,"end_id": 29,"weight":null},
+        {"start_id": 20,"end_id": 30,"weight":null},
+        {"start_id": 20,"end_id": 32,"weight":null},
+
+        {"start_id": 21,"end_id": 20,"weight":null},
+        {"start_id": 21,"end_id": 22,"weight":null},
+        {"start_id": 21,"end_id": 31,"weight":null},
+
+        {"start_id": 22,"end_id": 21,"weight":null},
+        {"start_id": 22,"end_id": 23,"weight":null},
+        {"start_id": 22,"end_id": 33,"weight":null},
+        {"start_id": 22,"end_id": 34,"weight":null},
+
+
+        {"start_id": 23,"end_id": 22,"weight":null},
+        {"start_id": 23,"end_id": 24,"weight":null},
+        {"start_id": 23,"end_id": 35,"weight":null},
+        {"start_id": 23,"end_id": 47,"weight":null},
+
+
+        {"start_id": 24,"end_id": 23,"weight":null},
+        {"start_id": 24,"end_id": 25,"weight":null},
+
+        {"start_id": 25,"end_id": 1,"weight":null},
+        {"start_id": 25,"end_id": 24,"weight":null},
+        {"start_id": 25,"end_id": 48,"weight":null},
+
+        {"start_id": 26,"end_id": 16,"weight":null},
+        {"start_id": 26,"end_id": 17,"weight":null},
+
+        {"start_id": 27,"end_id": 15,"weight":null},
+        {"start_id": 27,"end_id": 16,"weight":null},
+        {"start_id": 27,"end_id": 31,"weight":null},
+        {"start_id": 27,"end_id": 40,"weight":null},
+
+
+        {"start_id": 28,"end_id": 19,"weight":null},
+
+        {"start_id": 29,"end_id": 20,"weight":null},
+
+        {"start_id": 30,"end_id": 20,"weight":null},
+
+        {"start_id": 31,"end_id": 21,"weight":null},
+        {"start_id": 31,"end_id": 27,"weight":null},
+
+        {"start_id": 32,"end_id": 20,"weight":null},
+        {"start_id": 33,"end_id": 22,"weight":null},
+        {"start_id": 34,"end_id": 22,"weight":null},
+        {"start_id": 35,"end_id": 23,"weight":null},
+
+        {"start_id": 36,"end_id": 12,"weight":null},
+        {"start_id": 37,"end_id": 12,"weight":null},
+        {"start_id": 37,"end_id": 39,"weight":null},
+
+        {"start_id": 38,"end_id": 12,"weight":null},
+        {"start_id": 38,"end_id": 45,"weight":null},
+
+        {"start_id": 39,"end_id": 42,"weight":null},
+
+        {"start_id": 40,"end_id": 42,"weight":null},
+
+        {"start_id": 41,"end_id": 42,"weight":null},
+
+        {"start_id": 42,"end_id": 39,"weight":null},
+        {"start_id": 42,"end_id": 40,"weight":null},
+        {"start_id": 42,"end_id": 41,"weight":null},
+        {"start_id": 42,"end_id": 43,"weight":null},
+
+        {"start_id": 43,"end_id": 42,"weight":null},
+        {"start_id": 43,"end_id": 46,"weight":null},
+
+        {"start_id": 45,"end_id": 38,"weight":null},
+        {"start_id": 45,"end_id": 46,"weight":null},
+
+        {"start_id": 46,"end_id": 23,"weight":null},
+        {"start_id": 46,"end_id": 43,"weight":null},
+        {"start_id": 46,"end_id": 45,"weight":null},
+
+        {"start_id": 47,"end_id": 23,"weight":null},
+
+        {"start_id": 48,"end_id": 25,"weight":null},
+        {"start_id": 48,"end_id": 49,"weight":null},
+        {"start_id": 48,"end_id": 50,"weight":null},
+        {"start_id": 48,"end_id": 51,"weight":null},
+        {"start_id": 48,"end_id": 52,"weight":null},
+        {"start_id": 48,"end_id": 53,"weight":null},
+
+        {"start_id": 49,"end_id": 48,"weight":null},
+
+        {"start_id": 50,"end_id": 48,"weight":null},
+        {"start_id": 51,"end_id": 48,"weight":null},
+        {"start_id": 52,"end_id": 48,"weight":null},
+        {"start_id": 53,"end_id": 48,"weight":null},
+
+        {"start_id": 54,"end_id": 25,"weight":null},
+        {"start_id": 54,"end_id": 55,"weight":null},
+
+        {"start_id": 55,"end_id": 54,"weight":null},
+        {"start_id": 55,"end_id": 56,"weight":null},
+        {"start_id": 55,"end_id": 57,"weight":null},
+
+        {"start_id": 56,"end_id": 55,"weight":null},
+
+        {"start_id": 57,"end_id": 55,"weight":null},
+        {"start_id": 57,"end_id": 58,"weight":null},
+        {"start_id": 57,"end_id": 66,"weight":null},
+        {"start_id": 57,"end_id": 67,"weight":null},
+
+
+        {"start_id": 58,"end_id": 57,"weight":null},
+        {"start_id": 58,"end_id": 59,"weight":null},
+        {"start_id": 58,"end_id": 68,"weight":null},
+        {"start_id": 58,"end_id": 69,"weight":null},
+        {"start_id": 58,"end_id": 71,"weight":null},
+        {"start_id": 58,"end_id": 72,"weight":null},
+        {"start_id": 58,"end_id": 73,"weight":null},
+
+        {"start_id": 59,"end_id": 58,"weight":null},
+        {"start_id": 59,"end_id": 70,"weight":null},
+        {"start_id": 59,"end_id": 75,"weight":null},
+        {"start_id": 59,"end_id": 74,"weight":null},
+        {"start_id": 59,"end_id": 60,"weight":null},
+
+        {"start_id": 60,"end_id": 59,"weight":null},
+        {"start_id": 60,"end_id": 61,"weight":null},
+
+        {"start_id": 61,"end_id": 60,"weight":null},
+        {"start_id": 61,"end_id": 62,"weight":null},
+        {"start_id": 61,"end_id": 92,"weight":null},
+
+        {"start_id": 62,"end_id": 61,"weight":null},
+        {"start_id": 62,"end_id": 63,"weight":null},
+        {"start_id": 62,"end_id": 90,"weight":null},
+        {"start_id": 62,"end_id": 91,"weight":null},
+
+        {"start_id": 63,"end_id": 62,"weight":null},
+        {"start_id": 63,"end_id": 64,"weight":null},
+        {"start_id": 63,"end_id": 86,"weight":null},
+        {"start_id": 63,"end_id": 87,"weight":null},
+        {"start_id": 63,"end_id": 88,"weight":null},
+        {"start_id": 63,"end_id": 89,"weight":null},
+
+        {"start_id": 64,"end_id": 63,"weight":null},
+        {"start_id": 64,"end_id": 65,"weight":null},
+        {"start_id": 64,"end_id": 79,"weight":null},
+        {"start_id": 64,"end_id": 80,"weight":null},
+        {"start_id": 64,"end_id": 84,"weight":null},
+        {"start_id": 64,"end_id": 85,"weight":null},
+
+        {"start_id": 65,"end_id": 64,"weight":null},
+        {"start_id": 65,"end_id": 66,"weight":null},
+
+        {"start_id": 65,"end_id": 77,"weight":null},
+        {"start_id": 65,"end_id": 78,"weight":null},
+        {"start_id": 65,"end_id": 82,"weight":null},
+        {"start_id": 65,"end_id": 83,"weight":null},
+
+
+        {"start_id": 66,"end_id": 65,"weight":null},
+        {"start_id": 66,"end_id": 76,"weight":null},
+        {"start_id": 66,"end_id": 81,"weight":null},
+
+        {"start_id": 67,"end_id": 57,"weight":null},
+        {"start_id": 68,"end_id": 58,"weight":null},
+        {"start_id": 69,"end_id": 58,"weight":null},
+        {"start_id": 70,"end_id": 59,"weight":null},
+        {"start_id": 71,"end_id": 58,"weight":null},
+        {"start_id": 72,"end_id": 58,"weight":null},
+        {"start_id": 73,"end_id": 58,"weight":null},
+        {"start_id": 74,"end_id": 59,"weight":null},
+        {"start_id": 75,"end_id": 59,"weight":null},
+        {"start_id": 76,"end_id": 66,"weight":null},
+        {"start_id": 77,"end_id": 65,"weight":null},
+        {"start_id": 78,"end_id": 65,"weight":null},
+        {"start_id": 79,"end_id": 64,"weight":null},
+        {"start_id": 80,"end_id": 64,"weight":null},
+        {"start_id": 81,"end_id": 66,"weight":null},
+        {"start_id": 82,"end_id": 65,"weight":null},
+        {"start_id": 83,"end_id": 65,"weight":null},
+        {"start_id": 84,"end_id": 64,"weight":null},
+        {"start_id": 85,"end_id": 64,"weight":null},
+        {"start_id": 86,"end_id": 63,"weight":null},
+        {"start_id": 87,"end_id": 63,"weight":null},
+        {"start_id": 88,"end_id": 63,"weight":null},
+        {"start_id": 89,"end_id": 63,"weight":null},
+        {"start_id": 90,"end_id": 62,"weight":null},
+        {"start_id": 91,"end_id": 62,"weight":null},
+        {"start_id": 92,"end_id": 61,"weight":null},
+
+    ];
+
+
+
+</script>
+<hr />
+
+<div ng-app="maintainLocations">
+    <div ng-controller="locationController">
+        <canvas id="myCanvas" width="800" height="500" border="1"></canvas>
+
+<hr>
+        <button ng-click='vote()'>Load Data</button>
+        <button ng-click='togglePaths()'>Toggle Paths</button>
+        <button ng-click='toggleHalls()'>Toggle Halls</button>
+        <button ng-click='toggleRooms()'>Toggle Rooms</button>
+        <button ng-click='toggleBeacons()'>Toggle Beacons</button>
+
+        <hr />
+        {{message}}
+
+    </div>
+</div>
+
+
+<script>
+    window.onload = function() {
+        drawData();
+    }
+</script>
+
+<div style="visibility: hidden">
+    <img src="/data/ECSS2.png" border="0" sytle="visibility: hidden"  alt="" id="mapImage"/>
+</div>
+
+</body>
+</html>
