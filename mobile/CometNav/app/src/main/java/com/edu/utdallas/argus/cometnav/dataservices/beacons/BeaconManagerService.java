@@ -42,11 +42,11 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
      */
 
     // Number of iterations before beacon list is published
-    private static final int BEACON_VERIFY_ITERATIONS = 1;
+    private static final int BEACON_VERIFY_ITERATIONS = 4;
 
     // Percentage of BEACON_VERIFY_ITERATIONS beacon was seen in before being considered for publishing
     // Note: Given that these are integers, the percentage is rounded up
-    private static final double BEACON_VERIFY_THRESHOLD = .4;
+    private static final double BEACON_VERIFY_THRESHOLD = .2;
 
     // Average Distance threshold over the BEACON_VERIFY_ITERATIONS that a beacon must be less than or equal to
     // for publishing.

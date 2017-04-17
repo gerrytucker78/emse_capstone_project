@@ -5,7 +5,10 @@ import android.util.Log;
 //import java.io.
 import org.json.*;
 
-import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyClientInterface;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.IEmergencyClient;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.ILocationClient;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 import com.loopj.android.http.*;
 
@@ -17,9 +20,13 @@ import cz.msebera.android.httpclient.Header;
 public class DataServices {
     private static final String TAG="DataServices";
 
-    public static void getLocations(final Navigation nav)
+    private static final String LOCATIONS_NAVIGABLE = "locations/navigable";
+    private static final String LOCATIONS_BLOCKED_AREAS = "locations/blockedAreas";
+    private static final String LOCATIONS_PATHS = "locations/paths";
+
+    public static void getNavigableLocations(final ILocationClient client)
     {
-        DataServicesClient.get("locations", null, new JsonHttpResponseHandler()
+        DataServicesClient.get(LOCATIONS_NAVIGABLE, null, new JsonHttpResponseHandler()
         {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response)
@@ -31,14 +38,13 @@ public class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray locations)
             {
-                //Update the navigation with locations
-                nav.updateNodes(locations);
+                client.receiveNavigableLocations(Location.createLocations(locations));
             }
         });
     }
 
-    public static void getPaths(final Navigation nav) {
-        DataServicesClient.get("locations/paths", null, new JsonHttpResponseHandler() {
+    public static void getPaths(final ILocationClient client) {
+        DataServicesClient.get(LOCATIONS_PATHS, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
@@ -47,14 +53,13 @@ public class DataServices {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray paths) {
-                //Update the navigation with locations
-                nav.updatePaths(paths);
+                client.receivePaths(Path.createPaths(paths));
             }
         });
     }
 
-    public static void getBlockedAreas(final Navigation nav) {
-        DataServicesClient.get("locations", null, new JsonHttpResponseHandler()
+    public static void getBlockedAreas(final ILocationClient client) {
+        DataServicesClient.get(LOCATIONS_BLOCKED_AREAS, null, new JsonHttpResponseHandler()
         {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -65,13 +70,12 @@ public class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray blockedAreas)
             {
-                //Update the navigation with locations
-                nav.updateBlockedAreas(blockedAreas);
+                client.receiveBlockedAreas(Location.createLocations(blockedAreas));
             }
         });
     }
 
-    public static void getEmergencies(final EmergencyClientInterface emergencyClient) {
+    public static void getEmergencies(final IEmergencyClient emergencyClient) {
         DataServicesClient.get("emergencies", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
