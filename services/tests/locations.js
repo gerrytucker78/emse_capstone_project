@@ -10,6 +10,7 @@ describe('Locations', function () {
     var testFloors = [];
     var testBlockedAreas = [];
     var testPaths = [];
+    var testNavigable = [];
 
     before(function (done) {
         server = require('../app.js');
@@ -30,10 +31,10 @@ describe('Locations', function () {
 
                 if (simLoc.type == "FLOOR") {
                     testFloors.push(simLoc);
-                }
-
-                if (simLoc.type == "BLOCKED_AREA") {
+                } else if (simLoc.type == "BLOCKED_AREA") {
                     testBlockedAreas.push(simLoc);
+                } else {
+                    testNavigable.push(simLoc);
                 }
 
                 request(server).post('/locations').send(simLoc).end(function (err, res) {
@@ -107,6 +108,15 @@ describe('Locations', function () {
         request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
     })
 
+    it('getNearbyHalls', function (done) {
+        var nearbyHalls = [testLocations[1],testLocations[8]]
+        request(server).get('/locations/halls/nearby/190,180,30').expect(nearbyHalls).expect(200, done);
+    });
+
+    it('getAllNavigable', function (done) {
+        request(server).get('/locations/navigable').expect(testNavigable).expect(200, done);
+    });
+
     it('completeReplaceFloors', function(done) {
         request(server).put('/locations').send(testLocations).expect(testLocations).expect(200,done);
     })
@@ -121,10 +131,6 @@ describe('Locations', function () {
         });
     });
 
-    it('getNearbyHalls', function (done) {
-        var nearbyHalls = [testLocations[1],testLocations[8]]
-        request(server).get('/locations/halls/nearby/190,180,30').expect(nearbyHalls).expect(200, done);
-    });
 
 
 });
