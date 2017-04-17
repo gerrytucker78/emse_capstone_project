@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.navigation;
 
 /**
  * Created by Daniel on 4/15/2017.

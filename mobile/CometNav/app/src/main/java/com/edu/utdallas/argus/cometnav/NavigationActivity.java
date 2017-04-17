@@ -16,11 +16,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
+import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
+import com.edu.utdallas.argus.cometnav.navigation.CurrentLocation;
+import com.edu.utdallas.argus.cometnav.navigation.Navigation;
+import com.edu.utdallas.argus.cometnav.navigation.OnRouteChangedListener;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
-
-import org.altbeacon.beacon.Beacon;
 
 import java.io.InputStream;
 import java.util.ArrayList;
