@@ -19,6 +19,7 @@ var typesVisible = new TypeVisible();
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
 maintainLocations.controller('locationController', ['$scope', '$http', function ($scope, $http) {
     $scope.message = 'Initial Load';
+    $scope.locationName = 'Select a location...';
 
     $scope.togglePaths = function () {
         showPaths = !showPaths;
@@ -96,6 +97,10 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });
+    };
+
+    $scope.updateLocation = function() {
+        canvasState.selection.location.name = $scope.locationName;
     };
 
 }]);

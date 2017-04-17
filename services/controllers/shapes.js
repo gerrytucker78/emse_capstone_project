@@ -39,6 +39,10 @@ function LocationShape(location, w, h, fill) {
     this.valid = true;
 };
 
+LocationShape.prototype.edit = function() {
+    document.getElementById("location_name").value = this.location.name;
+};
+
 /**
  * Draw the shape
  * @param ctx
@@ -173,6 +177,7 @@ function CanvasState(canvas, image, floor) {
                 myState.dragging = true;
                 myState.selection = mySel;
                 myState.valid = false;
+                mySel.edit();
                 return;
             }
         }
