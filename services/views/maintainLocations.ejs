@@ -1300,28 +1300,68 @@
 
 <div ng-app="maintainLocations">
     <div ng-controller="locationController">
-        <table border="1">
+        <table border="1" width="800">
             <tr>
-                <td>
-                    <canvas id="myCanvas" width="800" height="500" border="1"></canvas>
+                <td rowspan="2">
+                    <canvas id="myCanvas" width="560" height="410" border="1"></canvas>
+                </td>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Locations</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td><input type="text" id="location_name" ng-model="locationName"
+                                       ng-change="updateLocationData()"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>Type:</b></td>
+                            <td><input type="text" id="location_type" ng-model="locationType"
+                                       ng-change="updateLocationData()"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='saveData()'>Save Data</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Add</b></td>
+                        </tr>
+                        <tr>
+                            <td><select id="addType">
+                                    <option value="LOCATION">Location</option>
+                                </select></td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <tr>
                 <td>
                     <button ng-click='loadData()'>Load Data</button>
-                    <button ng-click='saveData()'>Save Data</button>
+
 
                     <button ng-click='togglePaths()'>Toggle Paths</button>
                     <button ng-click='toggleHalls()'>Toggle Halls</button>
                     <button ng-click='toggleRooms()'>Toggle Rooms</button>
                     <button ng-click='toggleLabels()'>Toggle Labels</button>
                     <button ng-click='toggleBeacons()'>Toggle Beacons</button>
+
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="location_name" ng-model="locationName" ng-change="updateLocationData()"/>
-                    <input type="text" id="location_type" ng-model="locationType" ng-change="updateLocationData()"/>
+
+
                 </td>
             </tr>
             <tr>

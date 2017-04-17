@@ -86,14 +86,14 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
                 var location = locationShapes[i].location;
                 location.pixel_loc_x = locationShapes[i].x;
                 location.pixel_loc_y = locationShapes[i].y;
-
+                locationShapes[i].valid = true;
                 changedLocations.push(location);
             }
         }
 
         // Put updates
         $http.put('/locations/update',changedLocations).success(function (data, status, headers, config) {
-            loadData();
+            $scope.loadData();
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });
@@ -116,7 +116,7 @@ function initDrawing(currentFloor) {
 
 function loadData(currentFloor) {
     canvasState.shapes = []
-    
+
     for (var i in locations) {
 
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));

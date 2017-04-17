@@ -148,6 +148,8 @@ function CanvasState(canvas, image, floor) {
     this.dragoffx = 0; // See mousedown and mousemove events for explanation
     this.dragoffy = 0;
 
+    this.shapesAdded = [];
+
     // **** Then events! ****
 
     // This is an example of a closure!
@@ -205,7 +207,15 @@ function CanvasState(canvas, image, floor) {
     // double click for making new shapes
     canvas.addEventListener('dblclick', function(e) {
         var mouse = myState.getMouse(e);
-        myState.addShape(new Shape(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
+        var addType = document.getElementById("addType").value;
+
+        if (addType == "LOCATION") {
+            var newShape = new LocationShape({name: "New Shape", type: "UNKNOWN", pixel_loc_x: mouse.x - 5, pixel_loc_y: mouse.y - 5, floor: myState.floor}, 5, 5, "#000000");
+            newShape.valid = false;
+            myState.shapesAdded.push(newShape);
+            myState.addShape(newShape);
+            myState.valid = false;
+        }
     }, true);
 
     // **** Options! ****

@@ -8,7 +8,7 @@ var dbConfig = config.get("db");
  * Defining Database Model
  **/
 var Location = dbData.db.define('locations', {
-    location_id: {type: Sequelize.INTEGER, primaryKey: true},
+    location_id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
     floor: {type: Sequelize.INTEGER},
     name: {type: Sequelize.STRING},
     type: {type: Sequelize.STRING},
