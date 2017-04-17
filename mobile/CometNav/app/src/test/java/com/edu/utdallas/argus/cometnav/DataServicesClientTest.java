@@ -31,7 +31,7 @@ public void getEmergencies() throws Exception {
     @Test
     public void getAllLocations() throws Exception {
         //DataServices services = new DataServices();
-        //services.getLocations();
+        //services.getNavigableLocations();
         //assertEquals(4, 2 + 2);
     }
 
