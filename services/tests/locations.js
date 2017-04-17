@@ -131,7 +131,26 @@ describe('Locations', function () {
         });
     });
 
+    it('Update By Id', function (done) {
+        var testLoc = testLocations[0];
+        testLoc.type = "TEST";
+        request(server).put('/locations/id/' + testLoc.location_id).send(testLocations[0]).expect(200).then(function () {
+            request(server).get('/locations/id/' + testLocations[0].location_id).expect(testLoc).expect(200, done);
+        });
+    });
 
+    it('Bulk Update By Id', function (done) {
+        var testLocs = [];
+        testLocations[0].type = "TEST";
+        testLocations[1].type = "TEST";
+        testLocations[2].type = "TEST";
+
+        testLocs.push(testLocations[0]);
+        testLocs.push(testLocations[1]);
+        testLocs.push(testLocations[2]);
+
+        request(server).put('/locations/update/').send(testLocs).expect(testLocs).expect(200,done);
+    });
 
 });
 

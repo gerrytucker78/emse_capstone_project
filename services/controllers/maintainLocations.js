@@ -5,11 +5,15 @@ var showPaths = true;
 var exits = true;
 var stairs = true;
 var labels = true;
-var floor = 2;
+var floor;
 
 var locations = {};
 var paths = [];
 var sensors = [];
+var changedLocations = {};
+
+var canvasState;
+var typesVisible = new TypeVisible();
 
 
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
@@ -29,18 +33,16 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
     };
 
     $scope.toggleHalls = function () {
-        halls = !halls;
-        drawData();
+        typesVisible.toggleTypeVisible(TypeVisibleEnum.HALL)
     };
 
-    $scope.toggleHalls = function () {
+    $scope.toggleLabels = function () {
         labels = !labels;
         drawData();
     };
 
     $scope.toggleRooms = function () {
-        rooms = !rooms;
-        drawData();
+        typesVisible.toggleTypeVisible(TypeVisibleEnum.ROOM)
     };
 
     $scope.loadData = function () {
@@ -59,7 +61,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
                 $http.get('/sensors').success(function (data, status, headers, config) {
                     sensors = data;
-                    drawData();
+                    loadData();
                 }).error(function (data, status, headers, config) {
                     // TO-DO: Need to fill in.
                 });
@@ -71,9 +73,37 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
             // TO-DO: Need to fill in.
         });
 
-    }
+    };
+
+    $scope.saveData = function() {
+      var changedLocations = [];
+        var locationShapes = canvasState.shapes;
+
+        // Loop through all locations and pull out changed ones
+        for (var i = 0; i < locationShapes.length; i++) {
+            if (!locationShapes[i].valid) {
+                changedLocations.push(locationShapes[i]);
+            }
+        }
+    };
 
 }]);
+
+function initDrawing(currentFloor) {
+    var c = document.getElementById("myCanvas");
+    var img = document.getElementById("mapImage");
+
+    canvasState = new CanvasState(c, img, currentFloor);
+
+}
+
+function loadData(currentFloor) {
+
+    for (var i in locations) {
+        canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
+    }
+}
+
 
 function drawData() {
     var c = document.getElementById("myCanvas");

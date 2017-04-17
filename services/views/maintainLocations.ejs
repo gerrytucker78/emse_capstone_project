@@ -2,7 +2,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
-
+    <script src="/controllers/shapes.js"></script>
     <script src="/controllers/maintainLocations.js"></script>
 
     <script>
@@ -398,10 +398,12 @@
 
 <hr>
         <button ng-click='loadData()'>Load Data</button>
+        <button ng-click='saveData()'>Save Data</button>
+
         <button ng-click='togglePaths()'>Toggle Paths</button>
         <button ng-click='toggleHalls()'>Toggle Halls</button>
         <button ng-click='toggleRooms()'>Toggle Rooms</button>
-        <button ng-click='toggleLables()'>Toggle Labels</button>
+        <button ng-click='toggleLabels()'>Toggle Labels</button>
         <button ng-click='toggleBeacons()'>Toggle Beacons</button>
 
         <hr />
@@ -413,7 +415,7 @@
 
 <script>
     window.onload = function() {
-        drawData();
+        initDrawing(2);
     }
 </script>
 
