@@ -125,6 +125,17 @@ describe('Locations', function () {
         request(server).put('/locations/paths').send(testPaths).expect(testPaths).expect(200,done);
     })
 
+    it('Delete Paths - by ids', function(done) {
+        request(server).delete('/locations/paths/ids/' + testPaths[0].start_id + "," + testPaths[0].end_id).expect(200,done);
+    })
+
+
+    it('Delete By Id - No Body', function (done) {
+        request(server).delete('/locations/id/' + testLocations[1].location_id).expect(200).then(function () {
+            request(server).get('/locations/id/' + testLocations[1].location_id).expect('').expect(200, done);
+        });
+    });
+
     it('Delete By Id', function (done) {
         request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {
             request(server).get('/locations/id/' + testLocations[0].location_id).expect('').expect(200, done);

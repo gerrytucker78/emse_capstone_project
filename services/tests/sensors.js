@@ -67,6 +67,12 @@ describe('Sensors', function () {
     })
 
     it('Delete By Id', function (done) {
+        request(server).delete('/sensors/id/' + testSensors[0].sensor_id).expect(200).then(function () {
+            request(server).get('/sensors/id/' + testSensors[0].sensor_id).expect('').expect(200, done);
+        });
+    });
+
+    it('Delete By All', function (done) {
         request(server).delete('/sensors').send(testSensors[0]).expect(200).then(function () {
             request(server).get('/sensors/id/' + testSensors[0].sensor_id).expect('').expect(200, done);
         });

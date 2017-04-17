@@ -41,6 +41,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
     $scope.loadData = function () {
         $scope.message = "Loading /locations"
+        locations = {}
         $http.get('/locations').success(function (data, status, headers, config) {
             $scope.message = "Results" + data;
 
@@ -99,6 +100,18 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         canvasState.selection.location.type = document.getElementById("location_type").value
     };
 
+
+    $scope.deleteLocationData = function () {
+        var selectedLocation = canvasState.selection;
+        
+        // Put updates
+        $http.delete('/locations/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
+            $scope.loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
     /**
      * Function to update backend database for beacons
      */
@@ -126,6 +139,16 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         });
     };
 
+    $scope.deleteBeaconData = function () {
+        var selectedBeacon = canvasState.selection;
+
+        // Put updates
+        $http.delete('/sensors/id/' + selectedBeacon.sensor.sensor_id).success(function (data, status, headers, config) {
+            $scope.loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
 
 
     $scope.updateBeaconData = function () {

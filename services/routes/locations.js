@@ -51,6 +51,17 @@ router.get('/paths', function (req, res, next) {
     }
 });
 
+/* GET Path by ids */
+router.get('/paths/:start_id,:end_id', function (req, res, next) {
+    if (simulation.get("enabled") == "true") {
+        res.send(simDataSet);
+    } else {
+        Path.findAll({where: {start_id: req.params.start_id, end_id: req.params.end_id}, order: [['start_id', 'ASC'], ['end_id', 'ASC']]}).then(function (paths) {
+            return res.send(paths)
+        });
+    }
+});
+
 /* GET Nearby HALLs. */
 router.get('/halls/nearby/:floor,:x,:y,:dist', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
@@ -149,14 +160,29 @@ router.delete('/', function (req, res, next) {
 });
 
 /**
+ * DELETE Specific location by id
+ */
+router.delete('/id/:id', function (req, res, next) {
+    Location.destroy({where: {location_id: req.params.id}}).then(res.sendStatus(200));
+});
+
+/**
  * DELETE Specific path OR All
  */
 router.delete('/paths', function (req, res, next) {
     if (req.body.start_id === undefined && req.body.end_id === undefined) {
         Path.destroy({truncate: true}).then(res.sendStatus(200));
     } else {
-        Path.destroy({where: {start_id: req.body.start_id} & {end_id: req.body.end_id}}).then(res.sendStatus(200));
+        Path.destroy({where: {start_id: req.body.start_id, end_id: req.body.end_id}}).then(res.sendStatus(200));
     }
+
+});
+
+/**
+ * DELETE Specific path by Ids
+ */
+router.delete('/paths/ids/:start_id,:end_id', function (req, res, next) {
+    Path.destroy({where: {start_id: req.params.start_id, end_id: req.params.end_id}}).then(res.sendStatus(200));
 
 });
 
