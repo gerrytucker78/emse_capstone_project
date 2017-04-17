@@ -41,6 +41,7 @@ function LocationShape(location, w, h, fill) {
 
 LocationShape.prototype.edit = function() {
     document.getElementById("location_name").value = this.location.name;
+    document.getElementById("location_type").value = this.location.type;
 };
 
 /**

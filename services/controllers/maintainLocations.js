@@ -99,8 +99,9 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         });
     };
 
-    $scope.updateLocation = function() {
-        canvasState.selection.location.name = $scope.locationName;
+    $scope.updateLocationData = function() {
+        canvasState.selection.location.name = document.getElementById("location_name").value
+        canvasState.selection.location.type = document.getElementById("location_type").value
     };
 
 }]);
@@ -114,8 +115,10 @@ function initDrawing(currentFloor) {
 }
 
 function loadData(currentFloor) {
-
+    canvasState.shapes = []
+    
     for (var i in locations) {
+
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
     }
 }
