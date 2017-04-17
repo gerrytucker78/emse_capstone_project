@@ -1,4 +1,4 @@
-var floor;
+var floor = 2;
 
 var locations = {};
 var paths = [];
@@ -41,12 +41,15 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
     $scope.loadData = function () {
         $scope.message = "Loading /locations"
-        locations = {}
+
         $http.get('/locations').success(function (data, status, headers, config) {
             $scope.message = "Results" + data;
-
+            locations = {}
             for (i = 0; i < data.length; i++) {
-                locations[data[i].location_id] = data[i];
+                // Only add locations on this floor
+                if (data[i].floor == floor) {
+                    locations[data[i].location_id] = data[i];
+                }
             }
 
 
@@ -103,7 +106,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
     $scope.deleteLocationData = function () {
         var selectedLocation = canvasState.selection;
-        
+
         // Put updates
         $http.delete('/locations/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
             $scope.loadData();
@@ -174,6 +177,18 @@ function loadData(currentFloor) {
 
     for (var i = 0; i < sensors.length; i++) {
         canvasState.addShape(new BeaconShape(sensors[i], 5, 5, "#FF0000"));
+    }
+
+    for (var i = 0; i < paths.length; i++) {
+        var startNode;
+        var endNode;
+
+        startNode = locations[paths[i].start_id];
+        endNode = locations[paths[i].end_id];
+
+        if (startNode && endNode) {
+            canvasState.addShape(new PathShape(startNode, endNode, 5, 5, "#228B22"));
+        }
     }
 }
 
