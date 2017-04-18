@@ -15,7 +15,7 @@
     <div ng-controller="locationController">
         <table border="1" width="800">
             <tr>
-                <td rowspan="3">
+                <td rowspan="5">
                     <canvas id="myCanvas" width="560" height="410" border="1"></canvas>
                 </td>
                 <td style="vertical-align: top; horiz-align: center">
@@ -25,6 +25,12 @@
                                 style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
                                 <b>Locations</b></td>
                         </tr>
+                        <tr>
+                            <td><b>Id:</b></td>
+                            <td><input readonly type="text" id="location_id" ng-model="locationId"
+                                       ng-change="updateLocationData()"/></td>
+                        </tr>
+
                         <tr>
                             <td><b>Name:</b></td>
                             <td><input type="text" id="location_name" ng-model="locationName"
@@ -71,6 +77,34 @@
                 <td style="vertical-align: top; horiz-align: center">
                     <table border="1">
                         <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Paths</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Start Node Id:</b></td>
+                            <td><input type="text" id="start_node_id" ng-model="start_node_id"
+                                       ng-change="updatePathData()"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>End Node Id:</b></td>
+                            <td><input type="text" id="end_node_id" ng-model="end_node_id"
+                                       ng-change="updatePathData()"/></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='savePath()'>Save New Path</button>
+                                <button ng-click='deletePath()'>Delete Selected Path</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
                             <td style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
                                 <b>Add</b></td>
                         </tr>
@@ -82,6 +116,24 @@
                         </tr>
                     </table>
                 </td>
+                </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Selction Type</b></td>
+                        </tr>
+                        <tr>
+                            <td><select id="selectionType">
+                                    <option value="LOCATION">Location</option>
+                                    <option value="BEACON">Beacon</option>
+                                    <option value="PATH">Path</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </td>
+
             </tr>
             <tr>
                 <td>

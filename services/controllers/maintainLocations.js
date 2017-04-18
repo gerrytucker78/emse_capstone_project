@@ -1,6 +1,7 @@
 var floor = 2;
 
 var locations = {};
+var locationsByName = {};
 var paths = [];
 var sensors = [];
 var changedLocations = {};
@@ -40,15 +41,18 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
     };
 
     $scope.loadData = function () {
-        $scope.message = "Loading /locations"
+        $scope.message = "Loading /locations";
 
         $http.get('/locations').success(function (data, status, headers, config) {
             $scope.message = "Results" + data;
-            locations = {}
+            locations = {};
+            locationsByName = {};
+
             for (i = 0; i < data.length; i++) {
                 // Only add locations on this floor
                 if (data[i].floor == floor) {
                     locations[data[i].location_id] = data[i];
+                    locationsByName[data[i].name] = data[i];
                 }
             }
 
@@ -103,13 +107,40 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         canvasState.selection.location.type = document.getElementById("location_type").value
     };
 
-
     $scope.deleteLocationData = function () {
         var selectedLocation = canvasState.selection;
 
         // Put updates
         $http.delete('/locations/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
             $scope.loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
+    $scope.savePath = function () {
+        // Put updates
+        $http.post('/locations/paths',{start_id: $scope.start_node_id, end_id: $scope.end_node_id, weight: 1}).success(function (data, status, headers, config) {
+            $http.post('/locations/paths',{start_id: $scope.end_node_id, end_id: $scope.start_node_id, weight: 1}).success(function (data, status, headers, config) {
+
+            $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
+    $scope.deletePath = function () {
+        // Put updates
+        $http.delete('/locations/paths/ids/' + $scope.start_node_id + "," + $scope.end_node_id).success(function (data, status, headers, config) {
+            $http.delete('/locations/paths/ids/' + $scope.end_node_id + "," + $scope.start_node_id).success(function (data, status, headers, config) {
+            $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });

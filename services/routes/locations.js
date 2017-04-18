@@ -136,7 +136,7 @@ router.post('/', function (req, res, next) {
 /**
  * POST Add Path
  */
-router.post('/path', function (req, res, next) {
+router.post('/paths', function (req, res, next) {
 
     Path.create({
         start_id: req.body.start_id,

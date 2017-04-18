@@ -44,6 +44,7 @@ function LocationShape(location, w, h, fill) {
  * Method called to load the edit form with the appropriate data
  */
 LocationShape.prototype.edit = function () {
+    document.getElementById("location_id").value = this.location.location_id;
     document.getElementById("location_name").value = this.location.name;
     document.getElementById("location_type").value = this.location.type;
 };
@@ -63,11 +64,11 @@ LocationShape.prototype.draw = function (ctx) {
  * @param my
  * @returns {boolean}
  */
-LocationShape.prototype.contains = function (mx, my) {
+LocationShape.prototype.contains = function (mx, my, selType) {
     // All we have to do is make sure the Mouse X,Y fall in the area between
     // the shape's X and (X + Width) and its Y and (Y + Height)
     return (this.x <= mx) && (this.x + this.w >= mx) &&
-        (this.y <= my) && (this.y + this.h >= my);
+        (this.y <= my) && (this.y + this.h >= my) && (selType == "LOCATION");
 };
 
 /*****************************************************************************************************
@@ -128,11 +129,11 @@ BeaconShape.prototype.draw = function (ctx) {
  * @param my
  * @returns {boolean}
  */
-BeaconShape.prototype.contains = function (mx, my) {
+BeaconShape.prototype.contains = function (mx, my, selType) {
     // All we have to do is make sure the Mouse X,Y fall in the area between
     // the shape's X and (X + Width) and its Y and (Y + Height)
     return (this.x <= mx) && (this.x + this.w >= mx) &&
-        (this.y <= my) && (this.y + this.h >= my);
+        (this.y <= my) && (this.y + this.h >= my) &&  (selType == "BEACON");
 };
 
 /*****************************************************************************************************
@@ -174,12 +175,7 @@ function PathShape(startLoc, endLoc, w, h, fill) {
  */
 PathShape.prototype.edit = function () {
     document.getElementById("start_loc_name").value = this.startLocation.name;
-    document.getElementById("start_loc_x").value = this.startLocation.pixel_loc_x;
-    document.getElementById("start_loc_y").value = this.startLocation.pixel_loc_y;
-
     document.getElementById("end_loc_name").value = this.endLocation.name;
-    document.getElementById("end_loc_x").value = this.endLocation.pixel_loc_x;
-    document.getElementById("end_loc_y").value = this.endLocation.pixel_loc_y;
 };
 
 /**
@@ -200,13 +196,10 @@ PathShape.prototype.draw = function (ctx) {
  * @param my
  * @returns {boolean}
  */
-PathShape.prototype.contains = function (mx, my, paths) {
+PathShape.prototype.contains = function (mx, my, selType) {
     // All we have to do is make sure the Mouse X,Y fall in the area between
     // the shape's X and (X + Width) and its Y and (Y + Height)
-    return (((this.startLocation.pixel_loc_x <= mx) && (this.startLocation.pixel_loc_x + this.w >= mx) &&
-        (this.startLocation.pixel_loc_y <= my) && (this.startLocation.pixel_loc_y + this.h >= my)) ||
-        ((this.endLocation.pixel_loc_x <= mx) && (this.endLocation.pixel_loc_x + this.w >= mx) &&
-        (this.endLocation.pixel_loc_y <= my) && (this.endLocation.pixel_loc_y + this.h >= my))) && paths;
+    return false
 };
 
 /*****************************************************************************************************
@@ -299,6 +292,7 @@ function CanvasState(canvas, image, floor) {
 
     this.shapesAdded = [];
 
+
     // **** Then events! ****
 
     // This is an example of a closure!
@@ -321,8 +315,9 @@ function CanvasState(canvas, image, floor) {
         var my = mouse.y;
         var shapes = myState.shapes;
         var l = shapes.length;
+        var selectionType = document.getElementById("selectionType").value;
         for (var i = l - 1; i >= 0; i--) {
-            if (shapes[i].contains(mx, my)) {
+            if (shapes[i].contains(mx, my, selectionType)) {
                 var mySel = shapes[i];
                 mySel.valid = false;
                 // Keep track of where in the object we clicked
