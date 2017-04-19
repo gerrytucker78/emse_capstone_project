@@ -58,7 +58,7 @@ describe('Locations', function () {
                 testPaths.push(simPath);
 
 
-                request(server).post('/locations/path').send(simPath).end(function (err, res) {
+                request(server).post('/locations/paths').send(simPath).end(function (err, res) {
                     totalPathCount++;
                     if (totalPathCount == testPaths.length) {
                         pathSetupComplete = true;
@@ -125,13 +125,43 @@ describe('Locations', function () {
         request(server).put('/locations/paths').send(testPaths).expect(testPaths).expect(200,done);
     })
 
+    it('Delete Paths - by ids', function(done) {
+        request(server).delete('/locations/paths/ids/' + testPaths[0].start_id + "," + testPaths[0].end_id).expect(200,done);
+    })
+
+
+    it('Delete By Id - No Body', function (done) {
+        request(server).delete('/locations/id/' + testLocations[1].location_id).expect(200).then(function () {
+            request(server).get('/locations/id/' + testLocations[1].location_id).expect('').expect(200, done);
+        });
+    });
+
     it('Delete By Id', function (done) {
         request(server).delete('/locations').send(testLocations[0]).expect(200).then(function () {
             request(server).get('/locations/id/' + testLocations[0].location_id).expect('').expect(200, done);
         });
     });
 
+    it('Update By Id', function (done) {
+        var testLoc = testLocations[0];
+        testLoc.type = "TEST";
+        request(server).put('/locations/id/' + testLoc.location_id).send(testLocations[0]).expect(200).then(function () {
+            request(server).get('/locations/id/' + testLocations[0].location_id).expect(testLoc).expect(200, done);
+        });
+    });
 
+    it('Bulk Update By Id', function (done) {
+        var testLocs = [];
+        testLocations[0].type = "TEST";
+        testLocations[1].type = "TEST";
+        testLocations[2].type = "TEST";
+
+        testLocs.push(testLocations[0]);
+        testLocs.push(testLocations[1]);
+        testLocs.push(testLocations[2]);
+
+        request(server).put('/locations/update/').send(testLocs).expect(testLocs).expect(200,done);
+    });
 
 });
 

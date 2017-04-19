@@ -1,0 +1,188 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
+    <script src="/controllers/shapes.js"></script>
+    <script src="/controllers/maintainLocations.js"></script>
+
+    <script>
+
+    </script>
+</head>
+<body>
+
+<div ng-app="maintainLocations">
+    <div ng-controller="locationController">
+        <table border="1" width="800">
+            <tr>
+                <td colspan="2">Floor:
+                    <a href ng-click="floor = 2; init();">2</a>
+                    <a href ng-click="floor = 3; init();">3</a>
+                    <a href ng-click="floor = 4; init();">4</a>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="5">
+                    <canvas id="myCanvas" width="560" height="410" border="1"></canvas>
+                </td>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Locations</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Id:</b></td>
+                            <td><input readonly type="text" id="location_id" ng-model="locationId"/></td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td><input type="text" id="location_name" ng-model="locationName"
+                                       ng-change="updateLocationData()"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>Type:</b></td>
+                            <td><input type="text" id="location_type" ng-model="locationType"
+                                       ng-change="updateLocationData()"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='saveLocationData()'>Save All Locations Changes</button>
+                                <button ng-click='deleteLocationData()'>Delete Selected Location</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Beacons</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td><input type="text" id="beacon_name" ng-model="beaconName"
+                                       ng-change="updateBeaconData()"/></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='saveBeaconData()'>Save All Beacon Changes</button>
+                                <button ng-click='deleteBeaconData()'>Delete Selected Beacon</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Paths</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Start Node Id:</b></td>
+                            <td><input type="text" id="start_node_id" ng-model="start_node_id"
+                                       ng-change="updatePathData()"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>End Node Id:</b></td>
+                            <td><input type="text" id="end_node_id" ng-model="end_node_id"
+                                       ng-change="updatePathData()"/></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='savePath()'>Save New Path</button>
+                                <button ng-click='deletePath()'>Delete Selected Path</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Add</b></td>
+                        </tr>
+                        <tr>
+                            <td><select id="addType">
+                                    <option value="LOCATION">Location</option>
+                                    <option value="BEACON">Beacon</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </td>
+                </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Selction Type</b></td>
+                        </tr>
+                        <tr>
+                            <td><select id="selectionType">
+                                    <option value="LOCATION">Location</option>
+                                    <option value="BEACON">Beacon</option>
+                                    <option value="PATH">Path</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <button ng-click='loadData()'>Load Data</button>
+
+
+                    <button ng-click='togglePaths()'>Toggle Paths</button>
+                    <button ng-click='toggleHalls()'>Toggle Halls</button>
+                    <button ng-click='toggleRooms()'>Toggle Rooms</button>
+                    <button ng-click='toggleLabels()'>Toggle Labels</button>
+                    <button ng-click='toggleBeacons()'>Toggle Beacons</button>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{message}}
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function () {
+        //initDrawing(2);
+    }
+</script>
+
+<div style="visibility: hidden">
+    <img src="/data/ECSS2.png" border="0" sytle="visibility: hidden" alt="" id="mapImage2"/>
+    <img src="/data/ECSS3.png" border="0" sytle="visibility: hidden" alt="" id="mapImage3"/>
+    <img src="/data/ECSS4.png" border="0" sytle="visibility: hidden" alt="" id="mapImage4"/>
+
+</div>
+
+</body>
+</html>
