@@ -1,4 +1,4 @@
-var floor = 2;
+var floor;
 
 var locations = {};
 var locationsByName = {};
@@ -11,9 +11,10 @@ var typesVisible = new TypeVisible();
 
 
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
-maintainLocations.controller('locationController', ['$scope', '$http', function ($scope, $http) {
+maintainLocations.controller('locationController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     $scope.message = 'Initial Load';
     $scope.locationName = 'Select a location...';
+    $scope.floor;
 
     $scope.togglePaths = function () {
         showPaths = !showPaths;
@@ -188,11 +189,31 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
     $scope.updateBeaconData = function () {
         canvasState.selection.sensor.name = document.getElementById("beacon_name").value
     };
+
+    $scope.init = function() {
+        var parms = $location.search();
+
+        if ($scope.floor == undefined) {
+            if (parms.floor != undefined) {
+                $scope.floor = parms.floor;
+            } else {
+                $scope.floor = 2;
+            }
+        }
+
+        floor = $scope.floor;
+        initDrawing(floor);
+
+        $scope.loadData()
+    }
+
+
+    $scope.init();
 }]);
 
 function initDrawing(currentFloor) {
     var c = document.getElementById("myCanvas");
-    var img = document.getElementById("mapImage");
+    var img = document.getElementById("mapImage" + currentFloor);
 
     canvasState = new CanvasState(c, img, currentFloor);
 
