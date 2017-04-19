@@ -215,7 +215,13 @@ function initDrawing(currentFloor) {
     var c = document.getElementById("myCanvas");
     var img = document.getElementById("mapImage" + currentFloor);
 
-    canvasState = new CanvasState(c, img, currentFloor);
+    if (canvasState == undefined) {
+        canvasState = new CanvasState(c, img, currentFloor);
+    } else {
+        canvasState.image = img;
+        canvasState.floor = currentFloor;
+    }
+
 
 }
 

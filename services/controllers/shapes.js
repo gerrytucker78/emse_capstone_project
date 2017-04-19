@@ -185,8 +185,8 @@ PathShape.prototype.edit = function () {
 PathShape.prototype.draw = function (ctx) {
     ctx.fillStyle = this.fill;
     ctx.beginPath();
-    ctx.moveTo(this.startLocation.pixel_loc_x + this.w, this.startLocation.pixel_loc_y + this.h);
-    ctx.lineTo(this.endLocation.pixel_loc_x + this.w, this.endLocation.pixel_loc_y + this.h);
+    ctx.moveTo(this.startLocation.pixel_loc_x + this.w/2, this.startLocation.pixel_loc_y + this.h/2);
+    ctx.lineTo(this.endLocation.pixel_loc_x + this.w/2, this.endLocation.pixel_loc_y + this.h/2);
     ctx.stroke();
 };
 
