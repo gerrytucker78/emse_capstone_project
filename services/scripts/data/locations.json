@@ -1,4 +1,5 @@
     [
+		{"location_id": -1,"name": "2.HALL.NW.-1","type":"HALL","pixel_loc_x":190,"pixel_loc_y":105,"floor":2,"map":null},
 		{"location_id": 0,"name": "2.HALL.NW.1","type":"HALL","pixel_loc_x":190,"pixel_loc_y":105,"floor":2,"map":null},
 		{"location_id": 1,"name": "2.HALL.NW.2","type":"HALL","pixel_loc_x":190,"pixel_loc_y":180,"floor":2,"map":null},
 		{"location_id": 2,"name": "2.201","type":"ROOM","pixel_loc_x":170,"pixel_loc_y":190,"floor":2,"map":null},
