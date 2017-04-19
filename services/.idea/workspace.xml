@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/maintainLocations.js" afterPath="$PROJECT_DIR$/controllers/maintainLocations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/shapes.js" afterPath="$PROJECT_DIR$/controllers/shapes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/maintainLocations.ejs" afterPath="$PROJECT_DIR$/views/maintainLocations.ejs" />
     </list>
     <ignored path="services.iws" />
@@ -36,8 +37,18 @@
       <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="205" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
+            <state relative-caret-position="369">
+              <caret line="221" column="41" selection-start-line="221" selection-start-column="41" selection-end-line="221" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sensors.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -69,15 +80,14 @@
       <file leaf-file-name="shapes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-571">
-              <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
+            <state relative-caret-position="293">
+              <caret line="187" column="99" selection-start-line="187" selection-start-column="99" selection-end-line="187" selection-end-column="99" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#345#590#0" expanded="false" />
                 <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
                 <element signature="e#1404#1476#0" expanded="false" />
                 <element signature="e#1750#1798#0" expanded="false" />
-                <element signature="e#1845#1929#0" expanded="false" />
                 <element signature="e#1932#2037#0" expanded="false" />
                 <element signature="e#2381#2630#0" expanded="false" />
                 <element signature="e#2633#2876#0" expanded="false" />
@@ -92,19 +102,19 @@
                 <element signature="n#!!doc;n#PathShape#0" expanded="false" />
                 <element signature="e#5702#5774#0" expanded="false" />
                 <element signature="e#5974#6020#0" expanded="false" />
-                <element signature="e#6331#6436#0" expanded="false" />
-                <element signature="e#6909#7154#0" expanded="false" />
-                <element signature="e#7979#8228#0" expanded="false" />
+                <element signature="e#6339#6444#0" expanded="false" />
+                <element signature="e#6917#7162#0" expanded="false" />
+                <element signature="e#7987#8236#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maintainLocations.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="maintainLocations.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+            <state relative-caret-position="225">
+              <caret line="36" column="97" selection-start-line="36" selection-start-column="97" selection-end-line="36" selection-end-column="97" />
               <folding />
             </state>
           </provider>
@@ -152,11 +162,11 @@
         <option value="$PROJECT_DIR$/models/sensors.js" />
         <option value="$PROJECT_DIR$/routes/sensors.js" />
         <option value="$PROJECT_DIR$/tests/sensors.js" />
-        <option value="$PROJECT_DIR$/controllers/shapes.js" />
         <option value="$PROJECT_DIR$/routes/locations.js" />
         <option value="$PROJECT_DIR$/tests/locations.js" />
-        <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
         <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
+        <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
+        <option value="$PROJECT_DIR$/controllers/shapes.js" />
       </list>
     </option>
   </component>
@@ -256,7 +266,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -903,7 +931,7 @@
       <workItem from="1492400638522" duration="15504000" />
       <workItem from="1492457254492" duration="16170000" />
       <workItem from="1492479621582" duration="483000" />
-      <workItem from="1492556558327" duration="4721000" />
+      <workItem from="1492556558327" duration="6620000" />
     </task>
     <servers />
   </component>
@@ -940,7 +968,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117007000" />
+    <option name="totallyTimeSpent" value="118906000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -963,13 +991,14 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959481" sideWeight="0.50606585" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18156028" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18014185" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15057915" sideWeight="0.49393415" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32907802" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -981,7 +1010,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1238,13 +1266,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/data/paths.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1311,14 +1332,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/sensors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1331,38 +1344,6 @@
         <state relative-caret-position="630">
           <caret line="42" column="33" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="36" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-571">
-          <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#345#590#0" expanded="false" />
-            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
-            <element signature="e#1404#1476#0" expanded="false" />
-            <element signature="e#1750#1798#0" expanded="false" />
-            <element signature="e#1845#1929#0" expanded="false" />
-            <element signature="e#1932#2037#0" expanded="false" />
-            <element signature="e#2381#2630#0" expanded="false" />
-            <element signature="e#2633#2876#0" expanded="false" />
-            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
-            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
-            <element signature="e#3670#3742#0" expanded="false" />
-            <element signature="e#3784#3856#0" expanded="false" />
-            <element signature="e#3859#3905#0" expanded="false" />
-            <element signature="e#3950#4034#0" expanded="false" />
-            <element signature="e#4037#4142#0" expanded="false" />
-            <element signature="e#4483#4730#0" expanded="false" />
-            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
-            <element signature="e#5702#5774#0" expanded="false" />
-            <element signature="e#5974#6020#0" expanded="false" />
-            <element signature="e#6331#6436#0" expanded="false" />
-            <element signature="e#6909#7154#0" expanded="false" />
-            <element signature="e#7979#8228#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1401,18 +1382,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/sensors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="205" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
+        <state relative-caret-position="369">
+          <caret line="221" column="41" selection-start-line="221" selection-start-column="41" selection-end-line="221" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+        <state relative-caret-position="225">
+          <caret line="36" column="97" selection-start-line="36" selection-start-column="97" selection-end-line="36" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="187" column="99" selection-start-line="187" selection-start-column="99" selection-end-line="187" selection-end-column="99" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#345#590#0" expanded="false" />
+            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
+            <element signature="e#1404#1476#0" expanded="false" />
+            <element signature="e#1750#1798#0" expanded="false" />
+            <element signature="e#1932#2037#0" expanded="false" />
+            <element signature="e#2381#2630#0" expanded="false" />
+            <element signature="e#2633#2876#0" expanded="false" />
+            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
+            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
+            <element signature="e#3670#3742#0" expanded="false" />
+            <element signature="e#3784#3856#0" expanded="false" />
+            <element signature="e#3859#3905#0" expanded="false" />
+            <element signature="e#3950#4034#0" expanded="false" />
+            <element signature="e#4037#4142#0" expanded="false" />
+            <element signature="e#4483#4730#0" expanded="false" />
+            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
+            <element signature="e#5702#5774#0" expanded="false" />
+            <element signature="e#5974#6020#0" expanded="false" />
+            <element signature="e#6339#6444#0" expanded="false" />
+            <element signature="e#6917#7162#0" expanded="false" />
+            <element signature="e#7987#8236#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
           <folding />
         </state>
       </provider>
