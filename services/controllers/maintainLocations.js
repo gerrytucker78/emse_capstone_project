@@ -5,6 +5,7 @@ var locationsByName = {};
 var paths = [];
 var sensors = [];
 var changedLocations = {};
+var emergencies = {};
 
 var canvasState;
 var typesVisible = new TypeVisible();
@@ -64,7 +65,22 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
 
                 $http.get('/sensors').success(function (data, status, headers, config) {
                     sensors = data;
-                    loadData(floor);
+                    $http.get('/emergencies').success(function (data, status, headers, config) {
+                        emergencies = {};
+
+                        for (i = 0; i < data.length; i++) {
+                            if (locations[data[i].location_id] != undefined) {
+                                emergencies[data[i].location_id] = data[i];
+                            }
+                        }
+
+                        $scope.message = "Emergencies Results" + data;
+
+                        loadData(floor);
+                    }).error(function (data, status, headers, config) {
+                        // TO-DO: Need to fill in.
+                    });
+
                 }).error(function (data, status, headers, config) {
                     // TO-DO: Need to fill in.
                 });
@@ -119,6 +135,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
         });
     };
 
+
     $scope.savePath = function () {
         // Put updates
         $http.post('/locations/paths',{start_id: $scope.start_node_id, end_id: $scope.end_node_id, weight: 1}).success(function (data, status, headers, config) {
@@ -146,6 +163,46 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
             // TO-DO: Need to fill in.
         });
     };
+
+    $scope.updateEmergencyData = function () {
+        if (canvasState.selection.emergency == undefined) {
+            canvasState.selection.emergency = {emergency_id: "", notes: "", emergency_type: "", emergency_state: "",
+                location_id: canvasState.selection.location.location_id, start: "", last_update: "", end: ""};
+        }
+        canvasState.selection.emergency.emergency_notes = document.getElementById("emergency_notes").value;
+        canvasState.selection.emergency.emergency_type = document.getElementById("emergency_type").value;
+    };
+
+
+    $scope.saveEmergencyData = function() {
+        var selectedLocation = canvasState.selection.location;
+        var selectedEmergency = canvasState.selection.emergency;
+
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_start = Date.now();
+        } else if ($scope.emergency_state == "UPDATE") {
+            selectedEmergency.emergency_last_update = Date.now();
+        } else if ($scope.emergency_state == "END") {
+            selectedEmergency.emergency_last_update = Date.now();
+            selectedEmergency.emergency_end = selectedEmergency.emergency_last_update;
+        }
+
+        // Put updates
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_id = null;
+            $http.post('/emergencies', selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        } else {
+            $http.put('/emergencies/id/' + selectedEmergency.emergency_id, selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }
+    }
 
     /**
      * Function to update backend database for beacons
@@ -231,6 +288,7 @@ function loadData(currentFloor) {
     for (var i in locations) {
 
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
+        canvasState.shapes[canvasState.shapes.length-1].emergency = emergencies[i];
     }
 
     for (var i = 0; i < sensors.length; i++) {

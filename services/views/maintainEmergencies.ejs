@@ -1,0 +1,141 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
+    <script src="/controllers/shapes.js"></script>
+    <script src="/controllers/maintainLocations.js"></script>
+
+    <script>
+
+    </script>
+</head>
+<body>
+
+<div ng-app="maintainLocations">
+    <div ng-controller="locationController">
+        <table border="1" width="800">
+            <tr>
+                <td colspan="2">Floor:
+                    <a href ng-click="floor = 2; init();">2</a>
+                    <a href ng-click="floor = 3; init();">3</a>
+                    <a href ng-click="floor = 4; init();">4</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <canvas id="myCanvas" width="560" height="410" border="1"></canvas>
+                </td>
+
+            </tr>
+            <tr>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Locations</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Id:</b></td>
+                            <td><input readonly type="text" id="location_id" ng-model="locationId"/></td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td><input type="text" id="location_name" ng-model="locationName"
+                                       ng-change="updateLocationData()"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Type:</b></td>
+                            <td><select id="location_type" ng-model="locationType"
+                                        ng-change="updateLocationData()"/>
+                                <option value="STAIRS">Stairs</option>
+                                <option value="ROOM">Room</option>
+                                <option value="EXIT">Exit</option>
+                                <option value="HALL">Hall</option>
+                                <option value="EMERGENCY">Emergency</option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='saveLocationData()'>Save All Locations Changes</button>
+                                <button ng-click='deleteLocationData()'>Delete Selected Location</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="vertical-align: top; horiz-align: center">
+                    <table border="1">
+                        <tr>
+                            <td colspan="2"
+                                style="vertical-align: top; horiz-align: center; color: white; background-color: black;">
+                                <b>Emergencies</b>
+                                <input type="hidden" id="emergency_id" ng-model="emergency_id"/>
+                                <input type="hidden" id="emergency_start" ng-model="emergency_start"/>
+                                <input type="hidden" id="emergency_last_update" ng-model="emergency_last_update"/>
+                                <input type="hidden" id="emergency_end" ng-model="emergency_end"/>
+
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Type:</b></td>
+                            <td><select id="emergency_type" ng-model="emergency_type" ng-change="updateEmergencyData()"/>
+                                <option value="FIRE">Fire</option>
+                                <option value="HAZMAT">HAZMAT</option>
+                                <option value="FLOOD">Flood</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Notes:</b></td>
+                            <td><textarea id="emergency_notes" ng-model="emergency_notes" ng-change="updateEmergencyData()"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><b>State:</b></td>
+                            <td><select id="emergency_state" ng-model="emergency_state" ng-change="updateEmergencyData()">
+                                    <option value="NEW">New</option>
+                                    <option value="UPDATE">Update</option>
+                                    <option value="END">End</option>
+                                    <option value="ENDED">Ended</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button ng-click='saveEmergencyData()'>Save Emergency Changes</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="hidden" id="selectionType" value="LOCATION" />
+                    <button ng-click='loadData()'>Load Data</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function () {
+        //initDrawing(2);
+    }
+</script>
+
+<div style="visibility: hidden">
+    <img src="/data/ECSS2.png" border="0" sytle="visibility: hidden" alt="" id="mapImage2"/>
+    <img src="/data/ECSS3.png" border="0" sytle="visibility: hidden" alt="" id="mapImage3"/>
+    <img src="/data/ECSS4.png" border="0" sytle="visibility: hidden" alt="" id="mapImage4"/>
+
+</div>
+
+</body>
+</html>
