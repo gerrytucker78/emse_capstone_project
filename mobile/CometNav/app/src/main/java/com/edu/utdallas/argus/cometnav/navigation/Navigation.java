@@ -13,6 +13,7 @@ import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
 
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -31,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import net.coderodde.graph.UndirectedGraph;
+
+import static java.lang.Math.sqrt;
 
 /**
  * Created by Daniel on 3/25/2017.
@@ -199,6 +202,9 @@ public class Navigation implements ILocationClient {
         CurrentLocation loc = new CurrentLocation();
         boolean locationFound = false;
 
+        CometNavBeacon closestBeacon = null;
+        double minDistance = Double.MAX_VALUE;
+
         for (CometNavBeacon beacon : beaconList) {
             //foundBeacon is a known beacon we have stored on the web server. It contains the
             //beacon coordinates.
@@ -217,6 +223,11 @@ public class Navigation implements ILocationClient {
                 posList.add(list);
                 distanceList.add(beacon.getDistance());
                 floorList.add((double) foundBeacon.getFloor());
+                if (beacon.getDistance() < minDistance)
+                {
+                    minDistance = beacon.getDistance();
+                    closestBeacon = beacon;
+                }
             }
         }
         if (count == 0) {
@@ -253,52 +264,26 @@ public class Navigation implements ILocationClient {
             locationFound = true;
         }
 
-        boolean shouldSnapToNodes = false;
-        if (shouldSnapToNodes) {
-            // Look for nearby navigable location to projected location and set to the nearest
-            if (locationFound) {
-                double smallestZ = 0;
-                Location closestNavLoc = null;
-                List<Location> routeList = new ArrayList<>();
+        if (closestBeacon != null) {
+            //snap to radius around closest beacon
+            Point2DF pointClosestToBeacon =
+                    closestPointToCircle(loc.getxLoc(), loc.getyLoc(),
+                            closestBeacon.getxLoc(), closestBeacon.getyLoc(), closestBeacon.getDistance());
 
-                //If we have a route, only consider nodes on the route
-                if (currentRoute != null) {
-                    int[] routeNodes = currentRoute.toArray();
-                    for (int i = 0; i < routeNodes.length; i++)
-                        routeList.add(i, getLocation(routeNodes[i]));
-                    Log.d(TAG, "Snapping to route nodes: " + routeList.toString());
-                } else
-                    routeList = this.navigableLocations;
-                for (Location navLoc : routeList) {
-
-                    if (navLoc.getFloor() == loc.getFloor()) {
-                        double x = loc.getxLoc() - navLoc.getPixelLocX();
-                        double y = loc.getyLoc() - navLoc.getPixelLocY();
-
-
-                        double z = 0;
-
-                        z = (y * y) + (x * x);
-
-                        if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
-                            smallestZ = z;
-                            closestNavLoc = navLoc;
-                        }
-                    }
-                }
-
-                Log.d(TAG, "OriginalLoc: " + loc.getxLoc() + ", " + loc.getyLoc() + " || Z: " + smallestZ + " ClosestNavLoc => " + closestNavLoc.toString());
-
-                // Rest loc x and y with closest hall x and y
-                if (closestNavLoc != null) {
-                    loc.setxLoc(closestNavLoc.getPixelLocX());
-                    loc.setyLoc(closestNavLoc.getPixelLocY());
-                }
-
-            }
+            loc.setxLoc(Math.round(pointClosestToBeacon.getX()));
+            loc.setyLoc(Math.round(pointClosestToBeacon.getY()));
         }
-
         return loc;
+    }
+
+    private Point2DF closestPointToCircle(double pX, double pY, double cX, double cY, double radius)
+    {
+        double vX = pX - cX;
+        double vY = pY - cY;
+        double magV = sqrt(vX*vX + vY*vY);
+        double aX = cX + vX / magV * radius;
+        double aY = cY + vY / magV * radius;
+        return new Point2DF((float)aX, (float)aY);
     }
 
     private List<OnRouteChangedListener> mRouteChangedListeners;

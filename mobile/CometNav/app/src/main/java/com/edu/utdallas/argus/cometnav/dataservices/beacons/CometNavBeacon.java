@@ -22,6 +22,7 @@ public class CometNavBeacon implements Parcelable {
     private int xLoc = 0;
     private int yLoc = 0;
     private final Integer STR_CUT_LENGTH = 14;
+    //This is pixels per meter
     private final double PIXEL_METER_CONV_CONST = 373/101;
     private final double PIXEL_FEET_CONV_CONST = 373/332;
     /**
@@ -130,17 +131,19 @@ public class CometNavBeacon implements Parcelable {
 //        }
 //        else
 //        {
-            prevDistMtrs.add(distance);
-            if (prevDistMtrs.size() > 10)
-                prevDistMtrs.pop();
+
+//            prevDistMtrs.add(distance);
+//            if (prevDistMtrs.size() > 10)
+//                prevDistMtrs.pop();
+
             this.distMtr = distance;
         //}
     }
 
     public double getDistMtr() {
         //Do a running average
-        return getAvgDist();
-        //return distMtr;
+        //return getAvgDist();
+        return distMtr;
     }
 
     private double getAvgDist() {
@@ -177,8 +180,8 @@ public class CometNavBeacon implements Parcelable {
         dest.writeInt(this.floor);
         dest.writeInt(this.xLoc);
         dest.writeInt(this.yLoc);
-        dest.writeList(this.prevDistMtrs);
-        //dest.writeDouble(this.distance);
+        //dest.writeList(this.prevDistMtrs);
+        dest.writeDouble(this.distMtr);
 
     }
 
@@ -187,8 +190,8 @@ public class CometNavBeacon implements Parcelable {
         this.floor = in.readInt();
         this.xLoc = in.readInt();
         this.yLoc = in.readInt();
-        //this.distance = in.readDouble();
-        in.readList(this.prevDistMtrs, null);
+        this.distMtr = in.readDouble();
+        //in.readList(this.prevDistMtrs, null);
     }
 
     public static final Parcelable.Creator<CometNavBeacon> CREATOR = new Parcelable.Creator<CometNavBeacon>() {

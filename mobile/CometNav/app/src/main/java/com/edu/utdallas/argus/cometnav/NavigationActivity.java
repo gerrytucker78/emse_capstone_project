@@ -143,7 +143,10 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             float scaleVal = (1 / cumulScaleFactor);
             beacons.scale(scaleVal, scaleVal);
             beacons.drawCircle(0, 0, 5, beaconPaint);
-            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistance()),(float)(0), (float)(0), beaconPaint);
+            beacons.restore();
+            beacons.save();
+            beacons.translate(cnb.getxLoc(), cnb.getyLoc());
+            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistMtr()),(float)(0), (float)(0), beaconPaint);
             beacons.restore();
         }
     }
@@ -230,6 +233,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         /**
          * @// TODO: 4/16/2017 Need to integrate with list selection
          */
+        if (this.startLoc == 0 && this.endLoc == 0)
+        {
+            this.startLoc = 52;
+            this.endLoc = 46;
+        }
         navigation.beginNavigation(this.startLoc, this.endLoc);
     }
 
@@ -417,7 +425,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             {
                 showLocDot = false;
             }
-
         }
     }
 
