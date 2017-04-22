@@ -96,6 +96,8 @@ public class Navigation implements ILocationClient {
 
     private List<Location> navigableLocations;
 
+    private CurrentLocation currentLocation;
+
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
      */
@@ -273,7 +275,28 @@ public class Navigation implements ILocationClient {
             loc.setxLoc(Math.round(pointClosestToBeacon.getX()));
             loc.setyLoc(Math.round(pointClosestToBeacon.getY()));
         }
+        currentLocation = loc;
         return loc;
+    }
+
+    private void findNearestNode()
+    {
+        // Look for nearby navigable location to projected location and set to the nearest
+        double smallestZ = 0;
+        Location closestNavLoc = null;
+        for (Location navLoc : this.navigableLocations) {
+            if (navLoc.getFloor() == currentLocation.getFloor()) {
+                double x = currentLocation.getxLoc() - navLoc.getPixelLocX();
+                double y = currentLocation.getyLoc() - navLoc.getPixelLocY();
+                double z = 0;
+                z = (y * y) + (x * x);
+                if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
+                    smallestZ = z;
+                    closestNavLoc = navLoc;
+                }
+            }
+        }
+        //The closest node is contained in Location.
     }
 
     private Point2DF closestPointToCircle(double pX, double pY, double cX, double cY, double radius)
