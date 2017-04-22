@@ -8,4 +8,5 @@
     <string name="title_activity_find_aroom_maps">Find A Room</string>
     <string name="permissions_needed">CometNav needs access to your location for accurate navigation.</string>
     <string name="title_activity_navigate__to">Navigate_To</string>
+    <string name="title_activity_test">Test</string>
 </resources>

@@ -161,19 +161,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_findRoom) {
-            // Handle the Find Room action
-            Intent intent = new Intent(this,FindARoomMapsActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_emergency) {
+        if (id == R.id.nav_emergency) {
             //Toast.makeText(this, "Emergency Navigation Clicked", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, NavigationActivity.class);
+            
             this.startActivity(intent);
-            return true;
-
-        } else if (id == R.id.nav_reportEmergency) {
-            Toast.makeText(this, "Report Emergency Clicked", Toast.LENGTH_LONG).show();
             return true;
 
         } else if (id == R.id.nav_manage) {
