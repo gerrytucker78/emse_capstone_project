@@ -2,11 +2,13 @@ package com.edu.utdallas.argus.cometnav;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -19,6 +21,7 @@ import android.graphics.Paint;
 
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.ILocationClient;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
@@ -36,13 +39,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import static android.graphics.BitmapFactory.*;
 
 public class NavigationActivity extends AppCompatActivity implements ILocationClient
 {
+    private static final String TAG = "NavigationActivity";
     private BroadcastReceiver receiver;
-    //private PhotoView photoView;
+    private BroadcastReceiver emergencyReceiver;
     private CometNavView photoView;
     private DownloadImageTask task;
     private Canvas locDot;
@@ -67,6 +72,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private final int MIN_RADIUS = 10;
     private Navigation navigation = Navigation.getInstance();
     private List<CometNavBeacon> cnBeaconList = new ArrayList<>();
+    private List<Emergency> emergencyList = new ArrayList<>();
 
     private int startLoc = 0;
     private int endLoc = 0;
@@ -137,7 +143,10 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             float scaleVal = (1 / cumulScaleFactor);
             beacons.scale(scaleVal, scaleVal);
             beacons.drawCircle(0, 0, 5, beaconPaint);
-            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistance()),(float)(0), (float)(0), beaconPaint);
+            beacons.restore();
+            beacons.save();
+            beacons.translate(cnb.getxLoc(), cnb.getyLoc());
+            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistMtr()),(float)(0), (float)(0), beaconPaint);
             beacons.restore();
         }
     }
@@ -178,9 +187,14 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         IntentFilter filter = new IntentFilter();
         filter.addAction("BEACON_ACTION");
 
+        IntentFilter filterz = new IntentFilter();
+        filterz.addAction("EMERGENCY_ACTION");
+
         receiver = new BeaconBroadcastReceiver();
+        emergencyReceiver = new EmergencyBroadcastReceiver();
 
         registerReceiver(receiver, filter);
+        registerReceiver(emergencyReceiver, filterz);
 
         photoView.setAdjustViewBounds(true);
         //photoView.setOnPhotoTapListener(new PhotoTapListener());
@@ -219,6 +233,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         /**
          * @// TODO: 4/16/2017 Need to integrate with list selection
          */
+        if (this.startLoc == 0 && this.endLoc == 0)
+        {
+            this.startLoc = 52;
+            this.endLoc = 46;
+        }
         navigation.beginNavigation(this.startLoc, this.endLoc);
     }
 
@@ -226,8 +245,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
         this.cnBeaconList = new ArrayList<>();
         Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
-        //Log.d("Navigation", "Nav beacons: " + navigation.getBeaconMap().toString());
-        //Log.d("Navigation", "Found beacons: " + beaconArrayList.toString());
 
         for (CometNavBeacon cnBeacon : beaconArrayList)
         {
@@ -237,7 +254,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 cnBeacon.setyLoc(refBeacon.getyLoc());
                 cnBeacon.setFloor(refBeacon.getFloor());
                 cnBeaconList.add(cnBeacon);
-                //Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
             }
         }
         Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
@@ -327,6 +343,46 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         }
     }
 
+    private class EmergencyBroadcastReceiver extends BroadcastReceiver {
+        private void sendAlert(Context context, Emergency e){
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage("There is a(n) " + e.getType() + " emergency! Do you wish to navigate to safety?");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Grab the new/updated emergencies
+            emergencyList = intent.getParcelableArrayListExtra("EMERGENCY_LIST");
+
+            Log.d(TAG, "List of emergencies received from broadcast: " + emergencyList.toString());
+
+            //Send out an alert for all the emergencies in the list
+            for (Emergency e : emergencyList){
+                sendAlert(context, e);
+            }
+
+        }
+    }
+
     private class BeaconBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -369,7 +425,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             {
                 showLocDot = false;
             }
-
         }
     }
 

@@ -3,13 +3,14 @@ package com.edu.utdallas.argus.cometnav.dataservices.emergencies;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.edu.utdallas.argus.cometnav.dataservices.DataServices;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,7 +28,7 @@ public class EmergencyService extends IntentService{
     private TimerTask timerTask;
     private final Handler handler = new Handler();
     private EmergencyClient emergencyClient = new EmergencyClient();
-    private Map<Integer,Emergency> emergenciesMap = new HashMap();
+    private List<Emergency> emergencyList = new ArrayList<Emergency>();
 
 
     public EmergencyService(){
@@ -76,21 +77,68 @@ public class EmergencyService extends IntentService{
                 {
                     public void run()
                     {
-                        //Calling server to get emergiencies
+                        //Calling server to get emergencies
                         DataServices.getEmergencies(emergencyClient);
-                        emergenciesMap = emergencyClient.getEmergenciesMap();
-                        Log.i(TAG, "Emergiencies: " + emergenciesMap.toString());
-                    }
-                });
-            }
-        };
-    }
 
-    @Override
-    public void onDestroy() {
+                        //Get the list of emergencies
+                        List<Emergency> newEmergenciesList = emergencyClient.getEmergenciesMap();
+
+                        //Tmp list will contain the deltas from newEmergencies and current emergencies
+                        List<Emergency> tmpList = new ArrayList<Emergency>();
+
+                        if ( emergencyList.isEmpty() ) {
+                            //Congrats, the empty list now has all the emergencies in it
+                            Log.d(TAG, "EmergencyList empty. Setting it and tmpList to newEmergenciesList");
+                            emergencyList.addAll(newEmergenciesList);
+                            tmpList.addAll(emergencyList);
+                        }else if (emergencyList.equals(newEmergenciesList)){
+                            Log.d(TAG, "New emergency list equals current emergency list...");
+                            //Do Nothing
+                        }
+                        else{
+                            //Filter based on emergencies you already have
+                            for (Emergency newEmergency : newEmergenciesList) {
+                                if( !emergencyList.contains(newEmergency) ){
+                                    //Iterate over the emergencyList to find the object and replace it
+                                    for (int i = 0; i < emergencyList.size(); i++){
+                                        if(newEmergency.getEmergencyId() == emergencyList.get(i).getEmergencyId()){
+                                            Log.d(TAG, "Replacing emergency with updated emergency. New Emergency: " + newEmergency.toString()
+                                            + " ::: Orig Emergency: " + emergencyList.get(i).toString());
+                                            tmpList.add(newEmergency);
+                                            emergencyList.remove(i); //Remove original emergency
+                                            emergencyList.add(newEmergency); //Add the updated emergency
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Log.i(TAG, "Emergiencies: " + emergencyList.toString());
+                        Log.i(TAG, "TmpEmergencies: " + tmpList.toString());
+
+                        //Only broadcast if something changed...
+                        if (!tmpList.isEmpty()) {
+                            Log.d(TAG, "Broadcasting delta emergencies out..." + tmpList.toString());
+
+                            //Broadcast the new/udpated emergencies to whoever is listening
+                            Intent localIntent = new Intent("EMERGENCY_ACTION");
+                            localIntent.putParcelableArrayListExtra("EMERGENCY_LIST", (ArrayList<? extends Parcelable>) tmpList);
+                            sendBroadcast(localIntent);
+
+                            //Clear the list out
+                            tmpList.clear();
+                         }
+        }
+        });
+        }
+        };
+        }
+
+@Override
+public void onDestroy() {
         super.onDestroy();
 
         //Cleanup as needed
         Log.i(TAG, "EmergencyService Destroyed");
-    }
-}
+        }
+        }

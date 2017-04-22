@@ -8,7 +8,9 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +20,14 @@ import java.util.Map;
 public class EmergencyClient  implements IEmergencyClient {
     private static final String TAG="EmergencyClient";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private Map<Integer,Emergency> emergenciesMap = new HashMap();
+    //private Map<Integer,Emergency> emergenciesMap = new HashMap();
+    private List<Emergency> emergenciesMap = new ArrayList<Emergency>();
 
     @Override
     public void receiveEmergencies(JSONArray emergencies) {
         try
         {
+            emergenciesMap.clear();
             for(int i = 0; i < emergencies.length(); i++)
             {
                 JSONObject rawEm = emergencies.getJSONObject(i);
@@ -33,6 +37,8 @@ public class EmergencyClient  implements IEmergencyClient {
                 if(!rawEm.getString("emergency_end").equalsIgnoreCase("null")){
                     //Only parse the date if the value isn't "null"
                     em.setEnd(sdf.parse(rawEm.getString("emergency_end")));
+                }else{
+                    em.setEnd(null);
                 }
 
                 em.setLocationId(rawEm.getInt("location_id"));
@@ -41,15 +47,19 @@ public class EmergencyClient  implements IEmergencyClient {
                 if(!rawEm.getString("emergency_start").equalsIgnoreCase("null")){
                     //Only parse the date if the value isn't null
                     em.setStart(sdf.parse(rawEm.getString("emergency_start")));
+                }else{
+                    em.setStart(null);
                 }
 
                 em.setType(rawEm.getString("emergency_type"));
 
                 if(!rawEm.getString("emergency_last_update").equalsIgnoreCase("null")) {
                     em.setUpdate(sdf.parse(rawEm.getString("emergency_last_update")));
+                }else{
+                    em.setUpdate(null);
                 }
 
-                emergenciesMap.put(em.getEmergencyId(), em);
+                emergenciesMap.add(em);
             }
         }
         catch (JSONException e)
@@ -63,7 +73,7 @@ public class EmergencyClient  implements IEmergencyClient {
     }
 
     @Override
-    public Map<Integer, Emergency> getEmergenciesMap() {
+    public List<Emergency> getEmergenciesMap() {
         return emergenciesMap;
     }
 
