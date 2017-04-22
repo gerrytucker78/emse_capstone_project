@@ -57,6 +57,12 @@ describe('Emergencies', function () {
         });
     });
 
+    it('Delete By Id - No Body', function (done) {
+        request(server).delete('/emergencies/id/' + testEmergencies[1].emergency_id).expect(200).then(function () {
+            request(server).get('/emergencies/id/' + testEmergencies[1].emergency_id).expect('').expect(200, done);
+        });
+    });
+
 
     it('completeReplace', function(done) {
         request(server).put('/emergencies').send(testEmergencies).expect(testEmergencies).expect(200,done);

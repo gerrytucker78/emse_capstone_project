@@ -65,7 +65,7 @@ LocationShape.prototype.edit = function () {
         } else {
             document.getElementById("emergency_state").value = "UPDATE";
         }
-    } else {
+    } else if (document.getElementById("emergency_id")) {
         document.getElementById("emergency_id").value = "";
         document.getElementById("emergency_notes").value = "";
         document.getElementById("emergency_type").value = "";
@@ -74,6 +74,12 @@ LocationShape.prototype.edit = function () {
         document.getElementById("emergency_end").value = "";
 
     }
+};
+
+LocationShape.prototype.unselect = function () {
+    document.getElementById("location_id").value = "";
+    document.getElementById("location_name").value = "";
+    document.getElementById("location_type").value = "";
 };
 
 /**
@@ -141,6 +147,10 @@ BeaconShape.prototype.edit = function () {
     document.getElementById("beacon_name").value = this.sensor.name;
 };
 
+BeaconShape.prototype.unselect = function () {
+    document.getElementById("beacon_name").value = "";
+};
+
 /**
  * Draw the beacon shape
  * @param ctx
@@ -203,6 +213,11 @@ function PathShape(startLoc, endLoc, w, h, fill) {
 PathShape.prototype.edit = function () {
     document.getElementById("start_loc_name").value = this.startLocation.name;
     document.getElementById("end_loc_name").value = this.endLocation.name;
+};
+
+PathShape.prototype.unselect = function () {
+    document.getElementById("start_loc_name").value = "";
+    document.getElementById("end_loc_name").value = "";
 };
 
 /**
@@ -361,8 +376,11 @@ function CanvasState(canvas, image, floor) {
         // havent returned means we have failed to select anything.
         // If there was an object selected, we deselect it
         if (myState.selection) {
+            myState.selection.unselect();
+
             myState.selection = null;
             myState.valid = false; // Need to clear the old selection border
+
         }
     }, true);
     canvas.addEventListener('mousemove', function (e) {

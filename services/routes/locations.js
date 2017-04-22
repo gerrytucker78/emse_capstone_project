@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
         res.send(simDataSet);
     } else {
-        Location.findAll({order: [['location_id', 'ASC']]}).then(function (locations) {
+        Location.findAll({order: [['name', 'ASC']]}).then(function (locations) {
             return res.send(locations)
         });
     }
@@ -33,7 +33,7 @@ router.get('/navigable', function (req, res, next) {
     } else {
         Location.findAll({
             where: {$or: [{type: "HALL"}, {type: "STAIRS"}, {type: "ROOM"}, {type: "EXIT"}]},
-            order: [['location_id', 'ASC']]
+            order: [['name', 'ASC']]
         }).then(function (locations) {
             return res.send(locations)
         });

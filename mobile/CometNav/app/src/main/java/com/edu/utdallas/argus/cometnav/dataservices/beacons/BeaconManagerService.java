@@ -198,7 +198,7 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                       * Select the Beacon and use it's average distance
                       */
                     CometNavBeacon cnBeacon = new CometNavBeacon(b);
-                    cnBeacon.setDistance(beaconDistance.get(b)/count);
+                    cnBeacon.setDistMtr(beaconDistance.get(b)/count);
 
                     beaconList.add(cnBeacon);
                     Log.i(TAG,"Beacon " + b.getId1() + " made the cut: " + count + " with an average distance of " + cnBeacon.getDistance());
@@ -245,7 +245,8 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
             if (beaconMap.containsKey(cnBeacon.getName()))
             {
                 //update the distance
-                beaconMap.get(cnBeacon.getName()).setDistance(cnBeacon.getDistance());
+                cnBeacon = beaconMap.get(cnBeacon.getName());
+                cnBeacon.setDistMtr(b.getDistance());
                 //If the beacon is in our list, increment the count
                 int count = beaconCount.get(cnBeacon.getName());
                 count++;
@@ -253,7 +254,8 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                     count = BEACON_LOSS_THRESHOLD;
                 beaconCount.put(cnBeacon.getName(), count);
                 foundBeacons.add(cnBeacon.getName());
-                Log.d(TAG, "1Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+                Log.d(TAG, "1Beacon count true dist: " + cnBeacon.getStrName() + " " + count + " " + b.getDistance());
+                Log.d(TAG, "1Beacon count:           " + cnBeacon.getStrName() + " " + count + " " + cnBeacon.getDistMtr());
             }
             else
             {
@@ -265,7 +267,7 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                     count++;
                     if (count >= BEACON_GAIN_THRESHOLD)
                         count = BEACON_GAIN_THRESHOLD;
-                    Log.d(TAG, "2Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+                    Log.d(TAG, "2Beacon count: " + cnBeacon.getStrName() + " " + count + " " + cnBeacon.getDistMtr());
                     if (count == BEACON_GAIN_THRESHOLD)
                     {
                         //If we've seen this beacon threshold_count times in a row, add to beaconList
@@ -280,7 +282,7 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                 {
                     //First time seeing it, add beacon
                     beaconCount.put(cnBeacon.getName(), 1);
-                    Log.d(TAG, "3Beacon count: " + cnBeacon.getName() + " " + 1 + " " + cnBeacon.getDistance());
+                    Log.d(TAG, "3Beacon count: " + cnBeacon.getStrName() + " " + 1 + " " + cnBeacon.getDistMtr());
                 }
             }
         }
@@ -294,7 +296,7 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                 count--;
                 if (count <= 0)
                     count = 0;
-                Log.d(TAG, "4Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+                Log.d(TAG, "4Beacon count: " + cnBeacon.getStrName() + " " + count + " " + cnBeacon.getDistMtr());
                 if (count == 0)
                 {
                     //Missed THRESHOLD_COUNT times in a row - remove from list

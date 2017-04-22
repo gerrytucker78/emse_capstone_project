@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/maintainLocations.js" afterPath="$PROJECT_DIR$/controllers/maintainLocations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/maintainEmergencies.ejs" afterPath="$PROJECT_DIR$/views/maintainEmergencies.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/dev.json" afterPath="$PROJECT_DIR$/config/dev.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/locations.js" afterPath="$PROJECT_DIR$/routes/locations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/data/dev.json" afterPath="$PROJECT_DIR$/scripts/data/dev.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/locations.js" afterPath="$PROJECT_DIR$/tests/locations.js" />
     </list>
     <ignored path="services.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,31 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/emergencies.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="81" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/locations.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="80" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="80" />
+            <state relative-caret-position="2340">
+              <caret line="156" column="34" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -67,22 +49,29 @@
       <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3105">
-              <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="211" selection-end-column="7" />
+            <state relative-caret-position="420">
+              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ecss2_map.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/data/ecss2_map.html">
+      <file leaf-file-name="prod.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/prod.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="409" column="9" selection-start-line="409" selection-start-column="9" selection-end-line="409" selection-end-column="9" />
-              <folding>
-                <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#map#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
+            <state relative-caret-position="-1946">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dev.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/dev.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -90,41 +79,39 @@
       <file leaf-file-name="shapes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
+            <state relative-caret-position="810">
+              <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#345#590#0" expanded="false" />
                 <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
                 <element signature="e#1582#1654#0" expanded="false" />
-                <element signature="e#3305#3353#0" expanded="false" />
-                <element signature="e#3487#3592#0" expanded="false" />
-                <element signature="e#3936#4185#0" expanded="false" />
-                <element signature="e#4188#4431#0" expanded="false" />
+                <element signature="e#3572#3620#0" expanded="false" />
+                <element signature="e#3754#3859#0" expanded="false" />
+                <element signature="e#4203#4452#0" expanded="false" />
+                <element signature="e#4455#4698#0" expanded="false" />
                 <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
                 <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
-                <element signature="e#5225#5297#0" expanded="false" />
-                <element signature="e#5339#5411#0" expanded="false" />
-                <element signature="e#5414#5460#0" expanded="false" />
-                <element signature="e#5505#5589#0" expanded="false" />
-                <element signature="e#5592#5697#0" expanded="false" />
-                <element signature="e#6038#6285#0" expanded="false" />
+                <element signature="e#5492#5564#0" expanded="false" />
+                <element signature="e#5787#5833#0" expanded="false" />
+                <element signature="e#5965#6070#0" expanded="false" />
+                <element signature="e#6411#6658#0" expanded="false" />
                 <element signature="n#!!doc;n#PathShape#0" expanded="false" />
-                <element signature="e#7257#7329#0" expanded="false" />
-                <element signature="e#7529#7575#0" expanded="false" />
-                <element signature="e#7894#7999#0" expanded="false" />
-                <element signature="e#8472#8717#0" expanded="false" />
-                <element signature="e#9542#9791#0" expanded="false" />
+                <element signature="e#7630#7702#0" expanded="false" />
+                <element signature="e#8065#8111#0" expanded="false" />
+                <element signature="e#8430#8535#0" expanded="false" />
+                <element signature="e#9008#9253#0" expanded="false" />
+                <element signature="e#10078#10327#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maintainEmergencies.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/maintainEmergencies.ejs">
+      <file leaf-file-name="maintainLocations.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+            <state relative-caret-position="15">
+              <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
               <folding />
             </state>
           </provider>
@@ -133,28 +120,28 @@
       <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
+            <state relative-caret-position="165">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="locations.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
-              <caret line="144" column="1" selection-start-line="144" selection-start-column="1" selection-end-line="151" selection-end-column="0" />
+            <state relative-caret-position="114">
+              <caret line="111" column="42" selection-start-line="111" selection-start-column="42" selection-end-line="111" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
+            <state relative-caret-position="630">
+              <caret line="42" column="33" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -192,22 +179,23 @@
         <option value="$PROJECT_DIR$/scripts/data/sensors.json" />
         <option value="$PROJECT_DIR$/scripts/data/locations.json" />
         <option value="$PROJECT_DIR$/scripts/data/paths.json" />
-        <option value="$PROJECT_DIR$/config/dev.json" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/models/locations.js" />
         <option value="$PROJECT_DIR$/models/sensors.js" />
         <option value="$PROJECT_DIR$/routes/sensors.js" />
         <option value="$PROJECT_DIR$/tests/sensors.js" />
-        <option value="$PROJECT_DIR$/routes/locations.js" />
-        <option value="$PROJECT_DIR$/tests/locations.js" />
-        <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
         <option value="$PROJECT_DIR$/routes/admin.js" />
-        <option value="$PROJECT_DIR$/tests/emergencies.js" />
-        <option value="$PROJECT_DIR$/routes/emergencies.js" />
         <option value="$PROJECT_DIR$/models/emergencies.js" />
-        <option value="$PROJECT_DIR$/controllers/shapes.js" />
         <option value="$PROJECT_DIR$/views/maintainEmergencies.ejs" />
         <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
+        <option value="$PROJECT_DIR$/routes/emergencies.js" />
+        <option value="$PROJECT_DIR$/tests/emergencies.js" />
+        <option value="$PROJECT_DIR$/controllers/shapes.js" />
+        <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
+        <option value="$PROJECT_DIR$/routes/locations.js" />
+        <option value="$PROJECT_DIR$/scripts/data/dev.json" />
+        <option value="$PROJECT_DIR$/config/dev.json" />
+        <option value="$PROJECT_DIR$/tests/locations.js" />
       </list>
     </option>
   </component>
@@ -319,43 +307,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -380,7 +340,7 @@
       <recent name="$PROJECT_DIR$/models" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.bin/www">
+  <component name="RunManager" selected="Mocha.Locations">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -999,30 +959,19 @@
       <workItem from="1492479621582" duration="483000" />
       <workItem from="1492556558327" duration="8514000" />
       <workItem from="1492613952398" duration="8459000" />
-      <workItem from="1492873622533" duration="1549000" />
+      <workItem from="1492873622533" duration="5220000" />
+      <workItem from="1492893961536" duration="909000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Emergencies - 2017.04.19 at 20h 24m 26s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.04.19 at 20h 25m 25s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.04.19 at 20h 26m 25s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.04.19 at 20h 26m 57s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Emergencies - 2017.04.19 at 20h 27m 12s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="Emergencies - 2017.04.19 at 20h 45m 18s.xml">
       <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
     </history-entry>
     <history-entry file="Emergencies - 2017.04.19 at 20h 53m 47s.xml">
+      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Emergencies - 2017.04.22 at 11h 11m 12s.xml">
       <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
     </history-entry>
     <history-entry file="Locations - 2017.04.18 at 18h 32m 44s.xml">
@@ -1034,9 +983,21 @@
     <history-entry file="Locations - 2017.04.18 at 18h 33m 59s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="Locations - 2017.04.22 at 15h 53m 30s.xml">
+      <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Locations - 2017.04.22 at 15h 56m 57s.xml">
+      <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Locations - 2017.04.22 at 15h 59m 35s.xml">
+      <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="Locations - 2017.04.22 at 16h 01m 08s.xml">
+      <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130808000" />
+    <option name="totallyTimeSpent" value="135388000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1053,61 +1014,32 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329849" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39774013" sideWeight="0.5064034" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959481" sideWeight="0.50606585" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31631204" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14993565" sideWeight="0.49393415" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36723164" sideWeight="0.49359658" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32907802" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39774013" sideWeight="0.5064034" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959481" sideWeight="0.50606585" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5347518" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14993565" sideWeight="0.49393415" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49717513" sideWeight="0.49359658" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329849" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36723164" sideWeight="0.49359658" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959481" sideWeight="0.50606585" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32090396" sideWeight="0.8089648" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15101388" sideWeight="0.49393415" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32907802" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1125,7 +1057,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="82" />
+      <option name="time" value="83" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="mocha-javascript-test-runner">
@@ -1140,20 +1072,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/sensors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/sensors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1327,24 +1245,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/dev.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="27" column="24" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1373,14 +1277,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -1388,23 +1284,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="33" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-435">
-          <caret line="47" column="78" selection-start-line="47" selection-start-column="78" selection-end-line="47" selection-end-column="78" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1419,43 +1298,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3105">
-          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="211" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="144" column="1" selection-start-line="144" selection-start-column="1" selection-end-line="151" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/locations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="80" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,53 +1309,138 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="81" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#345#590#0" expanded="false" />
-            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
-            <element signature="e#1582#1654#0" expanded="false" />
-            <element signature="e#3305#3353#0" expanded="false" />
-            <element signature="e#3487#3592#0" expanded="false" />
-            <element signature="e#3936#4185#0" expanded="false" />
-            <element signature="e#4188#4431#0" expanded="false" />
-            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
-            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
-            <element signature="e#5225#5297#0" expanded="false" />
-            <element signature="e#5339#5411#0" expanded="false" />
-            <element signature="e#5414#5460#0" expanded="false" />
-            <element signature="e#5505#5589#0" expanded="false" />
-            <element signature="e#5592#5697#0" expanded="false" />
-            <element signature="e#6038#6285#0" expanded="false" />
-            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
-            <element signature="e#7257#7329#0" expanded="false" />
-            <element signature="e#7529#7575#0" expanded="false" />
-            <element signature="e#7894#7999#0" expanded="false" />
-            <element signature="e#8472#8717#0" expanded="false" />
-            <element signature="e#9542#9791#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="1050">
+          <caret line="70" column="88" selection-start-line="70" selection-start-column="88" selection-end-line="70" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="37" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/maintainEmergencies.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+        <state relative-caret-position="960">
+          <caret line="64" column="61" selection-start-line="64" selection-start-column="61" selection-end-line="64" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        <state relative-caret-position="2340">
+          <caret line="156" column="34" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#345#590#0" expanded="false" />
+            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
+            <element signature="e#1582#1654#0" expanded="false" />
+            <element signature="e#3572#3620#0" expanded="false" />
+            <element signature="e#3754#3859#0" expanded="false" />
+            <element signature="e#4203#4452#0" expanded="false" />
+            <element signature="e#4455#4698#0" expanded="false" />
+            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
+            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
+            <element signature="e#5492#5564#0" expanded="false" />
+            <element signature="e#5787#5833#0" expanded="false" />
+            <element signature="e#5965#6070#0" expanded="false" />
+            <element signature="e#6411#6658#0" expanded="false" />
+            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
+            <element signature="e#7630#7702#0" expanded="false" />
+            <element signature="e#8065#8111#0" expanded="false" />
+            <element signature="e#8430#8535#0" expanded="false" />
+            <element signature="e#9008#9253#0" expanded="false" />
+            <element signature="e#10078#10327#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/data/dev.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/prod.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1946">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/dev.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="111" column="42" selection-start-line="111" selection-start-column="42" selection-end-line="111" selection-end-column="42" />
           <folding />
         </state>
       </provider>
