@@ -65,6 +65,13 @@ router.delete('/', function (req, res, next) {
 });
 
 /**
+ * DELETE Specific location by id
+ */
+router.delete('/id/:id', function (req, res, next) {
+    Emergency.destroy({where: {emergency_id: req.params.id}}).then(res.sendStatus(200));
+});
+
+/**
  * PUT Complete drop and replace of data with provide array of JSON objects
  */
 router.put('/', function (req, res, next) {
@@ -73,6 +80,15 @@ router.put('/', function (req, res, next) {
     Emergency.destroy({truncate: true}).then(function () {
         Emergency.bulkCreate(emergencies).then(function (emergs) {
             res.send(emergs)
+        });
+    });
+
+});
+
+router.put('/id/:id', function (req, res, next) {
+    Emergency.destroy({where: {emergency_id: req.body.emergency_id}}).then(function () {
+        Emergency.create(req.body).then(function (emerg) {
+            res.send(emerg)
         });
     });
 

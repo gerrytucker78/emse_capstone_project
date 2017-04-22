@@ -179,8 +179,17 @@ public class Navigation implements ILocationClient {
         return retArray;
     }
 
+    public Location getLocation (int nodeId)
+    {
+        for (Location loc : navigableLocations)
+        {
+            if (loc.getLocationId() == nodeId)
+                return loc;
+        }
+        return null;
+    }
+
     public CurrentLocation calculateCurrentPos(List<CometNavBeacon> beaconList) {
-        //double[][] positions = [3][2];
         int iterator = 0;
         //We need at least 3 beacons to preform trilateration.
         int count = 0;
@@ -204,7 +213,7 @@ public class Navigation implements ILocationClient {
                 list.add((double) foundBeacon.getxLoc());
                 list.add((double) foundBeacon.getyLoc());
                 //Iffy on this one
-                list.add((double) foundBeacon.getFloor());
+                //list.add((double) foundBeacon.getFloor());
                 posList.add(list);
                 distanceList.add(beacon.getDistance());
                 floorList.add((double) foundBeacon.getFloor());
@@ -218,7 +227,7 @@ public class Navigation implements ILocationClient {
             //return point and radius
             loc.setxLoc((int) Math.round(posList.get(0).get(0)));
             loc.setyLoc((int) Math.round(posList.get(0).get(1)));
-            loc.setFloor((int) Math.round(posList.get(0).get(2)));
+            //loc.setFloor((int) Math.round(posList.get(0).get(2)));
             loc.setRadius((int) Math.round(distanceList.get(0)));
             locationFound = true;
         } else {
@@ -240,38 +249,52 @@ public class Navigation implements ILocationClient {
             double[] resultPoint = LocationFinder.getLocationPoint(positions, distances);
             loc.setxLoc((int) Math.round(resultPoint[0]));
             loc.setyLoc((int) Math.round(resultPoint[1]));
-            loc.setFloor((int) Math.round(resultPoint[2]));
+            //loc.setFloor((int) Math.round(resultPoint[2]));
             locationFound = true;
         }
 
-        // Look for nearby navigable location to projected location and set to the nearest
-        if (locationFound) {
-            double smallestZ = 0;
-            Location closestNavLoc = null;
-            for (Location navLoc : this.navigableLocations) {
+        boolean shouldSnapToNodes = false;
+        if (shouldSnapToNodes) {
+            // Look for nearby navigable location to projected location and set to the nearest
+            if (locationFound) {
+                double smallestZ = 0;
+                Location closestNavLoc = null;
+                List<Location> routeList = new ArrayList<>();
 
-                if (navLoc.getFloor() == loc.getFloor()) {
-                    double x = loc.getxLoc() - navLoc.getPixelLocX();
-                    double y = loc.getyLoc() - navLoc.getPixelLocY();
+                //If we have a route, only consider nodes on the route
+                if (currentRoute != null) {
+                    int[] routeNodes = currentRoute.toArray();
+                    for (int i = 0; i < routeNodes.length; i++)
+                        routeList.add(i, getLocation(routeNodes[i]));
+                    Log.d(TAG, "Snapping to route nodes: " + routeList.toString());
+                } else
+                    routeList = this.navigableLocations;
+                for (Location navLoc : routeList) {
+
+                    if (navLoc.getFloor() == loc.getFloor()) {
+                        double x = loc.getxLoc() - navLoc.getPixelLocX();
+                        double y = loc.getyLoc() - navLoc.getPixelLocY();
 
 
-                    double z = 0;
+                        double z = 0;
 
-                    z = (y*y) + (x*x);
+                        z = (y * y) + (x * x);
 
-                    if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
-                        smallestZ = z;
-                        closestNavLoc = navLoc;
+                        if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
+                            smallestZ = z;
+                            closestNavLoc = navLoc;
+                        }
                     }
                 }
-            }
 
-            Log.d(TAG,"OriginalLoc: " + loc.getxLoc() + ", " + loc.getyLoc() + " || Z: " + smallestZ + " ClosestNavLoc => " + closestNavLoc.toString());
+                Log.d(TAG, "OriginalLoc: " + loc.getxLoc() + ", " + loc.getyLoc() + " || Z: " + smallestZ + " ClosestNavLoc => " + closestNavLoc.toString());
 
-            // Rest loc x and y with closest hall x and y
-            if (closestNavLoc != null) {
-                loc.setxLoc(closestNavLoc.getPixelLocX());
-                loc.setyLoc(closestNavLoc.getPixelLocY());
+                // Rest loc x and y with closest hall x and y
+                if (closestNavLoc != null) {
+                    loc.setxLoc(closestNavLoc.getPixelLocX());
+                    loc.setyLoc(closestNavLoc.getPixelLocY());
+                }
+
             }
         }
 

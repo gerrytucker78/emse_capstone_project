@@ -8,7 +8,7 @@ var dbConfig = config.get("db");
  * Defining Database Model
  **/
 var Emergency = dbData.db.define('emergencies', {
-    emergency_id: {type: Sequelize.INTEGER, primaryKey: true},
+    emergency_id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
     location_id: {type: Sequelize.INTEGER},
     emergency_type: {type: Sequelize.STRING},
     emergency_notes: {type: Sequelize.STRING},

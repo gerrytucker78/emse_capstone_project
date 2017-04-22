@@ -5,9 +5,11 @@ var locationsByName = {};
 var paths = [];
 var sensors = [];
 var changedLocations = {};
+var emergencies = {};
 
 var canvasState;
 var typesVisible = new TypeVisible();
+
 
 
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
@@ -15,6 +17,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
     $scope.message = 'Initial Load';
     $scope.locationName = 'Select a location...';
     $scope.floor;
+    $scope.maintainEmergencies = false;
 
     $scope.togglePaths = function () {
         showPaths = !showPaths;
@@ -64,7 +67,27 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
 
                 $http.get('/sensors').success(function (data, status, headers, config) {
                     sensors = data;
-                    loadData(floor);
+
+                    if ($scope.maintainEmergencies) {
+                        $http.get('/emergencies').success(function (data, status, headers, config) {
+                            emergencies = {};
+
+                            for (i = 0; i < data.length; i++) {
+                                if (locations[data[i].location_id] != undefined) {
+                                    emergencies[data[i].location_id] = data[i];
+                                }
+                            }
+
+                            $scope.message = "Emergencies Results" + data;
+
+                            loadData(floor);
+                        }).error(function (data, status, headers, config) {
+                            // TO-DO: Need to fill in.
+                        });
+                    } else {
+                        loadData(floor);
+                    }
+
                 }).error(function (data, status, headers, config) {
                     // TO-DO: Need to fill in.
                 });
@@ -101,6 +124,16 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });
+
+        canvasState.selection = null;
+        document.getElementById("location_name").value = "";
+        getElementById("location_type").value = "";
+
+        $scope.updateLocationData();
+
+        if ($scope.maintainEmergencies) {
+            $scope.updateEmergencyData();
+        }
     };
 
     $scope.updateLocationData = function () {
@@ -111,13 +144,24 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
     $scope.deleteLocationData = function () {
         var selectedLocation = canvasState.selection;
 
-        // Put updates
+        var selectedEmergency = selectedLocation.emergency;
+
+        // Delete Location
         $http.delete('/locations/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
             $scope.loadData();
         }).error(function (data, status, headers, config) {
             // TO-DO: Need to fill in.
         });
+
+        // Delete Emergency
+        $http.delete('/emergencies/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
+            $scope.loadData();
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+
     };
+
 
     $scope.savePath = function () {
         // Put updates
@@ -146,6 +190,52 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
             // TO-DO: Need to fill in.
         });
     };
+
+    $scope.updateEmergencyData = function () {
+        if (canvasState.selection == null || canvasState.selection.emergency == undefined) {
+            canvasState.selection.emergency = {emergency_id: "", notes: "", emergency_type: "", emergency_state: "",
+                location_id: canvasState.selection.location.location_id, start: "", last_update: "", end: ""};
+
+            document.getElementById("emergency_notes").value = "";
+            document.getElementById("emergency_type").value = "";
+        }
+
+        $scope.emergency_state = document.getElementById("emergency_state").value;
+
+        canvasState.selection.emergency.emergency_notes = document.getElementById("emergency_notes").value;
+        canvasState.selection.emergency.emergency_type = document.getElementById("emergency_type").value;
+    };
+
+
+    $scope.saveEmergencyData = function() {
+        var selectedLocation = canvasState.selection.location;
+        var selectedEmergency = canvasState.selection.emergency;
+
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_start = Date.now();
+        } else if ($scope.emergency_state == "UPDATE") {
+            selectedEmergency.emergency_last_update = Date.now();
+        } else if ($scope.emergency_state == "END") {
+            selectedEmergency.emergency_last_update = Date.now();
+            selectedEmergency.emergency_end = selectedEmergency.emergency_last_update;
+        }
+
+        // Put updates
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_id = null;
+            $http.post('/emergencies', selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        } else {
+            $http.put('/emergencies/id/' + selectedEmergency.emergency_id, selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }
+    }
 
     /**
      * Function to update backend database for beacons
@@ -201,6 +291,10 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
             }
         }
 
+        if (parms.emergency != undefined) {
+            $scope.maintainEmergencies = true;
+        }
+
         floor = $scope.floor;
         initDrawing(floor);
 
@@ -231,6 +325,7 @@ function loadData(currentFloor) {
     for (var i in locations) {
 
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
+        canvasState.shapes[canvasState.shapes.length-1].emergency = emergencies[i];
     }
 
     for (var i = 0; i < sensors.length; i++) {
@@ -246,70 +341,6 @@ function loadData(currentFloor) {
 
         if (startNode && endNode) {
             canvasState.addShape(new PathShape(startNode, endNode, 5, 5, "#228B22"));
-        }
-    }
-}
-
-
-function drawData() {
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    var img = document.getElementById("mapImage");
-    ctx.drawImage(img, 0, 0);
-
-    var markerSize = 5;
-    var markerOffset = markerSize / 2;
-
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-
-    for (var i in locations) {
-        var loc = locations[i];
-        ctx.font = "10px Arial";
-
-        if (locations[i].floor == floor) {
-            ctx.fillStyle = "#000000"
-            if ((locations[i].type == "BEACON" && beacons) || (locations[i].type == "HALL" && halls) || (locations[i].type == "ROOM" && rooms) || (locations[i].type == "EXIT" && exits) || (locations[i].type == "STAIRS" && stairs)) {
-                if (labels) {
-                    ctx.fillText(i, locations[i].pixel_loc_x - markerOffset - 10, locations[i].pixel_loc_y + 10);
-                }
-
-                if (locations[i].type == "BEACON") {
-                    ctx.fillStyle = "#FF0000"
-                } else {
-                    ctx.fillStyle = "#000000"
-                }
-
-                ctx.fillRect((loc.pixel_loc_x + markerOffset), (loc.pixel_loc_y + markerOffset), 5, 5);
-            }
-        }
-    }
-
-    for (var i = 0; i < sensors.length; i++) {
-        var loc = sensors[i];
-        ctx.font = "10px Arial";
-
-        if (sensors[i].floor == floor) {
-            if (beacons) {
-
-                ctx.fillStyle = "#FF0000"
-                if (labels) {
-                    ctx.fillText(i, sensors[i].pixel_loc_x - markerOffset - 10, sensors[i].pixel_loc_y + 10);
-                }
-                ctx.fillRect((loc.pixel_loc_x + markerOffset), (loc.pixel_loc_y + markerOffset), 5, 5);
-            }
-        }
-    }
-
-
-    for (var i = 0; i < paths.length; i++) {
-        var cPath = paths[i];
-
-        if (showPaths && locations[cPath.start_id].floor == floor) {
-            ctx.beginPath();
-            ctx.moveTo(locations[cPath.start_id].pixel_loc_x + markerSize, locations[cPath.start_id].pixel_loc_y + markerSize);
-            ctx.lineTo(locations[cPath.end_id].pixel_loc_x + markerSize, locations[cPath.end_id].pixel_loc_y + markerSize);
-            ctx.stroke();
         }
     }
 }

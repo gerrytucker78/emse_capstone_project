@@ -34,18 +34,15 @@ public class CometNavBeacon implements Parcelable {
     {
         try
         {
-            Log.d("Navigation", beacon.getId1().toString());
-            Log.d("Navigation", beacon.getId1().toString().substring(STR_CUT_LENGTH + 2));
             //Add 2 to the cut length for the "0x"
-            Log.d("Navigation", Integer.toString(Integer.parseInt(beacon.getId1().toString().substring(STR_CUT_LENGTH + 2), 16)));
             setName(Integer.parseInt(beacon.getId1().toString().substring(STR_CUT_LENGTH + 2), 16));
-            Log.d("Navigation", name + " ");
-            //the beacon's distance is either in meters or feet, I think meters for now
+            //Log.d("Beacon", Integer.toString(getName()));
+            //the beacon's distance is in meters
             setDistance(beacon.getDistance() * PIXEL_METER_CONV_CONST);
         }
         catch (NumberFormatException e)
         {
-            Log.d("Navigation", "EXCEPTION in beacon construction: " + e.toString());
+            Log.d("Beacon", "EXCEPTION in beacon construction: " + e.toString());
         }
     }
 
@@ -57,26 +54,20 @@ public class CometNavBeacon implements Parcelable {
     {
         try
         {
-            Log.d("Navigation", beaconJson.getString("name"));
-            Log.d("Navigation", beaconJson.getString("name").substring(STR_CUT_LENGTH));
-            Log.d("Navigation", Integer.toString(Integer.parseInt(beaconJson.getString("name").substring(STR_CUT_LENGTH), 16)));
             setName(Integer.parseInt(beaconJson.getString("name").substring(STR_CUT_LENGTH), 16));
-            Log.d("Navigation", name + " ");
             setFloor(beaconJson.getInt("floor"));
             setxLoc(beaconJson.getInt("pixel_loc_x"));
             setyLoc(beaconJson.getInt("pixel_loc_y"));
         }
-        catch (JSONException | NumberFormatException e)
+        catch (JSONException | NumberFormatException | StringIndexOutOfBoundsException e)
         {
             Log.d("Navigation", "EXCEPTION in beacon construction: " + e.toString());
         }
     }
 
-
-
     public String toString()
     {
-        return name + "," + floor + "," + xLoc + "," + yLoc;
+        return name + "," + distance + "," + floor + "," + xLoc + "," + yLoc;
     }
 
     public int getName() {
@@ -119,6 +110,16 @@ public class CometNavBeacon implements Parcelable {
         this.distance = distance;
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        Log.d("Dan", "Hitting equals!");
+        boolean result = false;
+        if (object instanceof CometNavBeacon) {
+            CometNavBeacon otherBeacon = (CometNavBeacon) object;
+            result = (this.name == otherBeacon.name);
+        }
+        return result;
+    }
 
     @Override
     public int describeContents() {
