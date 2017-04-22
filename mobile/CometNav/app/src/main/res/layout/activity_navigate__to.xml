@@ -6,44 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.edu.utdallas.argus.cometnav.Navigate_To">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/textView2"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_weight="0.05"
-            android:lineSpacingExtra="8sp"
-            android:text="Navigation"
-            android:textAppearance="@android:style/TextAppearance.Material.DialogWindowTitle"
-            app:layout_anchor="@+id/tableLayout"
-            app:layout_anchorGravity="top|center_horizontal" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <Spinner
-            android:id="@+id/startLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.05" />
+    </android.support.design.widget.AppBarLayout>
 
-        <Spinner
-            android:id="@+id/endLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.05" />
-
-        <Button
-            android:id="@+id/navButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:onClick="startNavigation"
-            android:text="Navigate"
-            app:layout_anchor="@+id/tableLayout" />
-
-    </LinearLayout>
+    <include layout="@layout/content_navigate__to" />
 
 </android.support.design.widget.CoordinatorLayout>

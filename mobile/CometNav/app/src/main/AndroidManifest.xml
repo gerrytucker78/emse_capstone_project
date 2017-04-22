@@ -59,8 +59,7 @@
         <activity
             android:name=".Navigate_To"
             android:label="@string/title_activity_navigate__to"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
