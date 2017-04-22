@@ -58,7 +58,7 @@ describe('Locations', function () {
                 testPaths.push(simPath);
 
 
-                request(server).post('/locations/path').send(simPath).end(function (err, res) {
+                request(server).post('/locations/paths').send(simPath).end(function (err, res) {
                     totalPathCount++;
                     if (totalPathCount == testPaths.length) {
                         pathSetupComplete = true;

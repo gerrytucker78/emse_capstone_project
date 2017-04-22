@@ -49,6 +49,15 @@ describe('Emergencies', function () {
         request(server).get('/emergencies/id/' + testEmergencies[0].emergency_id).expect(testEmergencies[0]).expect(200, done);
     });
 
+    it('Update By Id', function (done) {
+        var testEmerg = testEmergencies[0];
+        testEmerg.emergency_type= "TEST";
+        request(server).put('/emergencies/id/' + testEmerg.emergency_id).send(testEmergencies[0]).expect(200).then(function () {
+            request(server).get('/emergencies/id/' + testEmergencies[0].emergency_id).expect(testEmerg).expect(200, done);
+        });
+    });
+
+
     it('completeReplace', function(done) {
         request(server).put('/emergencies').send(testEmergencies).expect(testEmergencies).expect(200,done);
     })

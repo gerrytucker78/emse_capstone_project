@@ -78,4 +78,13 @@ router.put('/', function (req, res, next) {
 
 });
 
+router.put('/id/:id', function (req, res, next) {
+    Emergency.destroy({where: {emergency_id: req.body.emergency_id}}).then(function () {
+        Emergency.create(req.body).then(function (emerg) {
+            res.send(emerg)
+        });
+    });
+
+});
+
 module.exports = router;

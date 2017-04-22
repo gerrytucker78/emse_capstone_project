@@ -154,7 +154,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
         photoView = (PhotoView) findViewById(R.id.photo_view);
         task = new DownloadImageTask(photoView);
-        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
+        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS4.png");
 
         //TODO Find Beacons on create. Move to only find beacons when ready to navigate
         Intent intent = new Intent(this, BeaconManagerService.class);

@@ -1,18 +1,21 @@
-var floor = 2;
+var floor;
 
 var locations = {};
+var locationsByName = {};
 var paths = [];
 var sensors = [];
 var changedLocations = {};
+var emergencies = {};
 
 var canvasState;
 var typesVisible = new TypeVisible();
 
 
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
-maintainLocations.controller('locationController', ['$scope', '$http', function ($scope, $http) {
+maintainLocations.controller('locationController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     $scope.message = 'Initial Load';
     $scope.locationName = 'Select a location...';
+    $scope.floor;
 
     $scope.togglePaths = function () {
         showPaths = !showPaths;
@@ -40,15 +43,18 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
     };
 
     $scope.loadData = function () {
-        $scope.message = "Loading /locations"
+        $scope.message = "Loading /locations";
 
         $http.get('/locations').success(function (data, status, headers, config) {
             $scope.message = "Results" + data;
-            locations = {}
+            locations = {};
+            locationsByName = {};
+
             for (i = 0; i < data.length; i++) {
                 // Only add locations on this floor
                 if (data[i].floor == floor) {
                     locations[data[i].location_id] = data[i];
+                    locationsByName[data[i].name] = data[i];
                 }
             }
 
@@ -59,7 +65,22 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
 
                 $http.get('/sensors').success(function (data, status, headers, config) {
                     sensors = data;
-                    loadData(floor);
+                    $http.get('/emergencies').success(function (data, status, headers, config) {
+                        emergencies = {};
+
+                        for (i = 0; i < data.length; i++) {
+                            if (locations[data[i].location_id] != undefined) {
+                                emergencies[data[i].location_id] = data[i];
+                            }
+                        }
+
+                        $scope.message = "Emergencies Results" + data;
+
+                        loadData(floor);
+                    }).error(function (data, status, headers, config) {
+                        // TO-DO: Need to fill in.
+                    });
+
                 }).error(function (data, status, headers, config) {
                     // TO-DO: Need to fill in.
                 });
@@ -103,7 +124,6 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
         canvasState.selection.location.type = document.getElementById("location_type").value
     };
 
-
     $scope.deleteLocationData = function () {
         var selectedLocation = canvasState.selection;
 
@@ -114,6 +134,78 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
             // TO-DO: Need to fill in.
         });
     };
+
+
+    $scope.savePath = function () {
+        // Put updates
+        $http.post('/locations/paths',{start_id: $scope.start_node_id, end_id: $scope.end_node_id, weight: 1}).success(function (data, status, headers, config) {
+            $http.post('/locations/paths',{start_id: $scope.end_node_id, end_id: $scope.start_node_id, weight: 1}).success(function (data, status, headers, config) {
+
+            $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
+    $scope.deletePath = function () {
+        // Put updates
+        $http.delete('/locations/paths/ids/' + $scope.start_node_id + "," + $scope.end_node_id).success(function (data, status, headers, config) {
+            $http.delete('/locations/paths/ids/' + $scope.end_node_id + "," + $scope.start_node_id).success(function (data, status, headers, config) {
+            $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+
+        }).error(function (data, status, headers, config) {
+            // TO-DO: Need to fill in.
+        });
+    };
+
+    $scope.updateEmergencyData = function () {
+        if (canvasState.selection.emergency == undefined) {
+            canvasState.selection.emergency = {emergency_id: "", notes: "", emergency_type: "", emergency_state: "",
+                location_id: canvasState.selection.location.location_id, start: "", last_update: "", end: ""};
+        }
+
+        $scope.emergency_state = document.getElementById("emergency_state").value;
+
+        canvasState.selection.emergency.emergency_notes = document.getElementById("emergency_notes").value;
+        canvasState.selection.emergency.emergency_type = document.getElementById("emergency_type").value;
+    };
+
+
+    $scope.saveEmergencyData = function() {
+        var selectedLocation = canvasState.selection.location;
+        var selectedEmergency = canvasState.selection.emergency;
+
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_start = Date.now();
+        } else if ($scope.emergency_state == "UPDATE") {
+            selectedEmergency.emergency_last_update = Date.now();
+        } else if ($scope.emergency_state == "END") {
+            selectedEmergency.emergency_last_update = Date.now();
+            selectedEmergency.emergency_end = selectedEmergency.emergency_last_update;
+        }
+
+        // Put updates
+        if (selectedEmergency.emergency_id == "") {
+            selectedEmergency.emergency_id = null;
+            $http.post('/emergencies', selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        } else {
+            $http.put('/emergencies/id/' + selectedEmergency.emergency_id, selectedEmergency).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }
+    }
 
     /**
      * Function to update backend database for beacons
@@ -157,13 +249,39 @@ maintainLocations.controller('locationController', ['$scope', '$http', function 
     $scope.updateBeaconData = function () {
         canvasState.selection.sensor.name = document.getElementById("beacon_name").value
     };
+
+    $scope.init = function() {
+        var parms = $location.search();
+
+        if ($scope.floor == undefined) {
+            if (parms.floor != undefined) {
+                $scope.floor = parms.floor;
+            } else {
+                $scope.floor = 2;
+            }
+        }
+
+        floor = $scope.floor;
+        initDrawing(floor);
+
+        $scope.loadData()
+    }
+
+
+    $scope.init();
 }]);
 
 function initDrawing(currentFloor) {
     var c = document.getElementById("myCanvas");
-    var img = document.getElementById("mapImage");
+    var img = document.getElementById("mapImage" + currentFloor);
 
-    canvasState = new CanvasState(c, img, currentFloor);
+    if (canvasState == undefined) {
+        canvasState = new CanvasState(c, img, currentFloor);
+    } else {
+        canvasState.image = img;
+        canvasState.floor = currentFloor;
+    }
+
 
 }
 
@@ -173,6 +291,7 @@ function loadData(currentFloor) {
     for (var i in locations) {
 
         canvasState.addShape(new LocationShape(locations[i], 5, 5, "#000000"));
+        canvasState.shapes[canvasState.shapes.length-1].emergency = emergencies[i];
     }
 
     for (var i = 0; i < sensors.length; i++) {
