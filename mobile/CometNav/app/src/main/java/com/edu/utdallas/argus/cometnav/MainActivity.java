@@ -1,12 +1,16 @@
 package com.edu.utdallas.argus.cometnav;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -28,9 +32,12 @@ import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
 
-
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +47,11 @@ public class MainActivity extends AppCompatActivity
     private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 100;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 200;
     private static final int BLUETOOTH_ENABLE_REQUEST_ID = 300;
+
+    private static final String TAG = MainActivity.class.toString();
+
+    private BroadcastReceiver emergencyReceiver;
+    private List<Emergency> emergencyList = new ArrayList<>();
 
     private boolean hasLocationPermissions = false;
     private Navigation navigation = Navigation.getInstance();
@@ -51,6 +63,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //ButterKnife.inject(this);
+
+        IntentFilter filterz = new IntentFilter();
+        filterz.addAction("EMERGENCY_ACTION");
+        emergencyReceiver = new EmergencyBroadcastReceiver();
+        registerReceiver(emergencyReceiver, filterz);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -257,5 +274,45 @@ public class MainActivity extends AppCompatActivity
         nMgr.cancel(1);
 
 
+    }
+
+    private class EmergencyBroadcastReceiver extends BroadcastReceiver {
+        private void sendAlert(Context context, Emergency e){
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage("There is a(n) " + e.getType() + " emergency! Do you wish to navigate to safety?");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Grab the new/updated emergencies
+            emergencyList = intent.getParcelableArrayListExtra("EMERGENCY_LIST");
+
+            Log.d(TAG, "List of emergencies received from broadcast: " + emergencyList.toString());
+
+            //Send out an alert for all the emergencies in the list
+            for (Emergency e : emergencyList){
+                sendAlert(context, e);
+            }
+
+        }
     }
 }
