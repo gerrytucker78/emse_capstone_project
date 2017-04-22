@@ -42,8 +42,8 @@ import static android.graphics.BitmapFactory.*;
 public class NavigationActivity extends AppCompatActivity implements ILocationClient
 {
     private BroadcastReceiver receiver;
-    private PhotoView photoView;
-    //private CometNavView photoView;
+    //private PhotoView photoView;
+    private CometNavView photoView;
     private DownloadImageTask task;
     private Canvas locDot;
     private Canvas paths;
@@ -146,11 +146,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     {
         if (backgroundCanvas != null)
             backgroundCanvas.drawBitmap(immutableMap, 0, 0, paint);
-         drawCurrentLoc();
+        drawCurrentLoc();
         drawBeacons();
         drawPath();
         //Forces a redraw
-        photoView.invalidate();
+        //photoView.invalidate();
     }
 
     @Override
@@ -162,7 +162,9 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 52);
         this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
 
-        photoView = (PhotoView) findViewById(R.id.photo_view);
+        CometNavView.setNavActivity(this);
+
+        photoView = (CometNavView) findViewById(R.id.photo_view);
         task = new DownloadImageTask(photoView);
         task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
 
@@ -208,14 +210,20 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                     }
                     pathArrayCounter+=2;
                 }
-                updateDraw();
+                //updateDraw();
+                photoView.invalidate();
+
             }
         });
 
+        /**
+         * @// TODO: 4/16/2017 Need to integrate with list selection
+         */
         navigation.beginNavigation(this.startLoc, this.endLoc);
     }
 
     private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
+
         this.cnBeaconList = new ArrayList<>();
         Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
         //Log.d("Navigation", "Nav beacons: " + navigation.getBeaconMap().toString());
@@ -291,20 +299,38 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         return dest;
     }
 
-    public class CometNavView extends PhotoView {
-        public CometNavView(Context context, AttributeSet attrs) {
+    public static class CometNavView extends PhotoView {
+
+        private static NavigationActivity navActivity;
+        public CometNavView(Context context) {
+            super(context);
+        }
+
+        public CometNavView(android.content.Context context, android.util.AttributeSet attrs) {
             super(context, attrs);
+        }
+
+        public CometNavView(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
+
+        public static void setNavActivity(NavigationActivity activity)
+        {
+            navActivity = activity;
         }
 
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            Log.d("Test", "Draw works!");
+            //Log.d("Test", "Draw works!");
+            if (navActivity != null)
+                navActivity.updateDraw();
         }
     }
 
     private class BeaconBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             // Update Beacons
             updateNavBeaconList(intent.getParcelableArrayListExtra("BEACON_LIST"));
 
@@ -345,8 +371,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             }
 
         }
-
-}
+    }
 
     private class PhotoTapListener implements OnPhotoTapListener {
 
@@ -365,7 +390,9 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         //This resizes the current location dot
         public void onScaleChange(float scaleFactor, float focusX, float focusY) {
             cumulScaleFactor = cumulScaleFactor * scaleFactor;
-            updateDraw();
+            //updateDraw();
+            photoView.invalidate();
+
         }
     }
 
@@ -426,12 +453,12 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
                 bmImage.setImageBitmap(mutableMap);
 
-                updateDraw();
+                //updateDraw();
+                photoView.invalidate();
+
             }
             else
                 Log.d("Navigation", "bmImage is null?");
         }
     }
-
-
 }
