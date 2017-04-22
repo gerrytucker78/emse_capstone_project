@@ -179,6 +179,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Manage Account Clicked", Toast.LENGTH_LONG).show();
             return true;
+        } else if (id == R.id.nav_navigation__to) {
+            Intent intent = new Intent(this, Navigate_To.class);
+            this.startActivity(intent);
+            return true;
 
         /*} else if (id == R.id.fab) {
             Intent intent = new Intent(this,FindARoomMapsActivity.class);

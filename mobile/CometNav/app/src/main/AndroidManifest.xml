@@ -13,7 +13,7 @@
     <!-- App has to have access to Bluetooth in order to find the Beacons -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -35,8 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".FindARoomMapsActivity"
             android:label="@string/title_activity_find_aroom_maps">
@@ -52,13 +50,17 @@
 
         <service
             android:name=".dataservices.beacons.BeaconManagerService"
-            android:label="BeaconManagerService"></service>
-
+            android:label="BeaconManagerService" />
         <service
             android:name=".dataservices.emergencies.EmergencyService"
-            android:label="EmergencyService"></service>
+            android:label="EmergencyService" />
 
-        <activity android:name=".NavigationActivity"></activity>
+        <activity android:name=".NavigationActivity" />
+        <activity
+            android:name=".Navigate_To"
+            android:label="@string/title_activity_navigate__to"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

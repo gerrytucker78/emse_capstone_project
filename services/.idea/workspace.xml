@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ea68cf6e-fdb2-4829-ab3c-0e4cb50d3f2e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/maintainLocations.js" afterPath="$PROJECT_DIR$/controllers/maintainLocations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/maintainEmergencies.ejs" afterPath="$PROJECT_DIR$/views/maintainEmergencies.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/maintainLocations.ejs" afterPath="$PROJECT_DIR$/views/maintainLocations.ejs" />
     </list>
     <ignored path="services.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,31 +33,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="maintainLocations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+            <state relative-caret-position="1530">
+              <caret line="156" column="34" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/emergencies.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="81" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/locations.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="80" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="80" />
+            <state relative-caret-position="30">
+              <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,22 +56,9 @@
       <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3105">
-              <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="211" selection-end-column="7" />
+            <state relative-caret-position="212">
+              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="166" selection-end-column="3" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ecss2_map.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/data/ecss2_map.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="409" column="9" selection-start-line="409" selection-start-column="9" selection-end-line="409" selection-end-column="9" />
-              <folding>
-                <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#map#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -90,31 +66,29 @@
       <file leaf-file-name="shapes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
+            <state relative-caret-position="-1176">
+              <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#345#590#0" expanded="false" />
                 <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
                 <element signature="e#1582#1654#0" expanded="false" />
-                <element signature="e#3305#3353#0" expanded="false" />
-                <element signature="e#3487#3592#0" expanded="false" />
-                <element signature="e#3936#4185#0" expanded="false" />
-                <element signature="e#4188#4431#0" expanded="false" />
+                <element signature="e#3572#3620#0" expanded="false" />
+                <element signature="e#3754#3859#0" expanded="false" />
+                <element signature="e#4203#4452#0" expanded="false" />
+                <element signature="e#4455#4698#0" expanded="false" />
                 <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
                 <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
-                <element signature="e#5225#5297#0" expanded="false" />
-                <element signature="e#5339#5411#0" expanded="false" />
-                <element signature="e#5414#5460#0" expanded="false" />
-                <element signature="e#5505#5589#0" expanded="false" />
-                <element signature="e#5592#5697#0" expanded="false" />
-                <element signature="e#6038#6285#0" expanded="false" />
+                <element signature="e#5492#5564#0" expanded="false" />
+                <element signature="e#5787#5833#0" expanded="false" />
+                <element signature="e#5965#6070#0" expanded="false" />
+                <element signature="e#6411#6658#0" expanded="false" />
                 <element signature="n#!!doc;n#PathShape#0" expanded="false" />
-                <element signature="e#7257#7329#0" expanded="false" />
-                <element signature="e#7529#7575#0" expanded="false" />
-                <element signature="e#7894#7999#0" expanded="false" />
-                <element signature="e#8472#8717#0" expanded="false" />
-                <element signature="e#9542#9791#0" expanded="false" />
+                <element signature="e#7630#7702#0" expanded="false" />
+                <element signature="e#8065#8111#0" expanded="false" />
+                <element signature="e#8430#8535#0" expanded="false" />
+                <element signature="e#9008#9253#0" expanded="false" />
+                <element signature="e#10078#10327#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -123,8 +97,28 @@
       <file leaf-file-name="maintainEmergencies.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/maintainEmergencies.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+            <state relative-caret-position="583">
+              <caret line="64" column="61" selection-start-line="64" selection-start-column="61" selection-end-line="64" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="maintainLocations.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sensors.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="885">
+              <caret line="59" column="37" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -133,8 +127,8 @@
       <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
+            <state relative-caret-position="271">
+              <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -143,8 +137,8 @@
       <file leaf-file-name="locations.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/locations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
-              <caret line="144" column="1" selection-start-line="144" selection-start-column="1" selection-end-line="151" selection-end-column="0" />
+            <state relative-caret-position="197">
+              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="136" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -153,8 +147,8 @@
       <file leaf-file-name="emergencies.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
+            <state relative-caret-position="392">
+              <caret line="70" column="88" selection-start-line="70" selection-start-column="88" selection-end-line="70" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -200,14 +194,14 @@
         <option value="$PROJECT_DIR$/tests/sensors.js" />
         <option value="$PROJECT_DIR$/routes/locations.js" />
         <option value="$PROJECT_DIR$/tests/locations.js" />
-        <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
         <option value="$PROJECT_DIR$/routes/admin.js" />
-        <option value="$PROJECT_DIR$/tests/emergencies.js" />
-        <option value="$PROJECT_DIR$/routes/emergencies.js" />
         <option value="$PROJECT_DIR$/models/emergencies.js" />
-        <option value="$PROJECT_DIR$/controllers/shapes.js" />
         <option value="$PROJECT_DIR$/views/maintainEmergencies.ejs" />
         <option value="$PROJECT_DIR$/controllers/maintainLocations.js" />
+        <option value="$PROJECT_DIR$/routes/emergencies.js" />
+        <option value="$PROJECT_DIR$/tests/emergencies.js" />
+        <option value="$PROJECT_DIR$/controllers/shapes.js" />
+        <option value="$PROJECT_DIR$/views/maintainLocations.ejs" />
       </list>
     </option>
   </component>
@@ -319,35 +313,39 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -999,14 +997,11 @@
       <workItem from="1492479621582" duration="483000" />
       <workItem from="1492556558327" duration="8514000" />
       <workItem from="1492613952398" duration="8459000" />
-      <workItem from="1492873622533" duration="1549000" />
+      <workItem from="1492873622533" duration="4627000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Emergencies - 2017.04.19 at 20h 24m 26s.xml">
-      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="Emergencies - 2017.04.19 at 20h 25m 25s.xml">
       <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -1025,6 +1020,9 @@
     <history-entry file="Emergencies - 2017.04.19 at 20h 53m 47s.xml">
       <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="Emergencies - 2017.04.22 at 11h 11m 12s.xml">
+      <configuration name="Emergencies" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
     <history-entry file="Locations - 2017.04.18 at 18h 32m 44s.xml">
       <configuration name="Locations" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -1036,7 +1034,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130808000" />
+    <option name="totallyTimeSpent" value="133886000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1125,7 +1123,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="82" />
+      <option name="time" value="83" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="mocha-javascript-test-runner">
@@ -1341,13 +1339,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/sensors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1377,13 +1368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/admin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1400,14 +1384,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-435">
-          <caret line="47" column="78" selection-start-line="47" selection-start-column="78" selection-end-line="47" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/data/ecss2_map.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1419,42 +1395,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3105">
-          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="211" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/locations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="144" column="1" selection-start-line="144" selection-start-column="1" selection-end-line="151" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="7" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/locations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="80" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="166" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -1467,49 +1419,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#345#590#0" expanded="false" />
-            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
-            <element signature="e#1582#1654#0" expanded="false" />
-            <element signature="e#3305#3353#0" expanded="false" />
-            <element signature="e#3487#3592#0" expanded="false" />
-            <element signature="e#3936#4185#0" expanded="false" />
-            <element signature="e#4188#4431#0" expanded="false" />
-            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
-            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
-            <element signature="e#5225#5297#0" expanded="false" />
-            <element signature="e#5339#5411#0" expanded="false" />
-            <element signature="e#5414#5460#0" expanded="false" />
-            <element signature="e#5505#5589#0" expanded="false" />
-            <element signature="e#5592#5697#0" expanded="false" />
-            <element signature="e#6038#6285#0" expanded="false" />
-            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
-            <element signature="e#7257#7329#0" expanded="false" />
-            <element signature="e#7529#7575#0" expanded="false" />
-            <element signature="e#7894#7999#0" expanded="false" />
-            <element signature="e#8472#8717#0" expanded="false" />
-            <element signature="e#9542#9791#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/emergencies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="70" column="88" selection-start-line="70" selection-start-column="88" selection-end-line="70" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="136" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/emergencies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/data/sensors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="37" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/maintainEmergencies.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+        <state relative-caret-position="583">
+          <caret line="64" column="61" selection-start-line="64" selection-start-column="61" selection-end-line="64" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/maintainLocations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        <state relative-caret-position="1530">
+          <caret line="156" column="34" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/shapes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1176">
+          <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#345#590#0" expanded="false" />
+            <element signature="n#!!doc;n#LocationShape#0" expanded="false" />
+            <element signature="e#1582#1654#0" expanded="false" />
+            <element signature="e#3572#3620#0" expanded="false" />
+            <element signature="e#3754#3859#0" expanded="false" />
+            <element signature="e#4203#4452#0" expanded="false" />
+            <element signature="e#4455#4698#0" expanded="false" />
+            <element signature="n#!!doc;n#BeaconShape#0" expanded="false" />
+            <element signature="n#!!block;n#BeaconShape#0" expanded="false" />
+            <element signature="e#5492#5564#0" expanded="false" />
+            <element signature="e#5787#5833#0" expanded="false" />
+            <element signature="e#5965#6070#0" expanded="false" />
+            <element signature="e#6411#6658#0" expanded="false" />
+            <element signature="n#!!doc;n#PathShape#0" expanded="false" />
+            <element signature="e#7630#7702#0" expanded="false" />
+            <element signature="e#8065#8111#0" expanded="false" />
+            <element signature="e#8430#8535#0" expanded="false" />
+            <element signature="e#9008#9253#0" expanded="false" />
+            <element signature="e#10078#10327#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/maintainLocations.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
           <folding />
         </state>
       </provider>

@@ -68,6 +68,12 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private Navigation navigation = Navigation.getInstance();
     private List<CometNavBeacon> cnBeaconList = new ArrayList<>();
 
+    private int startLoc = 0;
+    private int endLoc = 0;
+
+    public static final String START_LOCATION_ID = "START_LOCATION_ID";
+    public static final String END_LOCATION_ID = "END_LOCATION_ID";
+
     protected void onDestroy() {
         if (receiver != null) {
             unregisterReceiver(receiver);
@@ -131,6 +137,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             float scaleVal = (1 / cumulScaleFactor);
             beacons.scale(scaleVal, scaleVal);
             beacons.drawCircle(0, 0, 5, beaconPaint);
+            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistance()),(float)(0), (float)(0), beaconPaint);
             beacons.restore();
         }
     }
@@ -151,6 +158,9 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+        Intent origIntent = getIntent();
+        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 0);
+        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 0);
 
         CometNavView.setNavActivity(this);
 
@@ -209,7 +219,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         /**
          * @// TODO: 4/16/2017 Need to integrate with list selection
          */
-        navigation.beginNavigation(52, 45);
+        navigation.beginNavigation(this.startLoc, this.endLoc);
     }
 
     private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
@@ -451,6 +461,4 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 Log.d("Navigation", "bmImage is null?");
         }
     }
-
-
 }
