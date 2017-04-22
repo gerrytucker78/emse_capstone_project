@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -63,7 +64,6 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
     private static int noBeaconCount = 0;
 
     // Score contains that number of times a beacon is seen in the iterations
-    private static Map<Beacon, Integer> beaconScore = new HashMap<Beacon, Integer>();
 
     // Sum of distances for each iteration by beacon.  This will be used after all iterations
     // are complete to determine average distance
@@ -76,7 +76,6 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
     private BeaconManager beaconManager;
 
     // Running list of beacons that has been last broadcast
-    private static Set<CometNavBeacon> beaconsList=new HashSet<CometNavBeacon>();
 
     /**
      * Default Constructor
@@ -127,96 +126,202 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
             beaconManager.addRangeNotifier(new RangeNotifier() {
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                    Log.i(TAG,"Range Beacons in Region");
-
-                    /**
-                     * Simple algorithm for now to determine total # of counts we have seen the sensor
-                     */
-                    for (Beacon b : beacons) {
-                        Object value = beaconScore.get(b);
-                        int currentScore;
-
-                        if (value == null) {
-                            currentScore = 0;
-                        } else {
-                            currentScore = (Integer)value;
-                        }
-                        currentScore++;
-                        beaconScore.put(b, currentScore);
-
-                        // Build up average distance
-                        Object distValue = beaconDistance.get(b);
-                        double distTotal= 0;
-
-                        if (distValue == null) {
-                            distTotal = b.getDistance();
-                        } else {
-                            distTotal = distTotal + b.getDistance();
-                        }
-
-                        beaconDistance.put(b, distTotal);
+                    //If we had beacons previously and don't this time, throw out one poll. This helps
+                    //guard against erroneous full beacon loss
+                    if (previousCount != 0 && beacons.size() == 0) {
+                        previousCount = 0;
+                        return;
                     }
+                    previousCount = beacons.size();
+                    //List<CometNavBeacon> beaconArrayList = averageBeacons(beacons);
+                    List<CometNavBeacon> beaconArrayList = new ArrayList<CometNavBeacon>(thresholdBeacons(beacons));
+                    //ArrayList<CometNavBeacon> cnBeacons = new ArrayList<CometNavBeacon>();
+//                    for (Beacon b : beacons)
+//                    {
+//                        CometNavBeacon cnBeacon = new CometNavBeacon(b);
+//                        beaconMap.put(cnBeacon.getName(), cnBeacon);
+//                    }
+                    //Log.d(TAG, "Detected beacons! " + beaconMap.values().toString());
+                    // Broadcast accepted beacons as CometNavBeacons
 
-                    // Check to see if total number of verification iterations has been hit, if so
-                    // then proceed with filtering and broadcast logic.
-                    if (beaconVerifyCount == BEACON_VERIFY_ITERATIONS) {
-                        Log.d(TAG, "Beacon Verification Iterations Hit");
-                        if (beaconScore.size() > 0 || (beaconScore.size() == 0 && noBeaconCount == NO_BEACON_VERIFY_ITERATIONS)) {
-                            Log.d(TAG, "Clearing beacons");
-
-                            // Clear out previous broadcast of beacons
-                            beaconsList.clear();
-
-                            // Loop through beacon scores for the beacons seen and determine if they stay in
-                            for (Beacon b : beaconScore.keySet()) {
-                                Integer count = beaconScore.get(b);
-
-                                if (count >= Math.round(BEACON_VERIFY_ITERATIONS * BEACON_VERIFY_THRESHOLD)) {
-
-                                    /**
-                                     * Select the Beacon and use it's average distance
-                                     */
-                                    CometNavBeacon cnBeacon = new CometNavBeacon(b);
-                                    cnBeacon.setDistance(beaconDistance.get(b) / count);
-                                    if (cnBeacon.getDistance() <= BEACON_DISTANCE_THRESHOLD) {
-                                        beaconsList.add(cnBeacon);
-                                        Log.i(TAG, "Beacon " + b.getId1() + " made the cut: " + count + " with an average distance of " + cnBeacon.getDistance());
-                                    } else {
-                                        Log.i(TAG, "Beacon " + b.getId1() + " DID NOT MAKE the cut: " + count + " due to an average distance of " + cnBeacon.getDistance());
-                                    }
-
-
-                                } else {
-                                    Log.i(TAG, "Beacon " + b.getId1() + " DID NOT MAKE the cut: " + count + " with an average distance of " + beaconDistance.get(b) / count);
-                                }
-                            }
-
-                            // Broadcast accepted beacons as CometNavBeacons
-                            List<CometNavBeacon> beaconArrayList = new ArrayList<CometNavBeacon>(beaconsList);
-                            Intent localIntent = new Intent("BEACON_ACTION");
-                            localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
-                            sendBroadcast(localIntent);
-
-                            // Reset beacon variables
-                            beaconScore.clear();
-                            noBeaconCount = 0;
-                            beaconVerifyCount = 1;
-                        } else {
-                            Log.d(TAG, "No Beacons Found and Iterations NOT hit");
-
-                            noBeaconCount++;
-                        }
-                    } else {
-                        Log.d(TAG, "Beacon Verification Iterations NOT Hit");
-
-                        beaconVerifyCount++;
-                        Log.i(TAG, "Still checking " + beaconVerifyCount);
-                    }
+                    Intent localIntent = new Intent("BEACON_ACTION");
+                    localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
+                    sendBroadcast(localIntent);
+                    //beaconMap.clear();
                 }
             });
         } catch (Exception e) {
             Log.e(TAG,"Exception Error when ",e);
         }
+    }
+
+    //Used for Averaging
+    private static Map<Beacon, Integer> beaconScore = new HashMap<Beacon, Integer>();
+    //Used for averaging
+    private static Set<CometNavBeacon> beaconList = new HashSet<CometNavBeacon>();
+
+    private void averageBeacons(Collection<Beacon> beacons)
+    {
+        Log.i(TAG,"Range Beacons in Region");
+        /**
+          * Simple algorithm for now to determine total # of counts we have seen the sensor
+          */
+        for (Beacon b : beacons) {
+            Object value = beaconScore.get(b);
+            int currentScore;
+
+            if (value == null) {
+                currentScore = 0;
+            } else {
+                currentScore = (Integer)value;
+            }
+            currentScore++;
+            beaconScore.put(b, currentScore);
+
+            // Build up average distance
+            Object distValue = beaconDistance.get(b);
+            double distTotal= 0;
+
+            if (distValue == null) {
+                distTotal = b.getDistance();
+            } else {
+                distTotal = distTotal + b.getDistance();
+            }
+
+            beaconDistance.put(b, distTotal);
+        }
+
+        if (beaconVerifyCount == BEACON_VERIFY_ITERATIONS) {
+            Intent localIntent = new Intent("BEACON_ACTION");
+            beaconList.clear(); //Empty all the beacons, that way we don't list beacons that we can't see anymore
+
+            /**
+              * Loop through beacon scores for the beacons seen and determine if they stay in
+              */
+            for (Beacon b : beaconScore.keySet()) {
+                Integer count = beaconScore.get(b);
+
+                if (count >= Math.round(BEACON_VERIFY_ITERATIONS * BEACON_VERIFY_THRESHOLD) ) {
+
+                    /**
+                      * Select the Beacon and use it's average distance
+                      */
+                    CometNavBeacon cnBeacon = new CometNavBeacon(b);
+                    cnBeacon.setDistance(beaconDistance.get(b)/count);
+
+                    beaconList.add(cnBeacon);
+                    Log.i(TAG,"Beacon " + b.getId1() + " made the cut: " + count + " with an average distance of " + cnBeacon.getDistance());
+
+                } else {
+                    Log.i(TAG,"Beacon " + b.getId1()+ " DID NOT MAKE the cut: " + count + " with an average distance of " + beaconDistance.get(b)/count);
+                }
+            }
+
+            beaconScore.clear();
+
+            List<CometNavBeacon> beaconArrayList = new ArrayList<CometNavBeacon>(beaconList);
+
+            localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
+            sendBroadcast(localIntent);
+            beaconVerifyCount = 1;
+        } else {
+            beaconVerifyCount++;
+            Log.i(TAG, "Still checking " + beaconVerifyCount);
+        }
+    }
+
+    //Used for thresholding. beaconMap contains the map of beacon name to the beacon object
+    private static HashMap<Integer, CometNavBeacon> beaconMap = new HashMap<Integer, CometNavBeacon>();
+    //Used for thresholding. Stores the counts of how many times a beacon has been seen in the last
+    //BEACON_THRESHOLD_COUNT iterations.
+    private static Map<Integer, Integer> beaconCount = new HashMap<Integer, Integer>();
+
+    private static final int BEACON_GAIN_THRESHOLD = 3;
+    private static final int BEACON_LOSS_THRESHOLD = 4;
+
+    /**
+     * The previous count of beacons. Used to throw out false scans where no beacon is returned.
+     */
+    private int previousCount = 0;
+
+    private Collection<CometNavBeacon> thresholdBeacons(Collection<Beacon> beacons)
+    {
+        HashSet<Integer> foundBeacons = new HashSet<Integer>();
+        for (Beacon b : beacons)
+        {
+            CometNavBeacon cnBeacon = new CometNavBeacon(b);
+            //This beacon has passed the gain threshold and is considered a "found" beacon
+            if (beaconMap.containsKey(cnBeacon.getName()))
+            {
+                //update the distance
+                beaconMap.get(cnBeacon.getName()).setDistance(cnBeacon.getDistance());
+                //If the beacon is in our list, increment the count
+                int count = beaconCount.get(cnBeacon.getName());
+                count++;
+                if (count >= BEACON_LOSS_THRESHOLD)
+                    count = BEACON_LOSS_THRESHOLD;
+                beaconCount.put(cnBeacon.getName(), count);
+                foundBeacons.add(cnBeacon.getName());
+                Log.d(TAG, "1Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+            }
+            else
+            {
+                //If our beacon isn't in the list, see if we've seen it before.
+                if (beaconCount.get(cnBeacon.getName()) != null)
+                {
+                    //increment the score
+                    int count = beaconCount.get(cnBeacon.getName());
+                    count++;
+                    if (count >= BEACON_GAIN_THRESHOLD)
+                        count = BEACON_GAIN_THRESHOLD;
+                    Log.d(TAG, "2Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+                    if (count == BEACON_GAIN_THRESHOLD)
+                    {
+                        //If we've seen this beacon threshold_count times in a row, add to beaconList
+                        if (beaconMap.put(cnBeacon.getName(), cnBeacon) == null) {
+                            foundBeacons.add(cnBeacon.getName());
+                            Log.d(TAG, "Adding beacon: " + cnBeacon.getName());
+                        }
+                    }
+                    beaconCount.put(cnBeacon.getName(), count);
+                }
+                else
+                {
+                    //First time seeing it, add beacon
+                    beaconCount.put(cnBeacon.getName(), 1);
+                    Log.d(TAG, "3Beacon count: " + cnBeacon.getName() + " " + 1 + " " + cnBeacon.getDistance());
+                }
+            }
+        }
+        HashSet<Integer> deleteBeacons = new HashSet<Integer>();
+        for (CometNavBeacon cnBeacon : beaconMap.values())
+        {
+            if (!foundBeacons.contains(cnBeacon.getName()))
+            {
+                //We didn't see this beacon this time around - decrement count
+                int count = beaconCount.get(cnBeacon.getName());
+                count--;
+                if (count <= 0)
+                    count = 0;
+                Log.d(TAG, "4Beacon count: " + cnBeacon.getName() + " " + count + " " + cnBeacon.getDistance());
+                if (count == 0)
+                {
+                    //Missed THRESHOLD_COUNT times in a row - remove from list
+                    deleteBeacons.add(cnBeacon.getName());
+                    beaconCount.remove(cnBeacon.getName());
+                    Log.d(TAG, "Removed from list: " + cnBeacon.getName());
+                }
+                beaconCount.put(cnBeacon.getName(), count);
+            }
+        }
+        //Can't delete in the for loop as it throws a concurrent modification
+        //exception
+        for (int beaconId : deleteBeacons)
+        {
+            beaconMap.remove(beaconId);
+        }
+
+        return beaconMap.values();
     }
 
     @Override
@@ -235,8 +340,16 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.URI_BEACON_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT));
         beaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
+//        try {
+//            beaconManager.setForegroundScanPeriod(500l); // 500 mS
+//            beaconManager.setForegroundBetweenScanPeriod(0l); // 0ms
+//            beaconManager.updateScanPeriods();
+//        }
+//        catch (RemoteException e) {
+//            Log.e(TAG, "Cannot talk to service");
+//        }
         //beaconManager.setRssiFilterImplClass(RunningAverageRssiFilter.class);
-        //RunningAverageRssiFilter.setSampleExpirationMilliseconds(2000l);
+        //RunningAverageRssiFilter.setSampleExpirationMilliseconds(5000l);
         beaconManager.bind(this);
     }
 
