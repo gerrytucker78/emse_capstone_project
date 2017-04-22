@@ -133,21 +133,12 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                         return;
                     }
                     previousCount = beacons.size();
-                    //List<CometNavBeacon> beaconArrayList = averageBeacons(beacons);
+
                     List<CometNavBeacon> beaconArrayList = new ArrayList<CometNavBeacon>(thresholdBeacons(beacons));
-                    //ArrayList<CometNavBeacon> cnBeacons = new ArrayList<CometNavBeacon>();
-//                    for (Beacon b : beacons)
-//                    {
-//                        CometNavBeacon cnBeacon = new CometNavBeacon(b);
-//                        beaconMap.put(cnBeacon.getName(), cnBeacon);
-//                    }
-                    //Log.d(TAG, "Detected beacons! " + beaconMap.values().toString());
-                    // Broadcast accepted beacons as CometNavBeacons
 
                     Intent localIntent = new Intent("BEACON_ACTION");
                     localIntent.putParcelableArrayListExtra("BEACON_LIST", (ArrayList<? extends Parcelable>) beaconArrayList);
                     sendBroadcast(localIntent);
-                    //beaconMap.clear();
                 }
             });
         } catch (Exception e) {
