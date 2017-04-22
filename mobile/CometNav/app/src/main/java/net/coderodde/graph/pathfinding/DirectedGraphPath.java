@@ -70,6 +70,14 @@ public final class DirectedGraphPath {
         return sb.append(']').toString();
     }
 
+    public int[] toArray()
+    {
+        int[] retArray = new int[path.size()];
+        for(int i = 0; i < path.size(); i++)
+            retArray[i] = path.get(i);
+        return retArray;
+    }
+
     private void checkNotEmpty(List<Integer> path) {
         if (path.isEmpty()) {
             throw new IllegalArgumentException(

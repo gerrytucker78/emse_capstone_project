@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.navigation;
 
 import android.util.Log;
 
@@ -12,6 +12,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.SingularMatrixException;
 
+import java.util.Arrays;
+
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -20,9 +22,6 @@ import static junit.framework.Assert.assertEquals;
 
 public class LocationFinder
 {
-    private static LevenbergMarquardtOptimizer optimizer = new LevenbergMarquardtOptimizer();
-
-
     /**
      * Given a set of positions and distances, return the maximum likelihood point estimate of where the user is.
      * @param positions Positions. For a 2d plane need at least 3, for 3d 4.
@@ -33,11 +32,28 @@ public class LocationFinder
     {
         //double[][] positions = new double[][] { { 5.0, -6.0 }, { 13.0, -15.0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
         //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
+        //Log.d("Navigation", Arrays.deepToString(positions));
 
-        NonLinearLeastSquaresSolver solver =
-                new NonLinearLeastSquaresSolver
-                        (new TrilaterationFunction(positions, distances), optimizer);
-        LeastSquaresOptimizer.Optimum optimum = solver.solve();
+        TrilaterationFunction trilaterationFunction = new TrilaterationFunction(positions, distances);
+
+        NonLinearLeastSquaresSolver nlSolver = new NonLinearLeastSquaresSolver(trilaterationFunction, new LevenbergMarquardtOptimizer());
+
+        LeastSquaresOptimizer.Optimum optimum = null;
+        try {
+             optimum = nlSolver.solve();
+        }
+        catch (org.apache.commons.math3.exception.TooManyEvaluationsException e)
+        {
+            Log.d("Location", e.toString());
+            //If nonlinear fails, try a linear solution
+            LinearLeastSquaresSolver lSolver = new LinearLeastSquaresSolver(trilaterationFunction);
+
+            RealVector linearAnswer = lSolver.solve();
+            return linearAnswer.toArray();
+        }
+        //Log.d("Location", "Linear solver: " + linearAnswer.toString());
+        //Log.d("Location", "NonLinear solver: " + optimum.getPoint().toString());
+
 
         // the answer
         //double[] centroid = optimum.getPoint().toArray();
@@ -45,14 +61,18 @@ public class LocationFinder
         // error and geometry information; may throw SingularMatrixException depending the threshold argument provided
         //RealVector standardDeviation = optimum.getSigma(0);
         //RealMatrix covarianceMatrix = optimum.getCovariances(0);
-
-        return optimum.getPoint().toArray();
+        //return linearAnswer.toArray();
+        if (optimum != null)
+            return optimum.getPoint().toArray();
+        return new double[2];
     }
 
     public static RealMatrix getLocationMatrix(double[][] positions, double[] distances)
     {
         //double[][] positions = new double[][] { { 5.0, -6.0 }, { 13.0, -15.0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
         //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
+
+        LevenbergMarquardtOptimizer optimizer = new LevenbergMarquardtOptimizer();
 
         NonLinearLeastSquaresSolver solver =
                 new NonLinearLeastSquaresSolver

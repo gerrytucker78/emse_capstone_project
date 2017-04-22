@@ -1,60 +1,46 @@
-<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.edu.utdallas.argus.cometnav.FindARoomMapsActivity" />-->
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.edu.utdallas.argus.cometnav.FindARoomMapsActivity">
+    tools:context="com.edu.utdallas.argus.cometnav.FindARoomMapsActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp"
+    android:scaleType="centerCrop">
 
-    <fragment
-        android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
+
+
+    <!--<ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:scaleType="centerCrop"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+-->
+    <!---->  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/rootRL"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="fitCenter"
+          android:background="@drawable/ecss">
+      </RelativeLayout>
 
-    <TextView
-        android:id="@+id/latlongLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/searchView1"
+    <!--   <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/locator"
+           android:scaleType="center"
+           /> -->
 
-        android:gravity="bottom"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:textColor="#ffffffff" />
-    <!--android:background="#ff058fff"-->
-    <EditText
-        android:id="@+id/searchView1"
-        android:layout_width="250dp"
-        android:layout_height="34dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="14dp"
-        android:background="@android:color/white"
-        android:hint="Search Location"
-        android:textColor="@android:color/black"></EditText>
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="35dp"
-        android:layout_height="32dp"
-        android:layout_alignBaseline="@+id/searchView1"
-        android:layout_alignBottom="@+id/searchView1"
-        android:layout_alignRight="@+id/searchView1"
-        android:background="@drawable/g_search_btn" />
-</RelativeLayout>
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/photo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</android.support.v7.widget.LinearLayoutCompat>
+
+    <!--app:srcCompat="@drawable/common_full_open_on_phone"-->

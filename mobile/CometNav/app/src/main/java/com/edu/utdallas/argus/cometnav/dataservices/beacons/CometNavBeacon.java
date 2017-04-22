@@ -1,5 +1,7 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.dataservices.beacons;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.altbeacon.beacon.Beacon;
@@ -10,7 +12,7 @@ import org.json.JSONObject;
  * Created by Daniel on 4/14/2017.
  */
 
-public class CometNavBeacon {
+public class CometNavBeacon implements Parcelable {
 
     private int name = 0;
     private int floor = 0;
@@ -32,18 +34,15 @@ public class CometNavBeacon {
     {
         try
         {
-            Log.d("Navigation", beacon.getId1().toString());
-            Log.d("Navigation", beacon.getId1().toString().substring(STR_CUT_LENGTH + 2));
             //Add 2 to the cut length for the "0x"
-            Log.d("Navigation", Integer.toString(Integer.parseInt(beacon.getId1().toString().substring(STR_CUT_LENGTH + 2), 16)));
             setName(Integer.parseInt(beacon.getId1().toString().substring(STR_CUT_LENGTH + 2), 16));
-            Log.d("Navigation", name + " ");
-            //the beacon's distance is either in meters or feet, I think meters for now
+            //Log.d("Beacon", Integer.toString(getName()));
+            //the beacon's distance is in meters
             setDistance(beacon.getDistance() * PIXEL_METER_CONV_CONST);
         }
         catch (NumberFormatException e)
         {
-            Log.d("Navigation", "EXCEPTION in beacon construction: " + e.toString());
+            Log.d("Beacon", "EXCEPTION in beacon construction: " + e.toString());
         }
     }
 
@@ -55,26 +54,20 @@ public class CometNavBeacon {
     {
         try
         {
-            Log.d("Navigation", beaconJson.getString("name"));
-            Log.d("Navigation", beaconJson.getString("name").substring(STR_CUT_LENGTH));
-            Log.d("Navigation", Integer.toString(Integer.parseInt(beaconJson.getString("name").substring(STR_CUT_LENGTH), 16)));
             setName(Integer.parseInt(beaconJson.getString("name").substring(STR_CUT_LENGTH), 16));
-            Log.d("Navigation", name + " ");
             setFloor(beaconJson.getInt("floor"));
             setxLoc(beaconJson.getInt("pixel_loc_x"));
             setyLoc(beaconJson.getInt("pixel_loc_y"));
         }
-        catch (JSONException | NumberFormatException e)
+        catch (JSONException | NumberFormatException | StringIndexOutOfBoundsException e)
         {
             Log.d("Navigation", "EXCEPTION in beacon construction: " + e.toString());
         }
     }
 
-
-
     public String toString()
     {
-        return name + "," + floor + "," + xLoc + "," + yLoc;
+        return name + "," + distance + "," + floor + "," + xLoc + "," + yLoc;
     }
 
     public int getName() {
@@ -116,4 +109,49 @@ public class CometNavBeacon {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+    @Override
+    public boolean equals(final Object object) {
+        Log.d("Dan", "Hitting equals!");
+        boolean result = false;
+        if (object instanceof CometNavBeacon) {
+            CometNavBeacon otherBeacon = (CometNavBeacon) object;
+            result = (this.name == otherBeacon.name);
+        }
+        return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.name);
+        dest.writeInt(this.floor);
+        dest.writeInt(this.xLoc);
+        dest.writeInt(this.yLoc);
+        dest.writeDouble(this.distance);
+    }
+
+    protected CometNavBeacon(Parcel in) {
+        this.name = in.readInt();
+        this.floor = in.readInt();
+        this.xLoc = in.readInt();
+        this.yLoc = in.readInt();
+        this.distance = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<CometNavBeacon> CREATOR = new Parcelable.Creator<CometNavBeacon>() {
+        @Override
+        public CometNavBeacon createFromParcel(Parcel source) {
+            return new CometNavBeacon(source);
+        }
+
+        @Override
+        public CometNavBeacon[] newArray(int size) {
+            return new CometNavBeacon[size];
+        }
+    };
 }

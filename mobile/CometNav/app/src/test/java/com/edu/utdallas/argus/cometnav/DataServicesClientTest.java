@@ -1,5 +1,8 @@
 package com.edu.utdallas.argus.cometnav;
 
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyClient;
+
 import org.json.JSONArray;
 import org.junit.Test;
 
@@ -28,7 +31,7 @@ public void getEmergencies() throws Exception {
     @Test
     public void getAllLocations() throws Exception {
         //DataServices services = new DataServices();
-        //services.getLocations();
+        //services.getNavigableLocations();
         //assertEquals(4, 2 + 2);
     }
 

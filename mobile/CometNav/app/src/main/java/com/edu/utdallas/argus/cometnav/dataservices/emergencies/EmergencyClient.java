@@ -1,4 +1,4 @@
-package com.edu.utdallas.argus.cometnav;
+package com.edu.utdallas.argus.cometnav.dataservices.emergencies;
 
 import android.util.Log;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by gtucker on 4/11/2017.
  */
 
-public class EmergencyClient  implements EmergencyClientInterface {
+public class EmergencyClient  implements IEmergencyClient {
     private static final String TAG="EmergencyClient";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private Map<Integer,Emergency> emergenciesMap = new HashMap();

@@ -6,18 +6,32 @@ public class Point2DF {
 
     public Point2DF()
     {
-        this.setPoint(new PointF(0, 0));
+        setPoint(new PointF(0, 0));
     }
 
     public Point2DF(float x, float y)
     {
-        this.setPoint(new PointF(x, y));
+        setPoint(new PointF(x, y));
     }
 
     public float distance(Point2DF other)
     {
-        return (float) Math.sqrt(Math.pow(this.point.x - other.getPoint().x, 2) + Math.pow(this.point.y - other.getPoint().y, 2));
+        return (float) Math.sqrt(Math.pow(point.x - other.getPoint().x, 2) + Math.pow(point.y - other.getPoint().y, 2));
     }
+
+    public float getX()
+    {
+        return point.x;
+    }
+
+    public void setX(float x) { point.set(x, point.y); }
+
+    public float getY()
+    {
+        return point.y;
+    }
+
+    public void setY(float y) { point.set(point.x, y); }
 
     private PointF getPoint() {
         return point;

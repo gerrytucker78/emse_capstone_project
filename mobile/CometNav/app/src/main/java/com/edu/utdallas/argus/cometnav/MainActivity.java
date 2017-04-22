@@ -1,6 +1,5 @@
 package com.edu.utdallas.argus.cometnav;
 
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +19,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.v7.app.NotificationCompat;
+
+
+
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
+import com.edu.utdallas.argus.cometnav.navigation.Navigation;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //ButterKnife.inject(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -219,4 +232,34 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    //@OnClick(R.id.button)
+    public void sendNotification(View view) {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(android.R.drawable.ic_dialog_alert);
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/maps"));
+        Intent intent = new Intent(this, NavigationActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        builder.setContentIntent(pendingIntent);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        builder.setContentTitle("CometNav Emergency!!!");
+        builder.setContentText("Fire Incident Reported.");
+        builder.setSubText("Tap to get to a Safe Zone.");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Will display the notification in the notification bar
+        notificationManager.notify(1, builder.build());
+    }
+
+   // @OnClick(R.id.button2)
+    public void cancelNotification(View view) {
+
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
+        nMgr.cancel(1);
+
+
+    }
 }
