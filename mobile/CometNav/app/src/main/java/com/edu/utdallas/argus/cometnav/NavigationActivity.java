@@ -162,8 +162,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Intent origIntent = getIntent();
-        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 0);
-        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 0);
+        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 52);
+        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
 
         CometNavView.setNavActivity(this);
 
