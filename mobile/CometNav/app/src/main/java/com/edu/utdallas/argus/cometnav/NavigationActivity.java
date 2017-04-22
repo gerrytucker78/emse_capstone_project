@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -28,6 +29,8 @@ import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import net.coderodde.graph.pathfinding.support.Point2DF;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +43,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 {
     private BroadcastReceiver receiver;
     private PhotoView photoView;
+    //private CometNavView photoView;
     private DownloadImageTask task;
     private Canvas locDot;
     private Canvas paths;
@@ -56,6 +60,9 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private boolean showLocDot = false;
     private int xPos = 0;
     private int yPos = 0;
+    private boolean showLocDotReal = false;
+    private int xPosReal = 0;
+    private int yPosReal = 0;
     private int mRadius = 0;
     private final int MIN_RADIUS = 10;
     private Navigation navigation = Navigation.getInstance();
@@ -65,6 +72,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
+            navigation.stopNavigation();
         }
         super.onDestroy();
     }
@@ -76,20 +84,31 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     {
         if (locDot == null)
             return;
-        locDot.save();
-        //locDot.drawBitmap(immutableMap, 0, 0, paint);
+        if (showLocDotReal)
+        {
+            locDot.save();
+            locDot.translate(xPosReal, yPosReal);
+            float scaleVal = (1 / cumulScaleFactor);
+            locDot.scale(scaleVal, scaleVal);
+            Paint tempPaint = new Paint();
+            tempPaint.setAntiAlias(true);
+            tempPaint.setColor(Color.YELLOW);
+            locDot.drawCircle(0, 0, mRadius, tempPaint);
+            locDot.restore();
+        }
         if (showLocDot) {
+            locDot.save();
             locDot.translate(xPos, yPos);
             float scaleVal = (1 / cumulScaleFactor);
             locDot.scale(scaleVal, scaleVal);
             locDot.drawCircle(0, 0, mRadius, paint);
+            locDot.restore();
         }
-        locDot.restore();
     }
 
     private void drawPath()
     {
-        if (paths == null)
+        if (paths == null || mPathArray == null)
             return;
         paths.save();
         if (mPathArray.length > 0)
@@ -105,25 +124,16 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             return;
         }
 
-
-
         for (int i = 0; i < this.cnBeaconList.size(); i++) {
             beacons.save();
-
             CometNavBeacon cnb = this.cnBeaconList.get(i);
-
             beacons.translate(cnb.getxLoc(), cnb.getyLoc());
             float scaleVal = (1 / cumulScaleFactor);
             beacons.scale(scaleVal, scaleVal);
             beacons.drawCircle(0, 0, 5, beaconPaint);
-
             beacons.restore();
-
         }
-
-
     }
-
 
     private void updateDraw()
     {
@@ -164,6 +174,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         //photoView.setOnPhotoTapListener(new PhotoTapListener());
         photoView.setOnScaleChangeListener(new ScaleChangeListener());
 
+
         navigation.setOnRouteChangedListener(new OnRouteChangedListener()
         {
             boolean shouldAlt = false;
@@ -185,10 +196,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                         mPathArray[pathArrayCounter + 3] = coords[1];
                         pathArrayCounter+=2;
                     }
-                    //Log.d("Navigation", "Found path: ")
                     pathArrayCounter+=2;
                 }
-
                 updateDraw();
             }
         });
@@ -202,16 +211,19 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
         this.cnBeaconList = new ArrayList<>();
         Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
+        //Log.d("Navigation", "Nav beacons: " + navigation.getBeaconMap().toString());
+        //Log.d("Navigation", "Found beacons: " + beaconArrayList.toString());
 
         for (CometNavBeacon cnBeacon : beaconArrayList)
         {
             CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
-            cnBeacon.setxLoc(refBeacon.getxLoc());
-            cnBeacon.setyLoc(refBeacon.getyLoc());
-            cnBeacon.setFloor(refBeacon.getFloor());
-
-            cnBeaconList.add(cnBeacon);
-            Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
+            if (refBeacon != null) {
+                cnBeacon.setxLoc(refBeacon.getxLoc());
+                cnBeacon.setyLoc(refBeacon.getyLoc());
+                cnBeacon.setFloor(refBeacon.getFloor());
+                cnBeaconList.add(cnBeacon);
+                //Log.d("Navigation", "Newly created beacon! " + cnBeacon.toString());
+            }
         }
         Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
     }
@@ -231,6 +243,57 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         throw new UnsupportedOperationException("Method not implemented for this class");
     }
 
+    private void snapToPath(CurrentLocation loc)
+    {
+        float minDist = Float.MAX_VALUE;
+        Point2DF destCoords = new Point2DF();
+        for (int x = 0, y = 1; x < mPathArray.length - 2 && y < mPathArray.length - 1; x += 2, y += 2)
+        {
+            Point2DF point = nearestPointOnLine(mPathArray[x], mPathArray[y], mPathArray[x+2], mPathArray[y+2], loc.getxLoc(), loc.getyLoc());
+            float distance = distBetweenPoints(point.getX(), point.getY(), loc.getxLoc(), loc.getyLoc());
+            if (distance < minDist) {
+                minDist = distance;
+                destCoords = point;
+            }
+        }
+
+        loc.setxLoc(Math.round(destCoords.getX()));
+        loc.setyLoc(Math.round(destCoords.getY()));
+    }
+
+    private float distBetweenPoints(float x1, float y1, float x2, float y2)
+    {
+        return (float) Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+    }
+
+    private static Point2DF nearestPointOnLine(float ax, float ay, float bx, float by, float px, float py)
+    {
+        float apx = px - ax;
+        float apy = py - ay;
+        float abx = bx - ax;
+        float aby = by - ay;
+
+        float ab2 = abx * abx + aby * aby;
+        float ap_ab = apx * abx + apy * aby;
+        float t = ap_ab / ab2;
+        if (t < 0)
+            t = 0;
+        else if (t > 1)
+            t = 1;
+        Point2DF dest = new Point2DF(ax + abx * t, ay + aby * t);
+        return dest;
+    }
+
+    public class CometNavView extends PhotoView {
+        public CometNavView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            Log.d("Test", "Draw works!");
+        }
+    }
 
     private class BeaconBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -240,6 +303,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
             // Determine Current Location
             CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
+
+            showLocDotReal = true;
+            xPosReal = loc.getxLoc();
+            yPosReal = loc.getyLoc();
+            snapToPath(loc);
 
             // If we have a radius, that means there's only 1 beacon
             if (loc.getRadius() != 0)
