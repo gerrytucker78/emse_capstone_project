@@ -196,13 +196,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         IntentFilter filter = new IntentFilter();
         filter.addAction("BEACON_ACTION");
 
-        IntentFilter filterz = new IntentFilter();
-        filterz.addAction("EMERGENCY_ACTION");
 
         receiver = new BeaconBroadcastReceiver();
-        emergencyReceiver = new EmergencyBroadcastReceiver();
-
         registerReceiver(receiver, filter);
+
+        IntentFilter filterz = new IntentFilter();
+        filterz.addAction("EMERGENCY_ACTION");
+        emergencyReceiver = new EmergencyBroadcastReceiver();
         registerReceiver(emergencyReceiver, filterz);
 
         photoView.setAdjustViewBounds(true);
@@ -351,7 +351,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 navActivity.updateDraw();
         }
     }
-
     private class EmergencyBroadcastReceiver extends BroadcastReceiver {
         private void sendAlert(Context context, Emergency e){
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);

@@ -23,6 +23,12 @@ public class EmergencyClient  implements IEmergencyClient {
     //private Map<Integer,Emergency> emergenciesMap = new HashMap();
     private List<Emergency> emergenciesMap = new ArrayList<Emergency>();
 
+    private EmergencyService es = null;
+
+    public EmergencyClient(EmergencyService es) {
+        this.es = es;
+    }
+
     @Override
     public void receiveEmergencies(JSONArray emergencies) {
         try
@@ -70,6 +76,7 @@ public class EmergencyClient  implements IEmergencyClient {
         }
         Log.d(TAG, "Emergencies updated: " + this.getEmergenciesMap().size());
 
+        this.es.processUpdatedEmergencies();
     }
 
     @Override
