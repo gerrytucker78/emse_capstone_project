@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import android.graphics.Canvas;
@@ -61,6 +62,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private int xPos = 0;
     private int yPos = 0;
     private boolean showLocDotReal = false;
+    private boolean shouldShowBeacons = false;
     private int xPosReal = 0;
     private int yPosReal = 0;
     private int mRadius = 0;
@@ -126,7 +128,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
     private void drawBeacons()
     {
-        if (beacons == null) {
+        if (beacons == null || !shouldShowBeacons) {
             return;
         }
 
@@ -143,6 +145,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistMtr()),(float)(0), (float)(0), beaconPaint);
             beacons.restore();
         }
+    }
+
+    public void toggleDebug(View view)
+    {
+        showLocDotReal = !showLocDotReal;
+        shouldShowBeacons = !shouldShowBeacons;
+        photoView.invalidate();
     }
 
     private void updateDraw()
@@ -345,7 +354,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             // Determine Current Location
             CurrentLocation loc = navigation.calculateCurrentPos(cnBeaconList);
 
-            showLocDotReal = true;
             xPosReal = loc.getxLoc();
             yPosReal = loc.getyLoc();
             snapToPath(loc);

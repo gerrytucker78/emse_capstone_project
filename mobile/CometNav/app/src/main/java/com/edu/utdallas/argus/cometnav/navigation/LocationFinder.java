@@ -32,8 +32,8 @@ public class LocationFinder
     {
         //double[][] positions = new double[][] { { 5.0, -6.0 }, { 13.0, -15.0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
         //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
-        Log.d("Test", Arrays.deepToString(positions));
-        Log.d("Test", Arrays.toString(distances));
+        //Log.d("Test", Arrays.deepToString(positions));
+        //Log.d("Test", Arrays.toString(distances));
 
 
         TrilaterationFunction trilaterationFunction = new TrilaterationFunction(positions, distances);
@@ -54,9 +54,9 @@ public class LocationFinder
             Log.d("Location", "Linear solver: " + linearAnswer.toString());
             return linearAnswer.toArray();
         }
-        Log.d("Location", "NonLinear solver: " + optimum.getPoint().toString());
+        //Log.d("Location", "NonLinear solver: " + optimum.getPoint().toString());
 
-        Log.d("Location", optimum.getCovariances(100).toString());
+        //Log.d("Location", optimum.getCovariances(100).toString());
 
 
         // the answer

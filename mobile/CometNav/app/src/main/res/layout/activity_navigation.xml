@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
 
@@ -11,38 +11,13 @@
     tools:layout_editor_absoluteY="81dp"
     android:scaleType="centerCrop">
 
-
-
-    <!--<ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
--->
-  <!--  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rootRL"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:background="@drawable/ecss">
-    </RelativeLayout>-->
-
- <!--   <ImageView
-        android:layout_width="wrap_content"
+    <Button
         android:layout_height="wrap_content"
-        android:id="@+id/locator"
-        android:scaleType="center"
-        /> -->
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Toggle Debug"
+        android:onClick="toggleDebug" />
 
-<!--
-    <com.github.chrisbanes.photoview.PhotoView
-        android:id="@+id/photo_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
--->
     <view
         class="com.edu.utdallas.argus.cometnav.NavigationActivity$CometNavView"
         android:id="@+id/photo_view"
@@ -50,6 +25,5 @@
         android:layout_height="match_parent"
         />
 
-</android.support.v7.widget.LinearLayoutCompat>
-
+</RelativeLayout>
     <!--app:srcCompat="@drawable/common_full_open_on_phone"-->
