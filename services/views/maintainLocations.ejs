@@ -44,8 +44,15 @@
                         </tr>
                         <tr>
                             <td><b>Type:</b></td>
-                            <td><input type="text" id="location_type" ng-model="locationType"
-                                       ng-change="updateLocationData()"/></td>
+                            <td><select id="location_type" ng-model="locationType"
+                                        ng-change="updateLocationData()">
+                                <option value="STAIRS">Stairs</option>
+                                <option value="ROOM">Room</option>
+                                <option value="EXIT">Exit</option>
+                                <option value="HALL">Hall</option>
+                                <option value="EMERGENCY">Emergency</option>
+                                <option value="BLOCKED_AREA">Blocked Area</option>
+                                </select>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -66,8 +73,23 @@
                         </tr>
                         <tr>
                             <td><b>Name:</b></td>
-                            <td><input type="text" id="beacon_name" ng-model="beaconName"
-                                       ng-change="updateBeaconData()"/></td>
+                            <td>
+                                <select id="beacon_name" ng-model="beaconName"
+                                        ng-change="updateBeaconData()">
+                                    <option value="00010203040506070823">#1 - 00010203040506070823</option>
+                                    <option value="0001020304050607081d">#2 - 0001020304050607081d</option>
+                                    <option value="00010203040506070820">#3 - 00010203040506070820</option>
+                                    <option value="00010203040506070824">#4 - 00010203040506070824</option>
+                                    <option value="00010203040506070826">#5 - 00010203040506070826</option>
+                                    <option value="0001020304050607081f">#6 - 0001020304050607081f</option>
+
+                                    <option value="00010203040506070821">#7 - 00010203040506070821</option>
+                                    <option value="00010203040506070825">#8 - 00010203040506070825</option>
+                                    <option value="00010203040506070822">#9 - 00010203040506070822</option>
+                                    <option value="NewBeacon10">#10 - </option>
+                                </select>
+                            </td>
+
                         </tr>
 
                         <tr>
