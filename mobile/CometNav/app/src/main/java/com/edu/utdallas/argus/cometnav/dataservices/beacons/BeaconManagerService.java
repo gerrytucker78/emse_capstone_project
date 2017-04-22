@@ -18,6 +18,7 @@ import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.service.ArmaRssiFilter;
+import org.altbeacon.beacon.service.RunningAverageRssiFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -342,16 +343,8 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.URI_BEACON_LAYOUT));
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT));
         beaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
-//        try {
-//            beaconManager.setForegroundScanPeriod(500l); // 500 mS
-//            beaconManager.setForegroundBetweenScanPeriod(0l); // 0ms
-//            beaconManager.updateScanPeriods();
-//        }
-//        catch (RemoteException e) {
-//            Log.e(TAG, "Cannot talk to service");
-//        }
         //beaconManager.setRssiFilterImplClass(RunningAverageRssiFilter.class);
-        //RunningAverageRssiFilter.setSampleExpirationMilliseconds(5000l);
+        //RunningAverageRssiFilter.setSampleExpirationMilliseconds(20000l);
         beaconManager.bind(this);
     }
 
