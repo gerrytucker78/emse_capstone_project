@@ -169,6 +169,9 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
             canvasState.selection.emergency = {emergency_id: "", notes: "", emergency_type: "", emergency_state: "",
                 location_id: canvasState.selection.location.location_id, start: "", last_update: "", end: ""};
         }
+
+        $scope.emergency_state = document.getElementById("emergency_state").value;
+
         canvasState.selection.emergency.emergency_notes = document.getElementById("emergency_notes").value;
         canvasState.selection.emergency.emergency_type = document.getElementById("emergency_type").value;
     };
