@@ -207,7 +207,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
     private void loadIntentData() {
         Intent origIntent = getIntent();
-        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 52);
+        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 0);
         this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
 
         if (origIntent.hasExtra(EMERGENCIES)) {
@@ -298,8 +298,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             }
         });
 
-        if (this.startLoc != 0 && this.endLoc != 0)
+        if (this.startLoc != 0 && this.endLoc != 0) {
             navigation.beginNavigation(this.startLoc, this.endLoc);
+        } else if (this.startLoc == 0) {
+            navigation.beginNavigation(this.endLoc);
+        }
     }
 
     private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {

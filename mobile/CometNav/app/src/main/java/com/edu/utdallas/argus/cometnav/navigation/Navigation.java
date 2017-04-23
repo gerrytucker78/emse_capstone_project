@@ -102,6 +102,8 @@ public class Navigation implements ILocationClient {
 
     private CurrentLocation currentLocation;
 
+    public static String CURRENT_LOCATION = "Current Location";
+
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
      */

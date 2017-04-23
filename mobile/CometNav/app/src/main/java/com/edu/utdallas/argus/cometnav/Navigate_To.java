@@ -15,6 +15,7 @@ import com.edu.utdallas.argus.cometnav.dataservices.DataServices;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.ILocationClient;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
+import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +43,9 @@ public class Navigate_To extends AppCompatActivity implements ILocationClient {
         Spinner endLocation = (Spinner) findViewById(R.id.endLocation);
 
         ArrayList<String> locationNames = new ArrayList<String>();
+
+        locationNames.add(Navigation.CURRENT_LOCATION);
+        locNameToId.put(Navigation.CURRENT_LOCATION,0);
 
         for (Location loc : locations) {
             if (loc.getType() == Location.Type.ROOM)
