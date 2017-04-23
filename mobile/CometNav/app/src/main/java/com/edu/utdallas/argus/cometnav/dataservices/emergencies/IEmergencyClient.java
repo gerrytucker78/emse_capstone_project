@@ -9,6 +9,5 @@ import java.util.List;
  */
 
 public interface IEmergencyClient {
-    public void receiveEmergencies(JSONArray emergencies);
-    public List<Emergency> getEmergenciesMap();
+    public void receiveEmergencies(JSONArray emergencies, JSONArray emergencyLocations);
 }

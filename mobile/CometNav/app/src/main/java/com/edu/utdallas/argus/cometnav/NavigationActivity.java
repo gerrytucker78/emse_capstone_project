@@ -23,6 +23,7 @@ import android.graphics.Paint;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
+import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.ILocationClient;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Path;
@@ -55,9 +56,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private Canvas paths;
     private Canvas backgroundCanvas;
     private Canvas beacons;
+    private Canvas emergencies;
     private Paint paint;
     private Paint beaconPaint;
     private Paint pathPaint;
+    private Paint emergencyPaint;
 
     private float[] mPathArray;
     private Bitmap immutableMap;
@@ -74,13 +77,22 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private final int MIN_RADIUS = 10;
     private Navigation navigation = Navigation.getInstance();
     private List<CometNavBeacon> cnBeaconList = new ArrayList<>();
-    private List<Emergency> emergencyList = new ArrayList<>();
+    private List<Emergency> emergencyList = new ArrayList<Emergency>();
+    private List<Location> emergencyLocations = new ArrayList<Location>();
 
     private int startLoc = 0;
     private int endLoc = 0;
 
     public static final String START_LOCATION_ID = "START_LOCATION_ID";
     public static final String END_LOCATION_ID = "END_LOCATION_ID";
+    public static final String EMERGENCIES = "EMERGENCIES";
+    public static final String EMERGENCY_LOCATIONS = "EMERGENCY_LOCATIONS";
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        loadIntentData();
+    }
 
     protected void onDestroy() {
         if (receiver != null) {
@@ -132,6 +144,27 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         paths.restore();
     }
 
+    private void drawEmergencies() {
+        if (emergencies == null) {
+            return;
+        }
+
+        if (!this.emergencyList.isEmpty()) {
+            for (Location emLoc : this.emergencyLocations) {
+                emergencies.save();
+                emergencies.translate(emLoc.getPixelLocX(), emLoc.getPixelLocY());
+                float scaleVal = (1 / cumulScaleFactor);
+                emergencies.scale(scaleVal, scaleVal);
+                //emergencies.drawRect(0, 0, 5, 5, emergencyPaint);
+                emergencies.drawCircle(0, 0, 5, emergencyPaint);
+                emergencies.restore();
+                emergencies.save();
+                emergencies.translate(emLoc.getPixelLocX(), emLoc.getPixelLocY()+25);
+                emergencies.drawText(emLoc.getName(),(float)(0), (float)(0), emergencyPaint);
+                emergencies.restore();
+            }
+        }
+    }
     private void drawBeacons()
     {
         if (beacons == null || !shouldShowBeacons) {
@@ -167,8 +200,35 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         drawCurrentLoc();
         drawBeacons();
         drawPath();
+        drawEmergencies();
         //Forces a redraw
         //photoView.invalidate();
+    }
+
+    private void loadIntentData() {
+        Intent origIntent = getIntent();
+        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 52);
+        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
+
+        if (origIntent.hasExtra(EMERGENCIES)) {
+
+            Object[] emergArray =  (Object [])origIntent.getExtras().get(EMERGENCIES);
+
+            this.emergencyList = new ArrayList<Emergency>();
+            for (Object newEmerg : emergArray) {
+                this.emergencyList.add((Emergency)newEmerg);
+            }
+        }
+
+        if (origIntent.hasExtra(EMERGENCY_LOCATIONS)) {
+
+            Object[] emergLocArray =  (Object [])origIntent.getExtras().get(EMERGENCY_LOCATIONS);
+
+            this.emergencyLocations = new ArrayList<Location>();
+            for (Object newLoc : emergLocArray) {
+                this.emergencyLocations.add((Location)newLoc);
+            }
+        }
     }
 
     @Override
@@ -176,9 +236,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        Intent origIntent = getIntent();
-        this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 52);
-        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
+
+        loadIntentData();
 
         CometNavView.setNavActivity(this);
 
@@ -239,9 +298,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             }
         });
 
-        /**
-         * @// TODO: 4/16/2017 Need to integrate with list selection
-         */
         if (this.startLoc != 0 && this.endLoc != 0)
             navigation.beginNavigation(this.startLoc, this.endLoc);
     }
@@ -277,6 +333,12 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     @Override
     public void receivePaths(List<Path> paths) {
         throw new UnsupportedOperationException("Method not implemented for this class");
+    }
+
+    @Override
+    public void receiveEmergencyLocations(List<Location> locations) {
+        throw new UnsupportedOperationException("Method not implemented for this class");
+
     }
 
     private void snapToPath(CurrentLocation loc)
@@ -348,6 +410,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         }
     }
     private class EmergencyBroadcastReceiver extends BroadcastReceiver {
+
+
         private void sendAlert(Context context, Emergency e){
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
             String emergClass = "";
@@ -388,7 +452,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         @Override
         public void onReceive(Context context, Intent intent) {
             //Grab the new/updated emergencies
-            emergencyList = intent.getParcelableArrayListExtra("EMERGENCY_LIST");
+            emergencyList = intent.getParcelableArrayListExtra(EmergencyService.EMERGENCY_LIST);
+            emergencyLocations = intent.getParcelableArrayListExtra(EmergencyService.EMERGENCY_LOCATIONS);
 
             Log.d(TAG, "List of emergencies received from broadcast: " + emergencyList.toString());
 
@@ -506,11 +571,15 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
                 beaconPaint = new Paint();
                 beaconPaint.setAntiAlias(true);
-                beaconPaint.setColor(Color.RED);
+                beaconPaint.setColor(Color.GRAY);
 
                 pathPaint = new Paint();
                 pathPaint.setAntiAlias(true);
                 pathPaint.setColor(Color.GREEN);
+
+                emergencyPaint = new Paint();
+                emergencyPaint.setAntiAlias(true);
+                emergencyPaint.setColor(Color.RED);
 
                 //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_view,myOptions);
                 immutableMap = result;
@@ -520,7 +589,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 locDot = new Canvas(mutableMap);
                 paths = new Canvas(mutableMap);
                 beacons = new Canvas(mutableMap);
-
+                emergencies = new Canvas(mutableMap);
                 bmImage.setImageBitmap(mutableMap);
 
                 //updateDraw();

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -34,6 +35,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
 import com.edu.utdallas.argus.cometnav.navigation.Navigation;
 
 import java.util.ArrayList;
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.toString();
 
     private BroadcastReceiver emergencyReceiver;
-    private List<Emergency> emergencyList = new ArrayList<>();
+    private List<Emergency> emergencyList = new ArrayList<Emergency>();
+    private List<Location> emergencyLocationList = new ArrayList<Location>();
 
     private boolean hasLocationPermissions = false;
     private Navigation navigation = Navigation.getInstance();
@@ -175,6 +178,8 @@ public class MainActivity extends AppCompatActivity
     private void showEmergencyNav()
     {
         Intent intent = new Intent(this, NavigationActivity.class);
+        intent.putExtra(NavigationActivity.EMERGENCIES,(Object[])this.emergencyList.toArray());
+        intent.putExtra(NavigationActivity.EMERGENCY_LOCATIONS,(Object[])this.emergencyLocationList.toArray());
 
         this.startActivity(intent);
     }
@@ -305,6 +310,7 @@ public class MainActivity extends AppCompatActivity
                             showEmergencyNav();
                             dialog.cancel();
                             Log.d("Test", "Clicked?");
+
                             navigation.beginEmergencyNavigation();
                         }
                     });
@@ -323,7 +329,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             //Grab the new/updated emergencies
-            emergencyList = intent.getParcelableArrayListExtra("EMERGENCY_LIST");
+            emergencyList = intent.getParcelableArrayListExtra(EmergencyService.EMERGENCY_LIST);
+            emergencyLocationList = intent.getParcelableArrayListExtra(EmergencyService.EMERGENCY_LOCATIONS);
 
             Log.d(TAG, "List of emergencies received from broadcast: " + emergencyList.toString());
 

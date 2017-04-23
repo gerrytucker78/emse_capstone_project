@@ -93,6 +93,11 @@ public class Navigate_To extends AppCompatActivity implements ILocationClient {
 
     }
 
+    @Override
+    public void receiveEmergencyLocations(List<Location> locations) {
+
+    }
+
     /** Called when the user taps the Send button */
     public void startNavigation(View view) {
         // Do something in response to button

@@ -4,9 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,12 +28,82 @@ public class Emergency implements Parcelable {
     private Date start;
     private Date end;
     private Date update;
+    private boolean valid = true;
     //Thu Apr 20 02:08:48 CDT 2017
     private SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy");
+    private SimpleDateFormat jsonSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    private static final String JSON_LOCATION_ID = "location_id";
+    private static final String JSON_EMERGENCY_END = "emergency_end";
+    private static final String JSON_EMERGENCY_LAST_UPDATE = "emergency_last_update";
+    private static final String JSON_EMERGENCY_START = "emergency_start";
+    private static final String JSON_EMERGENCY_NOTES = "emergency_notes";
+    private static final String JSON_EMERGENCY_TYPE = "emergency_type";
+    private static final String JSON_EMERGENCY_ID = "emergency_id";
+    private static final String JSON_NULL = "null";
 
     public Emergency(){
         //Default constructor is blank
         //But has to be defined since we overloaded it
+    }
+
+    public static List<Emergency> createEmergencies(JSONArray rawEms) {
+        List<Emergency> results = new ArrayList<Emergency>();
+
+        for (int i = 0; i < rawEms.length(); i++) {
+            try {
+                Emergency em = new Emergency(rawEms.getJSONObject(i));
+                if (em.isValid()) {
+                    results.add(em);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return results;
+    }
+
+    public Emergency(JSONObject rawEm){
+        try {
+            this.setEmergencyId(rawEm.getInt(JSON_EMERGENCY_ID));
+
+            if(!rawEm.getString(JSON_EMERGENCY_END).equalsIgnoreCase(JSON_NULL)){
+                //Only parse the date if the value isn't "null"
+                this.setEnd(jsonSDF.parse(rawEm.getString(JSON_EMERGENCY_END)));
+            }else{
+                this.setEnd(null);
+            }
+
+            this.setLocationId(rawEm.getInt(JSON_LOCATION_ID));
+            this.setNotes(rawEm.getString(JSON_EMERGENCY_NOTES));
+
+            if(!rawEm.getString(JSON_EMERGENCY_START).equalsIgnoreCase(JSON_NULL)){
+                //Only parse the date if the value isn't null
+                this.setStart(jsonSDF.parse(rawEm.getString(JSON_EMERGENCY_START)));
+            }else{
+                this.setStart(null);
+            }
+
+            this.setType(rawEm.getString(JSON_EMERGENCY_TYPE));
+
+            if(!rawEm.getString(JSON_EMERGENCY_LAST_UPDATE).equalsIgnoreCase(JSON_NULL)) {
+                this.setUpdate(jsonSDF.parse(rawEm.getString(JSON_EMERGENCY_LAST_UPDATE)));
+            }else{
+                this.setUpdate(null);
+            }
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+            valid = false;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            valid = false;
+        }
+
+
+
+
     }
 
     protected Emergency(Parcel in) {
@@ -161,5 +237,9 @@ public class Emergency implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(emergencyId, locationId, type, notes, start, end, update);
+    }
+
+    public boolean isValid() {
+        return valid;
     }
 }

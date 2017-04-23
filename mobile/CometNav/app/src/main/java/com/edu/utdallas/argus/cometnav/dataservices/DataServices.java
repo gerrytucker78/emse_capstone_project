@@ -26,7 +26,7 @@ public class DataServices {
     private static final String LOCATIONS_NAVIGABLE = "locations/navigable";
     private static final String LOCATIONS_BLOCKED_AREAS = "locations/blockedAreas";
     private static final String LOCATIONS_PATHS = "locations/paths";
-    private static final String LOCATIONS_HALLS_NEARBY = "locations/halls/nearby";
+    private static final String LOCATIONS_EMERGENCIES = "locations/emergencies";
 
     public static void getNavigableLocations(final ILocationClient client) {
         DataServicesClient.get(LOCATIONS_NAVIGABLE, null, new JsonHttpResponseHandler() {
@@ -39,6 +39,7 @@ public class DataServices {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray locations) {
                 client.receiveNavigableLocations(Location.createLocations(locations));
+
             }
         });
     }
@@ -83,9 +84,21 @@ public class DataServices {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray emergencies) {
-                //Update the navigation with locations
-                emergencyClient.receiveEmergencies(emergencies);
 
+
+                DataServicesClient.get(LOCATIONS_EMERGENCIES, null, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        // If the response is JSONObject instead of expected JSONArray
+                        Log.d(TAG, "Warning! blocked areas returned as object and not array");
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray emergencyLocations) {
+                        //Update the navigation with locations
+                        emergencyClient.receiveEmergencies(emergencies, emergencyLocations);
+                    }
+                });
                 Log.i(TAG, "Emergencies received from callback: " + emergencies.toString());
             }
         });

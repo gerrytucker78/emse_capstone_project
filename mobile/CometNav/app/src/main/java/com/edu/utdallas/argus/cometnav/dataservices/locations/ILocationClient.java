@@ -13,4 +13,6 @@ public interface ILocationClient {
 
     public void receivePaths(List<Path> paths);
 
+    public void receiveEmergencyLocations(List<Location> locations);
+
 }

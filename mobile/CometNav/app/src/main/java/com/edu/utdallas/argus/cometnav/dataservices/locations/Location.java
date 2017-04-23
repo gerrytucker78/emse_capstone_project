@@ -1,5 +1,8 @@
 package com.edu.utdallas.argus.cometnav.dataservices.locations;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +14,7 @@ import java.util.List;
  * Created by gtucker on 4/16/2017.
  */
 
-public class Location {
+public class Location implements Parcelable {
     private int locationId;
     private int floor;
     private String name;
@@ -132,4 +135,45 @@ public class Location {
 
     ;
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.locationId);
+        dest.writeInt(this.floor);
+        dest.writeString(this.name);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeString(this.map);
+        dest.writeInt(this.pixelLocX);
+        dest.writeInt(this.pixelLocY);
+    }
+
+    public Location() {
+    }
+
+    protected Location(Parcel in) {
+        this.locationId = in.readInt();
+        this.floor = in.readInt();
+        this.name = in.readString();
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : Type.values()[tmpType];
+        this.map = in.readString();
+        this.pixelLocX = in.readInt();
+        this.pixelLocY = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Location> CREATOR = new Parcelable.Creator<Location>() {
+        @Override
+        public Location createFromParcel(Parcel source) {
+            return new Location(source);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 }

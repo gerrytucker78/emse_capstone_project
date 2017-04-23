@@ -96,6 +96,8 @@ public class Navigation implements ILocationClient {
 
     private HashMap<Integer, CometNavBeacon> beaconMap;
 
+    private List<Location> emergencyLocations;
+
     private List<Location> navigableLocations;
 
     private CurrentLocation currentLocation;
@@ -500,6 +502,11 @@ public class Navigation implements ILocationClient {
 
         heuristics = new EuclideanHeuristicFunction(coordinates);
         pathfinder = new NBAStarPathfinder(graph, weightFunction, heuristics);
+    }
+
+    @Override
+    public void receiveEmergencyLocations(List<Location> locations) {
+
     }
 
 }

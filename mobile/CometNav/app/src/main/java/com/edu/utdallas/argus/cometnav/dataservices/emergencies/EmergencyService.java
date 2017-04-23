@@ -8,9 +8,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.edu.utdallas.argus.cometnav.dataservices.DataServices;
+import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +32,13 @@ public class EmergencyService extends IntentService {
     private final Handler handler = new Handler();
     private EmergencyClient emergencyClient;
     private List<Emergency> emergencyList = new ArrayList<Emergency>();
+    private List<Location> emergencyLocations = new ArrayList<Location>();
+    private Map<Integer,Integer> emergencyListIndex = new HashMap<Integer, Integer>();
+    private Map<Integer,Integer> emergencyLocListIndex = new HashMap<Integer, Integer>();
+    private Map<Integer,Integer> emergencyToLocIndex = new HashMap<Integer, Integer>();
 
+    public static final String EMERGENCY_LOCATIONS = "EMERGENCY_LOCATIONS";
+    public static final String EMERGENCY_LIST = "EMERGENCY_LIST";
 
     public EmergencyService() {
         super(TAG);
@@ -82,68 +91,104 @@ public class EmergencyService extends IntentService {
 
     public void processUpdatedEmergencies() {
         //Get the list of emergencies
-        List<Emergency> newEmergenciesList = emergencyClient.getEmergenciesMap();
+        List<Emergency> receivedEmList = emergencyClient.getEmergencies();
+        List<Location> receivedEmLocations = emergencyClient.getEmergencyLocations();
 
         //Tmp list will contain the deltas from newEmergencies and current emergencies
-        List<Emergency> tmpList = new ArrayList<Emergency>();
+        List<Emergency> newEmList = new ArrayList<Emergency>();
+        List<Location> newEmLocations = new ArrayList<Location>();
 
         boolean allEmergenciesCleared = false;
 
         if ( emergencyList.isEmpty() ) {
             //Congrats, the empty list now has all the emergencies in it
-            Log.d(TAG, "EmergencyList empty. Setting it and tmpList to newEmergenciesList");
-            emergencyList.addAll(newEmergenciesList);
-            tmpList.addAll(emergencyList);
-        }else if (emergencyList.equals(newEmergenciesList)){
+            Log.d(TAG, "EmergencyList empty. Setting it and newEmList to receivedEmList");
+
+            // Loop through individually to build up index maps for faster access in the future
+            for (int i = 0; i < receivedEmList.size(); i++) {
+                emergencyList.add(receivedEmList.get(i));
+                emergencyListIndex.put(receivedEmList.get(i).getEmergencyId(),i);
+                emergencyLocations.add(receivedEmLocations.get(i));
+                emergencyLocListIndex.put(receivedEmLocations.get(i).getLocationId(),i);
+            }
+            newEmList.addAll(emergencyList);
+            newEmLocations.addAll(emergencyLocations);
+        }else if (emergencyList.equals(receivedEmList)){
             Log.d(TAG, "New emergency list equals current emergency list...");
             //Do Nothing
         }
-        else if (newEmergenciesList.isEmpty()) {
+        else if (receivedEmList.isEmpty()) {
             emergencyList.clear();
+            emergencyLocations.clear();
             Log.d(TAG, "No more emergencies.  Clear the list.");
             allEmergenciesCleared = true;
         }
         else{
             //Filter based on emergencies you already have
-            for (Emergency newEmergency : newEmergenciesList) {
-                boolean newEmergencyFlag = true;
+            for (Emergency newEmergency : receivedEmList) {
 
                 if( !emergencyList.contains(newEmergency) ){
-                    //Iterate over the emergencyList to find the object and replace it
-                    for (int i = 0; i < emergencyList.size(); i++){
-                        if(newEmergency.getEmergencyId() == emergencyList.get(i).getEmergencyId()){
-                            Log.d(TAG, "Replacing emergency with updated emergency. New Emergency: " + newEmergency.toString()
-                                    + " ::: Orig Emergency: " + emergencyList.get(i).toString());
-                            tmpList.add(newEmergency);
-                            emergencyList.remove(i); //Remove original emergency
-                            emergencyList.add(newEmergency); //Add the updated emergency
-                            newEmergencyFlag = false;
-                        }
-                    }
+                    // Check index and see if this emergency is known and updated
+                    if (emergencyListIndex.get(newEmergency.getEmergencyId()) != null) {
+                        int existingIndex = emergencyListIndex.get(newEmergency.getEmergencyId());
 
-                    // Emergency is actually completely new
-                    if (newEmergencyFlag) {
-                        tmpList.add(newEmergency);
+                        Log.d(TAG, "Replacing emergency with updated emergency. New Emergency: " + newEmergency.toString()
+                                + " ::: Orig Emergency: " + emergencyList.get(existingIndex).toString());
+
+                        // Add new entry for broadcast
+                        newEmList.add(newEmergency);
+
+                        // Pull forward existing emergency location entry to correspond with updated emergency
+                        newEmLocations.add(emergencyLocations.get(emergencyLocListIndex.get(newEmergency.getLocationId())));
+
+                        // Remove original (and index) and replace with new for the master list
+                        emergencyList.remove(existingIndex);
+                        emergencyListIndex.remove(newEmergency.getEmergencyId());
+
                         emergencyList.add(newEmergency);
+                        emergencyListIndex.put(newEmergency.getEmergencyId(),emergencyList.size()-1);
+
+
+
+                    } else {
+                        // Add new and index
+                        newEmList.add(newEmergency);
+                        emergencyList.add(newEmergency);
+                        emergencyListIndex.put(newEmergency.getEmergencyId(),emergencyList.size()-1);
+
+                        // Find corresponding location object
+                        for (Location newLocation : receivedEmLocations) {
+                            // Add new location and index
+                            if (newLocation.getLocationId() == newEmergency.getLocationId()) {
+                                newEmLocations.add(newLocation);
+                                emergencyLocations.add(newLocation);
+                                emergencyLocListIndex.put(newLocation.getLocationId(),emergencyLocations.size()-1);
+                            }
+                        }
                     }
                 }
             }
         }
 
-        Log.i(TAG, "Emergiencies: " + emergencyList.toString());
-        Log.i(TAG, "TmpEmergencies: " + tmpList.toString());
+        Log.i(TAG, "newEmList: " + emergencyList.toString());
+        Log.i(TAG, "TmpEmergencies: " + newEmList.toString());
+
+        Log.i(TAG, "emergencyLocations: " + emergencyLocations.toString());
+        Log.i(TAG, "newEmLocations: " + newEmLocations.toString());
 
         //Only broadcast if something changed...
-        if (!tmpList.isEmpty() || (tmpList.isEmpty() && allEmergenciesCleared) ) {
-            Log.d(TAG, "Broadcasting delta emergencies out..." + tmpList.toString());
+        if (!newEmList.isEmpty() || (newEmList.isEmpty() && allEmergenciesCleared) ) {
+            Log.d(TAG, "Broadcasting delta emergencies out..." + newEmList.toString());
 
             //Broadcast the new/udpated emergencies to whoever is listening
             Intent localIntent = new Intent("EMERGENCY_ACTION");
-            localIntent.putParcelableArrayListExtra("EMERGENCY_LIST", (ArrayList<? extends Parcelable>) tmpList);
+            localIntent.putParcelableArrayListExtra(EMERGENCY_LIST, (ArrayList<? extends Parcelable>) newEmList);
+            localIntent.putParcelableArrayListExtra(EMERGENCY_LOCATIONS, (ArrayList<? extends Parcelable>) newEmLocations);
+
             sendBroadcast(localIntent);
 
             //Clear the list out
-            tmpList.clear();
+            newEmList.clear();
         }
     }
     @Override
