@@ -12,7 +12,9 @@ import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
@@ -96,6 +98,8 @@ public class Navigation implements ILocationClient {
 
     private List<Location> navigableLocations;
 
+    private CurrentLocation currentLocation;
+
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
      */
@@ -145,7 +149,52 @@ public class Navigation implements ILocationClient {
      * @param targetNodeId the target node to navigate to
      */
     public void beginNavigation(int targetNodeId) {
-        beginNavigation(currentNode, targetNodeId);
+        //translate our current location into a node ID
+        beginNavigation(findNearestNode(), targetNodeId);
+    }
+
+    /**
+     * Finds the nearest exit and navigates from our current location
+     */
+    public void beginEmergencyNavigation()
+    {
+        int currentNode = findNearestNode();
+        if (currentNode == 0)
+        {
+            Log.d("Navigation", "Warning! Can't find current node, so can't start emergency nav!");
+            return;
+        }
+        int exitNode = 0;
+        int[] exitRoute;
+        float minWeight = Float.MAX_VALUE;
+        //First find the nearest exit
+        for (Location loc : navigableLocations)
+        {
+            if (loc.getType() == Location.Type.EXIT)
+            {
+                exitRoute = pathfinder.search(currentNode, loc.getLocationId()).toArray();
+                float weight = getWeightOfPath(exitRoute);
+                Log.d("Test", Arrays.toString(exitRoute) + " weight is " + weight);
+                if (weight < minWeight) {
+                    minWeight = weight;
+                    exitNode = loc.getLocationId();
+                }
+            }
+        }
+        if (exitNode != 0)
+            beginNavigation(exitNode);
+        else
+            Log.d("Navigation", "Warning! Cannot find exit!");
+    }
+
+    private float getWeightOfPath(int[] path)
+    {
+        float sum = 0;
+        for (int i=0; i < path.length; i++)
+        {
+            sum += weightFunction.get(i, i+1);
+        }
+        return sum;
     }
 
     /**
@@ -172,6 +221,11 @@ public class Navigation implements ILocationClient {
         navTimer.cancel();
     }
 
+    /**
+     * Given a node ID, return the coords for that node
+     * @param nodeId
+     * @return
+     */
     public int[] getNodePos(int nodeId) {
         int[] retArray = new int[2];
         Point2DF point = coordinates.get(nodeId);
@@ -182,6 +236,11 @@ public class Navigation implements ILocationClient {
         return retArray;
     }
 
+    /**
+     * Returns the location object for the given node ID
+     * @param nodeId
+     * @return
+     */
     public Location getLocation (int nodeId)
     {
         for (Location loc : navigableLocations)
@@ -273,7 +332,31 @@ public class Navigation implements ILocationClient {
             loc.setxLoc(Math.round(pointClosestToBeacon.getX()));
             loc.setyLoc(Math.round(pointClosestToBeacon.getY()));
         }
+        currentLocation = loc;
         return loc;
+    }
+
+    private int findNearestNode()
+    {
+        if (currentLocation == null)
+            return 0;
+        // Look for nearby navigable location to projected location and set to the nearest
+        double smallestZ = 0;
+        Location closestNavLoc = null;
+        for (Location navLoc : this.navigableLocations) {
+            if (navLoc.getFloor() == currentLocation.getFloor()) {
+                double x = currentLocation.getxLoc() - navLoc.getPixelLocX();
+                double y = currentLocation.getyLoc() - navLoc.getPixelLocY();
+                double z = 0;
+                z = (y * y) + (x * x);
+                if (z > 0 && (smallestZ == 0 || (z < smallestZ))) {
+                    smallestZ = z;
+                    closestNavLoc = navLoc;
+                }
+            }
+        }
+        //The closest node is contained in Location.
+        return closestNavLoc.getLocationId();
     }
 
     private Point2DF closestPointToCircle(double pX, double pY, double cX, double cY, double radius)
