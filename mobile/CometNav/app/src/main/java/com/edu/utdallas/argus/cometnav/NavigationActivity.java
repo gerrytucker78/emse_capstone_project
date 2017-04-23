@@ -242,12 +242,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         /**
          * @// TODO: 4/16/2017 Need to integrate with list selection
          */
-        if (this.startLoc == 0 && this.endLoc == 0)
-        {
-            this.startLoc = 52;
-            this.endLoc = 46;
-        }
-        navigation.beginNavigation(this.startLoc, this.endLoc);
+        if (this.startLoc != 0 && this.endLoc != 0)
+            navigation.beginNavigation(this.startLoc, this.endLoc);
     }
 
     private void updateNavBeaconList(List<CometNavBeacon> beaconArrayList) {
@@ -362,6 +358,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
+                            Log.d("Test", "Clicked?");
+                            navigation.beginEmergencyNavigation();
                         }
                     });
 
@@ -387,7 +385,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             for (Emergency e : emergencyList){
                 sendAlert(context, e);
             }
-
         }
     }
 
