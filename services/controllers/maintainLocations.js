@@ -10,6 +10,7 @@ var emergencies = {};
 var canvasState;
 var typesVisible = new TypeVisible();
 
+var maintainEmergencies = false;
 
 
 var maintainLocations = angular.module('maintainLocations', ['ngSanitize']);
@@ -17,7 +18,7 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
     $scope.message = 'Initial Load';
     $scope.locationName = 'Select a location...';
     $scope.floor;
-    $scope.maintainEmergencies = false;
+    $scope.maintainEmergencies = maintainEmergencies;
 
     $scope.togglePaths = function () {
         showPaths = !showPaths;
@@ -105,6 +106,8 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
         var changedLocations = [];
         var shapes = canvasState.shapes;
 
+        $scope.updateLocationData;
+
         // Loop through all locations and pull out changed ones
         for (var i = 0; i < shapes.length; i++) {
             if (!shapes[i].valid) {
@@ -126,14 +129,24 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
         });
 
         canvasState.selection = null;
-        document.getElementById("location_name").value = "";
-        getElementById("location_type").value = "";
 
-        $scope.updateLocationData();
+        document.getElementById("location_id").value = "";
+        document.getElementById("location_name").value = "";
+        document.getElementById("location_type").value = null;
+
+        $scope.locationType = null;
+        $scope.location = null;
 
         if ($scope.maintainEmergencies) {
-            $scope.updateEmergencyData();
+            document.getElementById("emergency_notes").value = "";
+            document.getElementById("emergency_type").value = null;
+
+            $scope.emergency_notes = "";
+            $scope.emergency_type = null;
         }
+
+
+
     };
 
     $scope.updateLocationData = function () {
@@ -154,12 +167,24 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
         });
 
         // Delete Emergency
-        $http.delete('/emergencies/id/' + selectedLocation.location.location_id).success(function (data, status, headers, config) {
-            $scope.loadData();
-        }).error(function (data, status, headers, config) {
-            // TO-DO: Need to fill in.
-        });
+        if ($scope.maintainEmergencies && selectedEmergency != null && selectedEmergency != undefined) {
+            $http.delete('/emergencies/id/' + selectedEmergency.emergency_id).success(function (data, status, headers, config) {
+                $scope.loadData();
+            }).error(function (data, status, headers, config) {
+                // TO-DO: Need to fill in.
+            });
+        }
 
+        canvasState.selection = null;
+
+        document.getElementById("location_id").value = "";
+        document.getElementById("location_name").value = "";
+        document.getElementById("location_type").value = null;
+
+        if ($scope.maintainEmergencies) {
+            document.getElementById("emergency_notes").value = "";
+            document.getElementById("emergency_type").value = null;
+        }
     };
 
 
@@ -192,12 +217,12 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
     };
 
     $scope.updateEmergencyData = function () {
-        if (canvasState.selection == null || canvasState.selection.emergency == undefined) {
+        if (canvasState.selection.emergency == undefined) {
             canvasState.selection.emergency = {emergency_id: "", notes: "", emergency_type: "", emergency_state: "",
                 location_id: canvasState.selection.location.location_id, start: "", last_update: "", end: ""};
 
             document.getElementById("emergency_notes").value = "";
-            document.getElementById("emergency_type").value = "";
+            document.getElementById("emergency_type").value = null;
         }
 
         $scope.emergency_state = document.getElementById("emergency_state").value;
@@ -235,6 +260,15 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
                 // TO-DO: Need to fill in.
             });
         }
+
+        document.getElementById("location_id").value = "";
+        document.getElementById("location_name").value = "";
+        document.getElementById("location_type").value = null;
+
+        document.getElementById("emergency_notes").value = "";
+        document.getElementById("emergency_type").value = null;
+        canvasState.selection = null;
+
     }
 
     /**
@@ -291,9 +325,8 @@ maintainLocations.controller('locationController', ['$scope', '$http', '$locatio
             }
         }
 
-        if (parms.emergency != undefined) {
-            $scope.maintainEmergencies = true;
-        }
+        $scope.maintainEmergencies = maintainEmergencies;
+
 
         floor = $scope.floor;
         initDrawing(floor);
