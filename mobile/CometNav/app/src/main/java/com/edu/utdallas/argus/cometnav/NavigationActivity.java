@@ -354,7 +354,18 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private class EmergencyBroadcastReceiver extends BroadcastReceiver {
         private void sendAlert(Context context, Emergency e){
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-            builder1.setMessage("There is a(n) " + e.getType() + " emergency! Do you wish to navigate to safety?");
+            String emergClass = "";
+
+            if (e.getUpdate() == null) {
+                emergClass = "NEW";
+            } else if (e.getEnd() == null) {
+                emergClass = "UPDATED";
+            } else {
+                emergClass = "ENDED";
+            }
+
+            builder1.setMessage("There is a(n) " + emergClass + " " + e.getType() + " emergency with the following notes:\n*****\n" + e.getNotes() + "\n*****\nDo you wish to navigate to safety?");
+
             builder1.setCancelable(true);
 
             builder1.setPositiveButton(
