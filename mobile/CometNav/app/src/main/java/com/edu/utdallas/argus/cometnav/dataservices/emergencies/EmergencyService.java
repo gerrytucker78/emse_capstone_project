@@ -87,6 +87,8 @@ public class EmergencyService extends IntentService {
         //Tmp list will contain the deltas from newEmergencies and current emergencies
         List<Emergency> tmpList = new ArrayList<Emergency>();
 
+        boolean allEmergenciesCleared = false;
+
         if ( emergencyList.isEmpty() ) {
             //Congrats, the empty list now has all the emergencies in it
             Log.d(TAG, "EmergencyList empty. Setting it and tmpList to newEmergenciesList");
@@ -95,6 +97,11 @@ public class EmergencyService extends IntentService {
         }else if (emergencyList.equals(newEmergenciesList)){
             Log.d(TAG, "New emergency list equals current emergency list...");
             //Do Nothing
+        }
+        else if (newEmergenciesList.isEmpty()) {
+            emergencyList.clear();
+            Log.d(TAG, "No more emergencies.  Clear the list.");
+            allEmergenciesCleared = true;
         }
         else{
             //Filter based on emergencies you already have
@@ -127,7 +134,7 @@ public class EmergencyService extends IntentService {
         Log.i(TAG, "TmpEmergencies: " + tmpList.toString());
 
         //Only broadcast if something changed...
-        if (!tmpList.isEmpty()) {
+        if (!tmpList.isEmpty() || (tmpList.isEmpty() && allEmergenciesCleared) ) {
             Log.d(TAG, "Broadcasting delta emergencies out..." + tmpList.toString());
 
             //Broadcast the new/udpated emergencies to whoever is listening

@@ -356,7 +356,11 @@ public class Navigation implements ILocationClient {
             }
         }
         //The closest node is contained in Location.
-        return closestNavLoc.getLocationId();
+        if (closestNavLoc == null) {
+            return 0;
+        } else {
+            return closestNavLoc.getLocationId();
+        }
     }
 
     private Point2DF closestPointToCircle(double pX, double pY, double cX, double cY, double radius)

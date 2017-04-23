@@ -154,8 +154,8 @@ public class Emergency implements Parcelable {
                 && (this.type.equals(that.type))
                 && (this.notes.equals(that.notes))
                 && (this.start.equals(that.start))
-                && ((this.end == null && that.end == null) || this.end.equals(that.end))
-                && ((this.update == null && that.update == null) || this.update.equals(that.update));
+                && ((this.end == null && that.end == null) || (this.end != null && this.end.equals(that.end)))
+                && ((this.update == null && that.update == null) || this.update != null && this.update.equals(that.update));
     }
 
     @Override
