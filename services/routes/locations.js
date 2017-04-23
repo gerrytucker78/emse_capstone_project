@@ -97,6 +97,17 @@ router.get('/floors', function (req, res, next) {
     }
 });
 
+/* GET ALL Floors listing. */
+router.get('/emergencies', function (req, res, next) {
+    if (simulation.get("enabled") == "true") {
+        res.send(simDataSet);
+    } else {
+        Location.findAll({where: {type: "EMERGENCY"}, order: [['location_id', 'ASC']]}).then(function (locations) {
+            return res.send(locations)
+        });
+    }
+});
+
 /* GET ALL Blocked Areas listing. */
 router.get('/blockedAreas', function (req, res, next) {
     if (simulation.get("enabled") == "true") {
