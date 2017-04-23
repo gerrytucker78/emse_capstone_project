@@ -11,6 +11,7 @@ describe('Locations', function () {
     var testBlockedAreas = [];
     var testPaths = [];
     var testNavigable = [];
+    var testEmergencies = [];
 
     before(function (done) {
         server = require('../app.js');
@@ -33,6 +34,8 @@ describe('Locations', function () {
                     testFloors.push(simLoc);
                 } else if (simLoc.type == "BLOCKED_AREA") {
                     testBlockedAreas.push(simLoc);
+                } else if (simLoc.type == "EMERGENCY") {
+                    testEmergencies.push(simLoc);
                 } else {
                     testNavigable.push(simLoc);
                 }
@@ -106,6 +109,10 @@ describe('Locations', function () {
 
     it('getBlockedAreas', function(done) {
         request(server).get('/locations/blockedAreas').expect(testBlockedAreas).expect(200,done);
+    })
+
+    it('getEmergencies', function(done) {
+        request(server).get('/locations/emergencies').expect(testEmergencies).expect(200,done);
     })
 
     it('getNearbyHalls', function (done) {

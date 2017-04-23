@@ -21,11 +21,12 @@
       {"location_id": 2,"name": "2.HALL.NW.2","type":"HALL","pixel_loc_x":190,"pixel_loc_y":180,"floor":2,"map":null},
       {"location_id": 9,"name": "2.HALL.NW.3","type":"HALL","pixel_loc_x":190,"pixel_loc_y":210,"floor":2,"map":null},
       {"location_id": 10,"name": "2.HALL.NW.4","type":"HALL","pixel_loc_x":190,"pixel_loc_y":242,"floor":2,"map":null},
-      {"location_id": 11,"name": "2.TEMP","type":"ROOM","pixel_loc_x":208,"pixel_loc_y":242,"floor":2,"map":null},
-      {"location_id": 12,"name": "2.TEMP","type":"ROOM","pixel_loc_x":213,"pixel_loc_y":250,"floor":2,"map":null},
-      {"location_id": 13,"name": "2.TEMP","type":"ROOM","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null},
+      {"location_id": 11,"name": "2.TEMP 1","type":"ROOM","pixel_loc_x":208,"pixel_loc_y":242,"floor":2,"map":null},
+      {"location_id": 12,"name": "2.TEMP 2","type":"ROOM","pixel_loc_x":213,"pixel_loc_y":250,"floor":2,"map":null},
+      {"location_id": 13,"name": "2.TEMP 3","type":"ROOM","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null},
       {"location_id": 14,"name": "Blocked 1","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null},
       {"location_id": 15,"name": "Blocked 2","type":"BLOCKED_AREA","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null},
+      {"location_id": 16,"name": "Emergency 1","type":"EMERGENCY","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":null},
 
 
       {"location_id": 1000,"name": "Floor 2","type":"FLOOR","pixel_loc_x":225,"pixel_loc_y":238,"floor":2,"map":"https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png"}
