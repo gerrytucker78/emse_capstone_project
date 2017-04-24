@@ -37,13 +37,14 @@
 
   <TextView
       android:id="@+id/textView5"
-      android:layout_width="337dp"
-      android:layout_height="370dp"
-      android:text="Getting where you need to go within supported UTD campus buildings is easier than ever.\n\nTo begin, select the Navigation button at the bottom."
+      android:layout_width="310dp"
+      android:layout_height="368dp"
+      android:text="Getting where you need to go within supported UTD campus buildings is easier than ever.\n\nTo begin, select the Navigation button at the bottom"
       android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
-      android:layout_marginLeft="8dp"
+      android:layout_marginLeft="24dp"
       app:layout_constraintBottom_toBottomOf="parent"
-      android:layout_marginBottom="8dp" />
+      android:layout_marginBottom="24dp"
+      tools:layout_editor_absoluteY="119dp" />
 
 </android.support.constraint.ConstraintLayout>
