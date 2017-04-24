@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //ButterKnife.inject(this);
 
         IntentFilter filterz = new IntentFilter();
         filterz.addAction("EMERGENCY_ACTION");
@@ -76,11 +75,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                startActivity(new Intent(MainActivity.this, FindARoomMapsActivity.class));
-
-
+                startActivity(new Intent(MainActivity.this, Navigate_To.class));
             }
 
 
@@ -121,26 +116,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, EmergencyService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startService(intent);
-
-
-        //This triggers the Singleton and creates the Navigation object.
-        //nav.beginNavigation(4, 6);
-        //double[][] positions = new double[][] { { 0, 0 }, { 10, 0 }, { 21.0, -3.0 }, { 12.4, -21.2 } };
-        //double[] distances = new double[] { 8.06, 13.97, 23.32, 15.31 };
-        //Log.d("Location", LocationFinder.getLocationMatrix(positions, distances).toString());
-        try {
-            //TODO Delete this later
-            //LocationFinder.trilateration1DExact1();
-            //LocationFinder.trilateration2DExact1();
-            //LocationFinder.trilateration3DExact();
-            //LocationFinder.trilateration3DInexact();
-            //LocationFinder.trilateration2DInexact1();
-            //LocationFinder.trilateration2DExact3();
-        }
-        catch (Exception e)
-        {
-            Log.d("LocTest", e.toString());
-        }
     }
 
     @Override
@@ -156,8 +131,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        //getMenuInflater().inflate(R.menu.main, menu);
+        return false;
     }
 
     @Override
@@ -194,23 +169,10 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(this, "Emergency Navigation Clicked", Toast.LENGTH_LONG).show();
             showEmergencyNav();
             return true;
-
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "Manage Account Clicked", Toast.LENGTH_LONG).show();
-            return true;
         } else if (id == R.id.nav_navigation__to) {
             Intent intent = new Intent(this, Navigate_To.class);
             this.startActivity(intent);
             return true;
-
-        /*} else if (id == R.id.fab) {
-            Intent intent = new Intent(this,FindARoomMapsActivity.class);
-            this.startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {*/
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -255,36 +217,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    //@OnClick(R.id.button)
-    public void sendNotification(View view) {
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(android.R.drawable.ic_dialog_alert);
-        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/maps"));
-        Intent intent = new Intent(this, NavigationActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        builder.setContentIntent(pendingIntent);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-        builder.setContentTitle("CometNav Emergency!!!");
-        builder.setContentText("Fire Incident Reported.");
-        builder.setSubText("Tap to get to a Safe Zone.");
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        // Will display the notification in the notification bar
-        notificationManager.notify(1, builder.build());
-    }
-
-   // @OnClick(R.id.button2)
-    public void cancelNotification(View view) {
-
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
-        nMgr.cancel(1);
-
-
-    }
 
     private class EmergencyBroadcastReceiver extends BroadcastReceiver {
         private void sendAlert(Context context, Emergency e){

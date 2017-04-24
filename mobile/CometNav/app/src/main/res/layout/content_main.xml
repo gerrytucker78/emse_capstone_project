@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_collapseParallaxMultiplier="1.0"
     tools:context="com.edu.utdallas.argus.cometnav.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
@@ -19,28 +21,29 @@
         android:text="Hello CometNav! \nAdded Clickable Menus and a Link to a Google Maps as a Placeholder.Floating Button also displays the Google Maps"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />-->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CREATE NOTIFICATION"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="sendNotification" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CANCEL NOTIFICATION"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="cancelNotification"/>
 
-</RelativeLayout>
+  <TextView
+      android:id="@+id/textView4"
+      android:layout_width="329dp"
+      android:layout_height="53dp"
+      android:text="Welcome to CometNav 2.0"
+      android:textColor="@color/colorPrimaryDark"
+      android:textSize="24sp"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="8dp"
+      android:layout_marginLeft="8dp"
+      app:layout_constraintLeft_toLeftOf="parent" />
+
+  <TextView
+      android:id="@+id/textView5"
+      android:layout_width="337dp"
+      android:layout_height="370dp"
+      android:text="Getting where you need to go within supported UTD campus buildings is easier than ever.\n\nTo begin, select the Navigation button at the bottom."
+      android:textSize="18sp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      android:layout_marginLeft="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_marginBottom="8dp" />
+
+</android.support.constraint.ConstraintLayout>
