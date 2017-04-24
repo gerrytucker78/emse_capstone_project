@@ -9,4 +9,7 @@
     <string name="permissions_needed">CometNav needs access to your location for accurate navigation.</string>
     <string name="title_activity_navigate__to">Navigate_To</string>
     <string name="title_activity_test">Test</string>
+    <string name="spinner_title">Test</string>
+    <string name="navigate_from">FROM:</string>
+    <string name="navigate_to">TO:</string>
 </resources>
