@@ -12,4 +12,5 @@
     <string name="spinner_title">Test</string>
     <string name="navigate_from">FROM:</string>
     <string name="navigate_to">TO:</string>
+    <string name="navigate_title">Navigation</string>
 </resources>
