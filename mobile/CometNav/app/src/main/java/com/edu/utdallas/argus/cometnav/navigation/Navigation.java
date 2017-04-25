@@ -1,5 +1,6 @@
 package com.edu.utdallas.argus.cometnav.navigation;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import net.coderodde.graph.DirectedGraphWeightFunction;
@@ -8,6 +9,7 @@ import net.coderodde.graph.pathfinding.AbstractPathfinder;
 import net.coderodde.graph.pathfinding.DirectedGraphPath;
 import net.coderodde.graph.pathfinding.GraphNodeCoordinates;
 import net.coderodde.graph.pathfinding.HeuristicFunction;
+import net.coderodde.graph.pathfinding.TargetUnreachableException;
 import net.coderodde.graph.pathfinding.support.EuclideanHeuristicFunction;
 import net.coderodde.graph.pathfinding.support.NBAStarPathfinder;
 import net.coderodde.graph.pathfinding.support.Point2DF;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -80,11 +83,6 @@ public class Navigation implements ILocationClient {
     private final Handler handler = new Handler();
 
     /**
-     * The current node id.
-     */
-    private int currentNode;
-
-    /**
      * The start node ID
      */
     private int startNode;
@@ -93,6 +91,11 @@ public class Navigation implements ILocationClient {
      * The target node id, if any
      */
     private int endNode;
+
+    /**
+     * Our current node, if we have one.
+     */
+    private int currentNode;
 
     private HashMap<Integer, CometNavBeacon> beaconMap;
 
@@ -103,6 +106,16 @@ public class Navigation implements ILocationClient {
     private CurrentLocation currentLocation;
 
     public static String CURRENT_LOCATION = "Current Location";
+
+    /**
+     * Set to true for when we should begin emergency navigation as soon as we have a location
+     */
+    boolean shouldStartEmergencyNav = false;
+
+    /**
+     * Set to true when currently navigating due to an emergency. Will always try to find the closest exit.
+     */
+    boolean isEmergencyNavActive = false;
 
     /**
      * Hashmap of beacon names (an int) to a CometNavBeacon object
@@ -154,7 +167,14 @@ public class Navigation implements ILocationClient {
      */
     public void beginNavigation(int targetNodeId) {
         //translate our current location into a node ID
-        beginNavigation(findNearestNode(), targetNodeId);
+        if (currentNode == 0)
+            currentNode = findNearestNode();
+        if (currentNode == 0)
+        {
+            Log.d("Navigation", "Warning! Can't find current node, so can't start nav!");
+            return;
+        }
+        beginNavigation(currentNode, targetNodeId);
     }
 
     /**
@@ -162,41 +182,53 @@ public class Navigation implements ILocationClient {
      */
     public void beginEmergencyNavigation()
     {
-        int currentNode = findNearestNode();
+        if (currentNode == 0)
+            currentNode = findNearestNode();
         if (currentNode == 0)
         {
             Log.d("Navigation", "Warning! Can't find current node, so can't start emergency nav!");
+            shouldStartEmergencyNav = true;
             return;
         }
+        isEmergencyNavActive = true;
+        DataServices.getBlockedAreas(Navigation.this);
+        updateCurrentRoute();
+        startNavTimer(); //start the timer so we can keep our path up to date
+    }
+
+    private int findClosestExitNode()
+    {
+        if (currentNode == 0)
+            currentNode = findNearestNode();
         int exitNode = 0;
-        int[] exitRoute;
-        float minWeight = Float.MAX_VALUE;
-        //First find the nearest exit
-        for (Location loc : navigableLocations)
-        {
-            if (loc.getType() == Location.Type.EXIT)
-            {
-                exitRoute = pathfinder.search(currentNode, loc.getLocationId()).toArray();
-                float weight = getWeightOfPath(exitRoute);
-                Log.d("Test", Arrays.toString(exitRoute) + " weight is " + weight);
-                if (weight < minWeight) {
-                    minWeight = weight;
-                    exitNode = loc.getLocationId();
+        if (currentNode != 0) {
+            int[] exitRoute;
+            float minWeight = Float.MAX_VALUE;
+            //First find the nearest exit
+            for (Location loc : navigableLocations) {
+                if (loc.getType() == Location.Type.EXIT) {
+                    try {
+                        exitRoute = pathfinder.search(currentNode, loc.getLocationId()).toArray();
+                        float weight = getWeightOfPath(exitRoute);
+                        if (weight < minWeight) {
+                            minWeight = weight;
+                            exitNode = loc.getLocationId();
+                        }
+                    } catch (TargetUnreachableException | NullPointerException e) {
+                        Log.d(TAG, e.toString());
+                    }
                 }
             }
         }
-        if (exitNode != 0)
-            beginNavigation(exitNode);
-        else
-            Log.d("Navigation", "Warning! Cannot find exit!");
+        return exitNode;
     }
 
     private float getWeightOfPath(int[] path)
     {
         float sum = 0;
-        for (int i=0; i < path.length; i++)
+        for (int i=0; i < path.length - 1; i++)
         {
-            sum += weightFunction.get(i, i+1);
+            sum += weightFunction.get(path[i], path[i+1]);
         }
         return sum;
     }
@@ -211,10 +243,8 @@ public class Navigation implements ILocationClient {
         startNode = startNodeId;
         endNode = endNodeId;
         Log.d("Navigation", "Beginning navigation from " + startNodeId + " to " + endNodeId);
-        if (pathfinder != null) {
-            DataServices.getBlockedAreas(Navigation.this);
-            updateCurrentRoute();
-        }
+        DataServices.getBlockedAreas(Navigation.this);
+        updateCurrentRoute();
         startNavTimer();
     }
 
@@ -222,7 +252,8 @@ public class Navigation implements ILocationClient {
      *
      */
     public void stopNavigation() {
-        navTimer.cancel();
+        if (navTimer != null)
+            navTimer.cancel();
     }
 
     /**
@@ -245,7 +276,7 @@ public class Navigation implements ILocationClient {
      * @param nodeId
      * @return
      */
-    public Location getLocation (int nodeId)
+    public Location getLocation(int nodeId)
     {
         for (Location loc : navigableLocations)
         {
@@ -263,7 +294,6 @@ public class Navigation implements ILocationClient {
         ArrayList<Double> distanceList = new ArrayList<>();
         ArrayList<Double> floorList = new ArrayList<>();
         CurrentLocation loc = new CurrentLocation();
-        boolean locationFound = false;
 
         CometNavBeacon closestBeacon = null;
         double minDistance = Double.MAX_VALUE;
@@ -292,6 +322,10 @@ public class Navigation implements ILocationClient {
                     closestBeacon = beacon;
                 }
             }
+            else
+            {
+                Log.d(TAG, "Warning, don't have beacon! " + beacon.getStrName());
+            }
         }
         if (count == 0) {
             Log.d("Navigation", "Warning! no beacons in list, cannot determine position");
@@ -301,9 +335,8 @@ public class Navigation implements ILocationClient {
             //return point and radius
             loc.setxLoc((int) Math.round(posList.get(0).get(0)));
             loc.setyLoc((int) Math.round(posList.get(0).get(1)));
-            //loc.setFloor((int) Math.round(posList.get(0).get(2)));
+            loc.setFloor((int) Math.round(floorList.get(0)));
             loc.setRadius((int) Math.round(distanceList.get(0)));
-            locationFound = true;
         } else {
             //With 2 points we can do a 1d trilateration which returns an estimated point that is
             //fairly innacurate. 3 points is where we really can trilaterate our position.
@@ -324,25 +357,31 @@ public class Navigation implements ILocationClient {
             loc.setxLoc((int) Math.round(resultPoint[0]));
             loc.setyLoc((int) Math.round(resultPoint[1]));
             //loc.setFloor((int) Math.round(resultPoint[2]));
-            locationFound = true;
+            loc.setFloor((int) Math.round(floorList.get(0)));
+
+            if (closestBeacon != null) {
+                //snap to radius around closest beacon
+                Point2DF pointClosestToBeacon =
+                        closestPointToCircle(loc.getxLoc(), loc.getyLoc(),
+                                closestBeacon.getxLoc(), closestBeacon.getyLoc(), closestBeacon.getDistance());
+
+                loc.setxLoc(Math.round(pointClosestToBeacon.getX()));
+                loc.setyLoc(Math.round(pointClosestToBeacon.getY()));
+            }
         }
 
-        if (closestBeacon != null) {
-            //snap to radius around closest beacon
-            Point2DF pointClosestToBeacon =
-                    closestPointToCircle(loc.getxLoc(), loc.getyLoc(),
-                            closestBeacon.getxLoc(), closestBeacon.getyLoc(), closestBeacon.getDistance());
-
-            loc.setxLoc(Math.round(pointClosestToBeacon.getX()));
-            loc.setyLoc(Math.round(pointClosestToBeacon.getY()));
-        }
         currentLocation = loc;
+        //Now that we have a location, begin nav
+        if (shouldStartEmergencyNav) {
+            shouldStartEmergencyNav = false;
+            beginEmergencyNavigation();
+        }
         return loc;
     }
 
     private int findNearestNode()
     {
-        if (currentLocation == null)
+        if (currentLocation == null || navigableLocations == null)
             return 0;
         // Look for nearby navigable location to projected location and set to the nearest
         double smallestZ = 0;
@@ -388,10 +427,21 @@ public class Navigation implements ILocationClient {
      */
     private void updateCurrentRoute() {
         if (pathfinder != null) {
-            currentRoute = pathfinder.search(startNode, endNode);
+            int[] notifyArray = new int[0];
+            if (isEmergencyNavActive) {
+                if (currentNode == 0)
+                    currentNode = findNearestNode();
+                int exitNode = findClosestExitNode();
+                if (currentNode != 0 && exitNode != 0) {
+                    currentRoute = pathfinder.search(currentNode, exitNode);
+                    notifyArray = currentRoute.toArray();
+                }
+            }
+            else {
+                currentRoute = pathfinder.search(startNode, endNode);
+                notifyArray = currentRoute.toArray();
+            }
             Log.d("Navigation", currentRoute.toString());
-            int[] notifyArray = currentRoute.toArray();
-            //Log.d("Navigation", notifyArray.toString());
             //notify listeners
             for (OnRouteChangedListener listener : mRouteChangedListeners) {
                 listener.onRouteChange(notifyArray);
@@ -414,17 +464,21 @@ public class Navigation implements ILocationClient {
                     float distance = p1.distance(p2);
                     weightFunction.put(nodeId, childNodeId, (float) (1.2 * distance));
                 }
+                else
+                    Log.d("Test", "Node doesn't have coords! " + childNodeId);
             }
         }
     }
 
     private void startNavTimer() {
-        //set a new Timer
-        navTimer = new Timer();
-        //initialize the TimerTask's job
-        initializeTimerTask();
-        //schedule the timer, after the first 2 seconds the TimerTask will run every 2 seconds
-        navTimer.schedule(timerTask, 2000, 2000); //
+        if (navTimer == null) {
+            //set a new Timer
+            navTimer = new Timer();
+            //initialize the TimerTask's job
+            initializeTimerTask();
+            //schedule the timer, after the first 2 seconds the TimerTask will run every 2 seconds
+            navTimer.schedule(timerTask, 2000, 2000);
+        }
     }
 
     private void stopNavTimer() {
@@ -440,6 +494,8 @@ public class Navigation implements ILocationClient {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
+                        //Update nodes and arcs every time to undo lifted blocked areas
+                        DataServices.getNavigableLocations(Navigation.this);
                         DataServices.getBlockedAreas(Navigation.this);
                         updateCurrentRoute();
                     }
@@ -494,10 +550,28 @@ public class Navigation implements ILocationClient {
     @Override
     public void receivePaths(List<Path> paths) {
         String logStr = new String();
+        Set<Integer> nodeSet = graph.getNodeSet();
         for (int i = 0; i < paths.size(); i++) {
             Path path = paths.get(i);
-            graph.addArc(path.getStartId(), path.getEndId());
-            logStr += path.getStartId() + "-" + path.getEndId() + ", ";
+            if (!nodeSet.contains(path.getStartId()))
+            {
+                Log.d(TAG, "Doesn't contain node " + path.getStartId() + " so can't add arc " + path.getStartId() + "-" + path.getEndId());
+            }
+            else if (!nodeSet.contains(path.getEndId()))
+            {
+                Log.d(TAG, "Doesn't contain node " + path.getEndId() + " so can't add arc " + path.getStartId() + "-" + path.getEndId());
+            }
+            else
+            {
+                Location start = getLocation(path.getStartId());
+                Location end = getLocation(path.getEndId());
+                if (start != null && start.getType() != Location.Type.BLOCKED_AREA &&
+                        end != null && end.getType() != Location.Type.BLOCKED_AREA)
+                {
+                    graph.addArc(path.getStartId(), path.getEndId());
+                    logStr += path.getStartId() + "-" + path.getEndId() + ", ";
+                }
+            }
         }
 
         Log.d("Navigation", "Arcs updated: " + logStr);
@@ -512,6 +586,5 @@ public class Navigation implements ILocationClient {
     public void receiveEmergencyLocations(List<Location> locations) {
 
     }
-
 }
 

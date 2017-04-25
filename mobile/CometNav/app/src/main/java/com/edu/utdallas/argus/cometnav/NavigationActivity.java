@@ -208,7 +208,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private void loadIntentData() {
         Intent origIntent = getIntent();
         this.startLoc = origIntent.getIntExtra(NavigationActivity.START_LOCATION_ID, 0);
-        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 49);
+        this.endLoc = origIntent.getIntExtra(NavigationActivity.END_LOCATION_ID, 0);
 
         if (origIntent.hasExtra(EMERGENCIES)) {
 
@@ -276,31 +276,33 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             @Override
             public void onRouteChange(int[] routeArcs) {
                 Log.d("Navigation", "Updating route: " + Arrays.toString(routeArcs));
-                //Each intermediate node will be present twice
-                mPathArray = new float[(routeArcs.length * 4) - 4];
-                int pathArrayCounter = 0;
-                for (int i = 0; i < routeArcs.length; i++)
-                {
-                    int[] coords = navigation.getNodePos(routeArcs[i]);
-                    mPathArray[pathArrayCounter] = coords[0];
-                    mPathArray[pathArrayCounter + 1] = coords[1];
-                    if (pathArrayCounter > 0  && i != routeArcs.length-1)
-                    {
-                        mPathArray[pathArrayCounter + 2] = coords[0];
-                        mPathArray[pathArrayCounter + 3] = coords[1];
-                        pathArrayCounter+=2;
+                if (routeArcs.length < 2) {
+                    mPathArray = null;
+                }
+                else {
+                    //Each intermediate node will be present twice
+                    mPathArray = new float[(routeArcs.length * 4) - 4];
+                    int pathArrayCounter = 0;
+                    for (int i = 0; i < routeArcs.length; i++) {
+                        int[] coords = navigation.getNodePos(routeArcs[i]);
+                        mPathArray[pathArrayCounter] = coords[0];
+                        mPathArray[pathArrayCounter + 1] = coords[1];
+                        if (pathArrayCounter > 0 && i != routeArcs.length - 1) {
+                            mPathArray[pathArrayCounter + 2] = coords[0];
+                            mPathArray[pathArrayCounter + 3] = coords[1];
+                            pathArrayCounter += 2;
+                        }
+                        pathArrayCounter += 2;
                     }
-                    pathArrayCounter+=2;
                 }
                 //updateDraw();
                 photoView.invalidate();
-
             }
         });
 
         if (this.startLoc != 0 && this.endLoc != 0) {
             navigation.beginNavigation(this.startLoc, this.endLoc);
-        } else if (this.startLoc == 0) {
+        } else if (this.startLoc == 0 && this.endLoc != 0) {
             navigation.beginNavigation(this.endLoc);
         }
     }
@@ -346,6 +348,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
     private void snapToPath(CurrentLocation loc)
     {
+        if (mPathArray == null || mPathArray.length < 4)
+            return;
         float minDist = Float.MAX_VALUE;
         Point2DF destCoords = new Point2DF();
         for (int x = 0, y = 1; x < mPathArray.length - 2 && y < mPathArray.length - 1; x += 2, y += 2)
@@ -492,7 +496,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 mRadius = (int)Math.round(loc.getRadius());
                 if (mRadius < MIN_RADIUS)
                     mRadius = MIN_RADIUS;
-                Log.d("Navigation", "Found a position! " + loc.toString());
+                Log.d("Navigation", "Found a position with 1 node: " + loc.toString());
             }
             //otherwise we'll have x y and floor
             else if (loc.getxLoc() != 0)
@@ -508,6 +512,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             {
                 showLocDot = false;
             }
+            //This forces a redraw
+            photoView.invalidate();
         }
     }
 
@@ -528,9 +534,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         //This resizes the current location dot
         public void onScaleChange(float scaleFactor, float focusX, float focusY) {
             cumulScaleFactor = cumulScaleFactor * scaleFactor;
-            //updateDraw();
             photoView.invalidate();
-
         }
     }
 

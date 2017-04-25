@@ -241,8 +241,6 @@ public class MainActivity extends AppCompatActivity
                         {
                             showEmergencyNav();
                             dialog.cancel();
-                            Log.d("Test", "Clicked?");
-
                             navigation.beginEmergencyNavigation();
                         }
                     });

@@ -12,11 +12,12 @@
     android:scaleType="centerCrop">
 
     <Button
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:onClick="toggleDebug"
         android:text="Toggle Debug"
-        android:onClick="toggleDebug" />
+        android:visibility="invisible" />
 
     <view
         class="com.edu.utdallas.argus.cometnav.NavigationActivity$CometNavView"
