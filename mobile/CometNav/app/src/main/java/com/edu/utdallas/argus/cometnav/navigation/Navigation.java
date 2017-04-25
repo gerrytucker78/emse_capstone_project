@@ -409,9 +409,11 @@ public class Navigation implements ILocationClient {
             Point2DF p1 = coordinates.get(nodeId);
             for (Integer childNodeId : graph.getChildrenOf(nodeId)) {
                 Point2DF p2 = coordinates.get(childNodeId);
-
-                float distance = p1.distance(p2);
-                weightFunction.put(nodeId, childNodeId, (float) (1.2 * distance));
+                if (p2 != null)
+                {
+                    float distance = p1.distance(p2);
+                    weightFunction.put(nodeId, childNodeId, (float) (1.2 * distance));
+                }
             }
         }
     }
