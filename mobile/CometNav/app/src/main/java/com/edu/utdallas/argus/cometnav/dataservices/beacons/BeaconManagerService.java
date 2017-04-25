@@ -255,7 +255,6 @@ public class BeaconManagerService extends IntentService implements BeaconConsume
                     count = BEACON_LOSS_THRESHOLD;
                 beaconCount.put(cnBeacon.getName(), count);
                 foundBeacons.add(cnBeacon.getName());
-                Log.d(TAG, "1Beacon count true dist: " + cnBeacon.getStrName() + " " + count + " " + b.getDistance());
                 Log.d(TAG, "1Beacon count:           " + cnBeacon.getStrName() + " " + count + " " + cnBeacon.getDistMtr());
             }
             else
