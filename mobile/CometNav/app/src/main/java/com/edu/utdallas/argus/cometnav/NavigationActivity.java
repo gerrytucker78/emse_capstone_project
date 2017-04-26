@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.Toast;
 
+import com.edu.utdallas.argus.cometnav.dataservices.DataServices;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
@@ -46,8 +47,7 @@ import java.util.StringJoiner;
 
 import static android.graphics.BitmapFactory.*;
 
-public class NavigationActivity extends AppCompatActivity implements ILocationClient
-{
+public class NavigationActivity extends AppCompatActivity implements ILocationClient {
     private static final String TAG = "NavigationActivity";
     private BroadcastReceiver receiver;
     private BroadcastReceiver emergencyReceiver;
@@ -58,10 +58,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private Canvas backgroundCanvas;
     private Canvas beacons;
     private Canvas emergencies;
+    private Canvas blockedAreasCanvas;
+
     private Paint paint;
     private Paint beaconPaint;
     private Paint pathPaint;
     private Paint emergencyPaint;
+    private Paint blockedAreasPaint;
 
     private float[] mPathArray;
     private Bitmap immutableMap;
@@ -80,6 +83,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private List<CometNavBeacon> cnBeaconList = new ArrayList<>();
     private List<Emergency> emergencyList = new ArrayList<Emergency>();
     private List<Location> emergencyLocations = new ArrayList<Location>();
+    private List<Location> blockedAreas = new ArrayList<Location>();
 
     private int startLoc = 0;
     private int endLoc = 0;
@@ -93,6 +97,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     protected void onPostResume() {
         super.onPostResume();
         loadIntentData();
+        DataServices.getBlockedAreas(this);
+
     }
 
     protected void onDestroy() {
@@ -107,12 +113,10 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     /**
      * Draws our current location
      */
-    private void drawCurrentLoc()
-    {
+    private void drawCurrentLoc() {
         if (locDot == null)
             return;
-        if (showLocDotReal)
-        {
+        if (showLocDotReal) {
             locDot.save();
             locDot.translate(xPosReal, yPosReal);
             float scaleVal = (1 / cumulScaleFactor);
@@ -133,13 +137,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         }
     }
 
-    private void drawPath()
-    {
+    private void drawPath() {
         if (paths == null || mPathArray == null)
             return;
         paths.save();
-        if (mPathArray.length > 0)
-        {
+        if (mPathArray.length > 0) {
             paths.drawLines(mPathArray, pathPaint);
         }
         paths.restore();
@@ -160,14 +162,14 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 emergencies.drawCircle(0, 0, 5, emergencyPaint);
                 emergencies.restore();
                 emergencies.save();
-                emergencies.translate(emLoc.getPixelLocX(), emLoc.getPixelLocY()+25);
-                emergencies.drawText(emLoc.getName(),(float)(0), (float)(0), emergencyPaint);
+                emergencies.translate(emLoc.getPixelLocX(), emLoc.getPixelLocY() + 25);
+                emergencies.drawText(emLoc.getName(), (float) (0), (float) (0), emergencyPaint);
                 emergencies.restore();
             }
         }
     }
-    private void drawBeacons()
-    {
+
+    private void drawBeacons() {
         if (beacons == null || !shouldShowBeacons) {
             return;
         }
@@ -182,26 +184,41 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             beacons.restore();
             beacons.save();
             beacons.translate(cnb.getxLoc(), cnb.getyLoc());
-            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format ("%.2f", cnb.getDistMtr()),(float)(0), (float)(0), beaconPaint);
+            beacons.drawText(Integer.toHexString(cnb.getName()) + " - " + String.format("%.2f", cnb.getDistMtr()), (float) (0), (float) (0), beaconPaint);
             beacons.restore();
         }
     }
 
-    public void toggleDebug(View view)
-    {
+    private void drawBlockedAreas() {
+        if (blockedAreasCanvas == null) {
+            return;
+        }
+
+        for (int i = 0; i < this.blockedAreas.size(); i++) {
+            blockedAreasCanvas.save();
+            Location loc = this.blockedAreas.get(i);
+            blockedAreasCanvas.translate(loc.getPixelLocX(), loc.getPixelLocY());
+            float scaleVal = (1 / cumulScaleFactor);
+            blockedAreasCanvas.scale(scaleVal, scaleVal);
+            blockedAreasCanvas.drawCircle(0, 0, 10, blockedAreasPaint);
+            blockedAreasCanvas.restore();
+            blockedAreasCanvas.save();
+        }
+    }
+    public void toggleDebug(View view) {
         showLocDotReal = !showLocDotReal;
         shouldShowBeacons = !shouldShowBeacons;
         photoView.invalidate();
     }
 
-    private void updateDraw()
-    {
+    private void updateDraw() {
         if (backgroundCanvas != null)
             backgroundCanvas.drawBitmap(immutableMap, 0, 0, paint);
         drawCurrentLoc();
         drawBeacons();
         drawPath();
         drawEmergencies();
+        drawBlockedAreas();
         //Forces a redraw
         //photoView.invalidate();
     }
@@ -213,32 +230,32 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
         if (origIntent.hasExtra(EMERGENCIES)) {
 
-            Object[] emergArray =  (Object [])origIntent.getExtras().get(EMERGENCIES);
+            Object[] emergArray = (Object[]) origIntent.getExtras().get(EMERGENCIES);
 
             this.emergencyList = new ArrayList<Emergency>();
             for (Object newEmerg : emergArray) {
-                this.emergencyList.add((Emergency)newEmerg);
+                this.emergencyList.add((Emergency) newEmerg);
             }
         }
 
         if (origIntent.hasExtra(EMERGENCY_LOCATIONS)) {
 
-            Object[] emergLocArray =  (Object [])origIntent.getExtras().get(EMERGENCY_LOCATIONS);
+            Object[] emergLocArray = (Object[]) origIntent.getExtras().get(EMERGENCY_LOCATIONS);
 
             this.emergencyLocations = new ArrayList<Location>();
             for (Object newLoc : emergLocArray) {
-                this.emergencyLocations.add((Location)newLoc);
+                this.emergencyLocations.add((Location) newLoc);
             }
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
         loadIntentData();
+        DataServices.getBlockedAreas(this);
 
         CometNavView.setNavActivity(this);
 
@@ -270,8 +287,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         photoView.setOnScaleChangeListener(new ScaleChangeListener());
 
 
-        navigation.setOnRouteChangedListener(new OnRouteChangedListener()
-        {
+        navigation.setOnRouteChangedListener(new OnRouteChangedListener() {
             boolean shouldAlt = false;
 
             @Override
@@ -279,8 +295,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 Log.d("Navigation", "Updating route: " + Arrays.toString(routeArcs));
                 if (routeArcs.length < 2) {
                     mPathArray = null;
-                }
-                else {
+                } else {
                     //Each intermediate node will be present twice
                     mPathArray = new float[(routeArcs.length * 4) - 4];
                     int pathArrayCounter = 0;
@@ -314,8 +329,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         this.cnBeaconList = new ArrayList<>();
         Map<Integer, CometNavBeacon> beaconData = navigation.getBeaconMap();
 
-        for (CometNavBeacon cnBeacon : beaconArrayList)
-        {
+        for (CometNavBeacon cnBeacon : beaconArrayList) {
             CometNavBeacon refBeacon = beaconData.get(cnBeacon.getName());
             if (refBeacon != null) {
                 cnBeacon.setxLoc(refBeacon.getxLoc());
@@ -324,7 +338,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 cnBeaconList.add(cnBeacon);
             }
         }
-        Log.d("Navigation", "Received beacon broadcast! " +beaconArrayList.toString() );
+        Log.d("Navigation", "Received beacon broadcast! " + beaconArrayList.toString());
     }
 
     @Override
@@ -334,7 +348,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
     @Override
     public void receiveBlockedAreas(List<Location> locations) {
-        throw new UnsupportedOperationException("Method not implemented for this class");
+        this.blockedAreas = locations;
     }
 
     @Override
@@ -348,15 +362,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
     }
 
-    private void snapToPath(CurrentLocation loc)
-    {
+    private void snapToPath(CurrentLocation loc) {
         if (mPathArray == null || mPathArray.length < 4)
             return;
         float minDist = Float.MAX_VALUE;
         Point2DF destCoords = new Point2DF();
-        for (int x = 0, y = 1; x < mPathArray.length - 2 && y < mPathArray.length - 1; x += 2, y += 2)
-        {
-            Point2DF point = nearestPointOnLine(mPathArray[x], mPathArray[y], mPathArray[x+2], mPathArray[y+2], loc.getxLoc(), loc.getyLoc());
+        for (int x = 0, y = 1; x < mPathArray.length - 2 && y < mPathArray.length - 1; x += 2, y += 2) {
+            Point2DF point = nearestPointOnLine(mPathArray[x], mPathArray[y], mPathArray[x + 2], mPathArray[y + 2], loc.getxLoc(), loc.getyLoc());
             float distance = distBetweenPoints(point.getX(), point.getY(), loc.getxLoc(), loc.getyLoc());
             if (distance < minDist) {
                 minDist = distance;
@@ -368,13 +380,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         loc.setyLoc(Math.round(destCoords.getY()));
     }
 
-    private float distBetweenPoints(float x1, float y1, float x2, float y2)
-    {
-        return (float) Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+    private float distBetweenPoints(float x1, float y1, float x2, float y2) {
+        return (float) Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
-    private static Point2DF nearestPointOnLine(float ax, float ay, float bx, float by, float px, float py)
-    {
+    private static Point2DF nearestPointOnLine(float ax, float ay, float bx, float by, float px, float py) {
         float apx = px - ax;
         float apy = py - ay;
         float abx = bx - ax;
@@ -394,6 +404,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     public static class CometNavView extends PhotoView {
 
         private static NavigationActivity navActivity;
+
         public CometNavView(Context context) {
             super(context);
         }
@@ -406,8 +417,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             super(context, attrs, defStyle);
         }
 
-        public static void setNavActivity(NavigationActivity activity)
-        {
+        public static void setNavActivity(NavigationActivity activity) {
             navActivity = activity;
         }
 
@@ -418,10 +428,11 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 navActivity.updateDraw();
         }
     }
+
     private class EmergencyBroadcastReceiver extends BroadcastReceiver {
 
 
-        private void sendAlert(Context context, Emergency e){
+        private void sendAlert(Context context, Emergency e) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
             String emergClass = "";
 
@@ -458,6 +469,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             AlertDialog alert11 = builder1.create();
             alert11.show();
         }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             //Grab the new/updated emergencies
@@ -467,7 +479,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             Log.d(TAG, "List of emergencies received from broadcast: " + emergencyList.toString());
 
             //Send out an alert for all the emergencies in the list
-            for (Emergency e : emergencyList){
+            for (Emergency e : emergencyList) {
                 sendAlert(context, e);
             }
         }
@@ -488,21 +500,19 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             snapToPath(loc);
 
             // If we have a radius, that means there's only 1 beacon
-            if (loc.getRadius() != 0)
-            {
+            if (loc.getRadius() != 0) {
                 showLocDot = true;
                 //Draw circle at location
                 xPos = loc.getxLoc();
                 yPos = loc.getyLoc();
                 //right now I'm assuming we're on the right floor
-                mRadius = (int)Math.round(loc.getRadius());
+                mRadius = (int) Math.round(loc.getRadius());
                 if (mRadius < MIN_RADIUS)
                     mRadius = MIN_RADIUS;
                 Log.d("Navigation", "Found a position with 1 node: " + loc.toString());
             }
             //otherwise we'll have x y and floor
-            else if (loc.getxLoc() != 0)
-            {
+            else if (loc.getxLoc() != 0) {
                 showLocDot = true;
                 xPos = loc.getxLoc();
                 yPos = loc.getyLoc();
@@ -510,8 +520,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 Log.d("Navigation", "Found a position! " + loc.toString());
             }
             //If we don't have x, that means we don't have a location. Hide our current location.
-            else
-            {
+            else {
                 showLocDot = false;
             }
             //This forces a redraw
@@ -599,6 +608,10 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 emergencyPaint.setAntiAlias(true);
                 emergencyPaint.setColor(Color.RED);
 
+                blockedAreasPaint = new Paint();
+                blockedAreasPaint.setAntiAlias(true);
+                blockedAreasPaint.setColor(Color.RED);
+
                 //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_view,myOptions);
                 immutableMap = result;
                 mutableMap = immutableMap.copy(Bitmap.Config.ARGB_8888, true);
@@ -608,13 +621,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 paths = new Canvas(mutableMap);
                 beacons = new Canvas(mutableMap);
                 emergencies = new Canvas(mutableMap);
+                blockedAreasCanvas = new Canvas(mutableMap);
                 bmImage.setImageBitmap(mutableMap);
 
                 //updateDraw();
                 photoView.invalidate();
 
-            }
-            else
+            } else
                 Log.d("Navigation", "bmImage is null?");
         }
     }
