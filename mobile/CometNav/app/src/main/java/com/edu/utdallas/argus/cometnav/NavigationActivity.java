@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -531,6 +532,10 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             Log.d("Test", endLoc + " " + navigation.findNearestNode());
             if (endLoc != 0 && endLoc == navigation.findNearestNode()) {
                 Toast.makeText(NavigationActivity.this, "You have arrived", Toast.LENGTH_LONG).show();
+                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arrival);
+                mp.setVolume(1f, 1f); //to play sound when volume is 0
+                mp.start();
+
                 navigation.stopNavigation();
                 mPathArray = null; //Clear the path
             }
