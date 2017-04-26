@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -530,6 +531,23 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                 MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arrival);
                 mp.setVolume(1f, 1f); //to play sound when volume is 0
                 mp.start();
+
+                CountDownTimer timer = new CountDownTimer(3000, 3000) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // Nothing to do
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        if (mp.isPlaying()) {
+                            mp.stop();
+                            mp.release();
+                        }
+                    }
+                };
+                timer.start();
 
                 navigation.stopNavigation();
                 mPathArray = null; //Clear the path
