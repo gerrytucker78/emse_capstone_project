@@ -252,8 +252,11 @@ public class Navigation implements ILocationClient {
      *
      */
     public void stopNavigation() {
+        Log.d(TAG, "Stopping navigation");
         if (navTimer != null)
             navTimer.cancel();
+        if (isEmergencyNavActive)
+            isEmergencyNavActive = false;
     }
 
     /**
@@ -379,7 +382,7 @@ public class Navigation implements ILocationClient {
         return loc;
     }
 
-    private int findNearestNode()
+    public int findNearestNode()
     {
         if (currentLocation == null || navigableLocations == null)
             return 0;

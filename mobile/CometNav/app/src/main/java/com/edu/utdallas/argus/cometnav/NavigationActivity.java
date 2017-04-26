@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.beacons.CometNavBeacon;
@@ -70,7 +71,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private int xPos = 0;
     private int yPos = 0;
     private boolean showLocDotReal = false;
-    private boolean shouldShowBeacons = false;
+    private boolean shouldShowBeacons = true;
     private int xPosReal = 0;
     private int yPosReal = 0;
     private int mRadius = 0;
@@ -300,6 +301,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             }
         });
 
+        Log.d("Test", startLoc + " " + endLoc);
         if (this.startLoc != 0 && this.endLoc != 0) {
             navigation.beginNavigation(this.startLoc, this.endLoc);
         } else if (this.startLoc == 0 && this.endLoc != 0) {
@@ -514,6 +516,15 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             }
             //This forces a redraw
             photoView.invalidate();
+
+            //If we've arrived at our destination. Determine that by our closest node being the dest
+            //node
+            Log.d("Test", endLoc + " " + navigation.findNearestNode());
+            if (endLoc != 0 && endLoc == navigation.findNearestNode()) {
+                Toast.makeText(NavigationActivity.this, "You have arrived", Toast.LENGTH_LONG).show();
+                navigation.stopNavigation();
+                mPathArray = null; //Clear the path
+            }
         }
     }
 
