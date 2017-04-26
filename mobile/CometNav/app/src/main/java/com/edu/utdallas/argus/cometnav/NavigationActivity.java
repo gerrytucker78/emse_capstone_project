@@ -71,7 +71,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private int xPos = 0;
     private int yPos = 0;
     private boolean showLocDotReal = false;
-    private boolean shouldShowBeacons = true;
+    private boolean shouldShowBeacons = false;
     private int xPosReal = 0;
     private int yPosReal = 0;
     private int mRadius = 0;
@@ -244,12 +244,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
         photoView = (CometNavView) findViewById(R.id.photo_view);
         task = new DownloadImageTask(photoView);
-        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
-
-        //TODO Find Beacons on create. Move to only find beacons when ready to navigate
-        Intent intent = new Intent(this, BeaconManagerService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startService(intent);
+        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS4.png");
 
         // your oncreate code should be
         Log.d("Navigation", "Creating NavigationActivity!");
@@ -520,7 +515,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             //If we've arrived at our destination. Determine that by our closest node being the dest
             //node
             Log.d("Test", endLoc + " " + navigation.findNearestNode());
-            if (endLoc != 0 && endLoc == navigation.findNearestNode()) {
+            if (endLoc != 0 && (endLoc == navigation.findNearestNode() || navigation.getDistanceToNode(endLoc) < 30 )) {
                 Toast.makeText(NavigationActivity.this, "You have arrived", Toast.LENGTH_LONG).show();
                 navigation.stopNavigation();
                 mPathArray = null; //Clear the path

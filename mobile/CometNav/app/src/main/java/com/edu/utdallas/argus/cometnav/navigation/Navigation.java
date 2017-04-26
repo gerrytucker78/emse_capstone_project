@@ -196,6 +196,18 @@ public class Navigation implements ILocationClient {
         startNavTimer(); //start the timer so we can keep our path up to date
     }
 
+    public float getDistanceToNode(int nodeId)
+    {
+        float distance = Float.MAX_VALUE;
+        int[] nodeCoords = getNodePos(nodeId);
+        if (currentLocation != null) {
+            distance = (float) Math.sqrt(Math.pow((currentLocation.getxLoc() - nodeCoords[0]), 2) +
+                    Math.pow((currentLocation.getyLoc() - nodeCoords[1]), 2));
+        }
+        Log.d("Test", "Our distance to node " + nodeId + " is " + distance);
+        return distance;
+    }
+
     private int findClosestExitNode()
     {
         if (currentNode == 0)
@@ -441,13 +453,21 @@ public class Navigation implements ILocationClient {
                 }
             }
             else {
-                currentRoute = pathfinder.search(startNode, endNode);
-                notifyArray = currentRoute.toArray();
+                try {
+                    currentRoute = pathfinder.search(startNode, endNode);
+                    notifyArray = currentRoute.toArray();
+                }
+                catch (TargetUnreachableException e)
+                {
+                    Log.d("Navigation", e.toString());
+                }
             }
-            Log.d("Navigation", currentRoute.toString());
-            //notify listeners
-            for (OnRouteChangedListener listener : mRouteChangedListeners) {
-                listener.onRouteChange(notifyArray);
+            if (currentRoute != null) {
+                Log.d("Navigation", currentRoute.toString());
+                //notify listeners
+                for (OnRouteChangedListener listener : mRouteChangedListeners) {
+                    listener.onRouteChange(notifyArray);
+                }
             }
         }
     }

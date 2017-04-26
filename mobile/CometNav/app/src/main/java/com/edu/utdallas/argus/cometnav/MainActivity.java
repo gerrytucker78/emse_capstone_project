@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
 
+import com.edu.utdallas.argus.cometnav.dataservices.beacons.BeaconManagerService;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.Emergency;
 import com.edu.utdallas.argus.cometnav.dataservices.emergencies.EmergencyService;
 import com.edu.utdallas.argus.cometnav.dataservices.locations.Location;
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity
         filterz.addAction("EMERGENCY_ACTION");
         emergencyReceiver = new EmergencyBroadcastReceiver();
         registerReceiver(emergencyReceiver, filterz);
+
+        Intent intent = new Intent(this, BeaconManagerService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -113,9 +118,9 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_ID);
 
         // Start Emergency Service - Run until the app is killed
-        Intent intent = new Intent(this, EmergencyService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startService(intent);
+        Intent intent2 = new Intent(this, EmergencyService.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent2);
     }
 
     @Override
