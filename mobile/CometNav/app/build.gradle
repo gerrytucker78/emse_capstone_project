@@ -7,7 +7,7 @@ android {
         applicationId "com.edu.utdallas.argus.cometnav"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {

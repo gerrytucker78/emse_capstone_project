@@ -528,7 +528,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             Log.d("Test", endLoc + " " + navigation.findNearestNode());
             if (endLoc != 0 && (endLoc == navigation.findNearestNode() || navigation.getDistanceToNode(endLoc) < 30 )) {
                 Toast.makeText(NavigationActivity.this, "You have arrived", Toast.LENGTH_LONG).show();
-                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arrival);
+/*                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.arrival);
                 mp.setVolume(1f, 1f); //to play sound when volume is 0
                 mp.start();
 
@@ -547,7 +547,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                         }
                     }
                 };
-                timer.start();
+                timer.start();*/
 
                 navigation.stopNavigation();
                 mPathArray = null; //Clear the path
