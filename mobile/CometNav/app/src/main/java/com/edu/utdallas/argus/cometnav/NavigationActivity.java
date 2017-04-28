@@ -263,7 +263,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
 
         photoView = (CometNavView) findViewById(R.id.photo_view);
         task = new DownloadImageTask(photoView);
-        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS4.png");
+        task.execute("https://s3-us-west-2.amazonaws.com/got150030/capstone/ECSS2.png");
 
         // your oncreate code should be
         Log.d("Navigation", "Creating NavigationActivity!");
