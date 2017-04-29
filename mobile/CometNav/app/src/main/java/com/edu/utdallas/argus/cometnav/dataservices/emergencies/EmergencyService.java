@@ -105,11 +105,15 @@ public class EmergencyService extends IntentService {
             Log.d(TAG, "EmergencyList empty. Setting it and newEmList to receivedEmList");
 
             // Loop through individually to build up index maps for faster access in the future
-            for (int i = 0; i < receivedEmList.size(); i++) {
-                emergencyList.add(receivedEmList.get(i));
-                emergencyListIndex.put(receivedEmList.get(i).getEmergencyId(),i);
-                emergencyLocations.add(receivedEmLocations.get(i));
-                emergencyLocListIndex.put(receivedEmLocations.get(i).getLocationId(),i);
+            for (int emIndex = 0; emIndex < receivedEmList.size(); emIndex++) {
+                emergencyList.add(receivedEmList.get(emIndex));
+                emergencyListIndex.put(receivedEmList.get(emIndex).getEmergencyId(),emIndex);
+                for (int locIndex = 0; locIndex < receivedEmLocations.size(); locIndex++) {
+                    if (receivedEmLocations.get(locIndex).getLocationId() == receivedEmList.get(emIndex).getLocationId()) {
+                        emergencyLocations.add(receivedEmLocations.get(locIndex));
+                        emergencyLocListIndex.put(receivedEmLocations.get(locIndex).getLocationId(), emIndex);
+                    }
+                }
             }
             newEmList.addAll(emergencyList);
             newEmLocations.addAll(emergencyLocations);
