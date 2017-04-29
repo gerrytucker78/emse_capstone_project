@@ -172,6 +172,7 @@ public class Navigation implements ILocationClient {
         if (currentNode == 0)
         {
             Log.d("Navigation", "Warning! Can't find current node, so can't start nav!");
+
             return;
         }
         beginNavigation(currentNode, targetNodeId);
@@ -182,6 +183,7 @@ public class Navigation implements ILocationClient {
      */
     public void beginEmergencyNavigation()
     {
+        Log.d("Navigation", "Updating current route");
         if (currentNode == 0)
             currentNode = findNearestNode();
         if (currentNode == 0)
@@ -316,7 +318,7 @@ public class Navigation implements ILocationClient {
             //beacon coordinates.
             //beacon is one of the beacons we are currently detecting. It contains the beacon's
             //distance.
-            Log.d("Navigation", "Beacon in beaconList: " + beacon.toString());
+            //Log.d("Navigation", "Beacon in beaconList: " + beacon.toString());
 
             CometNavBeacon foundBeacon = getBeaconMap().get(beacon.getName());
             if (foundBeacon != null) {

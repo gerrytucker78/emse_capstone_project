@@ -75,8 +75,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private boolean showLocDot = false;
     private int xPos = 0;
     private int yPos = 0;
-    private boolean showLocDotReal = false;
-    private boolean shouldShowBeacons = false;
+    private boolean showLocDotReal = true;
+    private boolean shouldShowBeacons = true;
     private int xPosReal = 0;
     private int yPosReal = 0;
     private int mRadius = 0;
@@ -107,7 +107,7 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
         if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
-            navigation.stopNavigation();
+            //navigation.stopNavigation();
         }
         super.onDestroy();
     }
@@ -548,7 +548,6 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
                     }
                 };
                 timer.start();*/
-
                 navigation.stopNavigation();
                 mPathArray = null; //Clear the path
             }
