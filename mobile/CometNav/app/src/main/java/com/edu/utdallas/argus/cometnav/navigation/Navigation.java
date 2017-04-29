@@ -255,6 +255,7 @@ public class Navigation implements ILocationClient {
     public void beginNavigation(int startNodeId, int endNodeId) {
         startNode = startNodeId;
         endNode = endNodeId;
+        isEmergencyNavActive = false;
         Log.d("Navigation", "Beginning navigation from " + startNodeId + " to " + endNodeId);
         updateCurrentRoute();
         startNavTimer();
@@ -442,20 +443,17 @@ public class Navigation implements ILocationClient {
      */
     private void updateCurrentRoute() {
         if (pathfinder != null) {
-            int[] notifyArray = new int[0];
             if (isEmergencyNavActive) {
                 if (currentNode == 0)
                     currentNode = findNearestNode();
                 int exitNode = findClosestExitNode();
                 if (currentNode != 0 && exitNode != 0) {
                     currentRoute = pathfinder.search(currentNode, exitNode);
-                    notifyArray = currentRoute.toArray();
                 }
             }
             else {
                 try {
                     currentRoute = pathfinder.search(startNode, endNode);
-                    notifyArray = currentRoute.toArray();
                 }
                 catch (TargetUnreachableException e)
                 {
@@ -463,7 +461,9 @@ public class Navigation implements ILocationClient {
                 }
             }
             if (currentRoute != null) {
-                Log.d("Navigation", currentRoute.toString());
+                int[] notifyArray = new int[0];
+                notifyArray = currentRoute.toArray();
+                Log.d("Navigation", "Current route: " + currentRoute.toString());
                 //notify listeners
                 for (OnRouteChangedListener listener : mRouteChangedListeners) {
                     listener.onRouteChange(notifyArray);
