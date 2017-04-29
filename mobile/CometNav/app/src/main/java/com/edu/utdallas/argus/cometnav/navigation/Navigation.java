@@ -191,7 +191,6 @@ public class Navigation implements ILocationClient {
             return;
         }
         isEmergencyNavActive = true;
-        DataServices.getBlockedAreas(Navigation.this);
         updateCurrentRoute();
         startNavTimer(); //start the timer so we can keep our path up to date
     }
@@ -255,7 +254,6 @@ public class Navigation implements ILocationClient {
         startNode = startNodeId;
         endNode = endNodeId;
         Log.d("Navigation", "Beginning navigation from " + startNodeId + " to " + endNodeId);
-        DataServices.getBlockedAreas(Navigation.this);
         updateCurrentRoute();
         startNavTimer();
     }
@@ -519,7 +517,6 @@ public class Navigation implements ILocationClient {
                     public void run() {
                         //Update nodes and arcs every time to undo lifted blocked areas
                         DataServices.getNavigableLocations(Navigation.this);
-                        DataServices.getBlockedAreas(Navigation.this);
                         updateCurrentRoute();
                     }
                 });
@@ -603,6 +600,9 @@ public class Navigation implements ILocationClient {
 
         heuristics = new EuclideanHeuristicFunction(coordinates);
         pathfinder = new NBAStarPathfinder(graph, weightFunction, heuristics);
+
+        //Update blocked areas after paths
+        DataServices.getBlockedAreas(Navigation.this);
     }
 
     @Override
