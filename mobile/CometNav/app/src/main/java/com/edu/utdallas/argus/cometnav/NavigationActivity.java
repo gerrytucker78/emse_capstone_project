@@ -75,8 +75,8 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
     private boolean showLocDot = false;
     private int xPos = 0;
     private int yPos = 0;
-    private boolean showLocDotReal = true;
-    private boolean shouldShowBeacons = true;
+    private boolean showLocDotReal = false;
+    private boolean shouldShowBeacons = false;
     private int xPosReal = 0;
     private int yPosReal = 0;
     private int mRadius = 0;
