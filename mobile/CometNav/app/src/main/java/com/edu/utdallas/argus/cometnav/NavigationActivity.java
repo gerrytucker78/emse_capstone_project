@@ -523,6 +523,13 @@ public class NavigationActivity extends AppCompatActivity implements ILocationCl
             //This forces a redraw
             photoView.invalidate();
 
+            //Should we be navigating?
+            if (NavigationActivity.this.startLoc != 0 && NavigationActivity.this.endLoc != 0) {
+                navigation.beginNavigation(NavigationActivity.this.startLoc, NavigationActivity.this.endLoc);
+            } else if (NavigationActivity.this.startLoc == 0 && NavigationActivity.this.endLoc != 0) {
+                navigation.beginNavigation(NavigationActivity.this.endLoc);
+            }
+
             //If we've arrived at our destination. Determine that by our closest node being the dest
             //node
             Log.d("Test", endLoc + " " + navigation.findNearestNode());
